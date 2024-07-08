@@ -12,13 +12,14 @@ public class Paciente {
     private int edad;
     List<Peticion> peticionesDelPaciente;
 
-    public Paciente(String nombre, int dni, String domicilio, Object mail, String sexo, int edad) {
+    public Paciente(String nombre, int dni, String domicilio, Object mail, String sexo, int edad, List<Peticion> peticionesDelPaciente) {
         this.nombre = nombre;
         this.dni = dni;
         this.domicilio = domicilio;
         this.mail = mail;
         this.sexo = sexo;
         this.edad = edad;
+        this.peticionesDelPaciente = peticionesDelPaciente;
     }
 
     public int getDNIPaciente() {

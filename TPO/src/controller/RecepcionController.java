@@ -1,6 +1,7 @@
 package controller;
 
 import model.Paciente;
+import model.Peticion;
 import model.Practica;
 import model.Sucursal;
 
@@ -29,8 +30,8 @@ public class RecepcionController {
     }
 
     //Dar de alta paciente - agregar paciente al sistema.
-    public void darAltaPaciente(String nombre, int dni, String domicilio, Object mail, String sexo, int edad) {
-        Paciente paciente = new Paciente(nombre, dni, domicilio, mail, sexo, edad);
+    public void darAltaPaciente(String nombre, int dni, String domicilio, Object mail, String sexo, int edad, List<Peticion> peticionesDelPaciente) {
+        Paciente paciente = new Paciente(nombre, dni, domicilio, mail, sexo, edad, peticionesDelPaciente);
         listaPacientes.add(paciente);
     }
 
