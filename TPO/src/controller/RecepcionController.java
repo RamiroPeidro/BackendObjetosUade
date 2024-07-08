@@ -4,7 +4,13 @@ import model.Paciente;
 import model.Practica;
 import model.Sucursal;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class RecepcionController {
+
+    private final List<Paciente> listaPacientes = new ArrayList<>();
 
     public void recibirPaciente() {
     }
@@ -22,10 +28,30 @@ public class RecepcionController {
     public void consultarResultado() { //TODO: Agregar id peticion como parametro.
     }
 
-    public void darAltaPaciente() {
+    //Dar de alta paciente - agregar paciente al sistema.
+    public void darAltaPaciente(String nombre, int dni, String domicilio, Object mail, String sexo, int edad) {
+        Paciente paciente = new Paciente(nombre, dni, domicilio, mail, sexo, edad);
+        listaPacientes.add(paciente);
     }
 
+    //Devuelve la lista de pacientes.
+    public List<Paciente> getPacientes() {
+        return listaPacientes;
+    }
+
+    /** Diagrama de secuencia 1: **/
     public void darBajaPaciente(int dniPaciente) {
+        List<Paciente> pacientes = getPacientes();
+        Iterator<Paciente> iterator = pacientes.iterator();
+        while (iterator.hasNext()) {
+            Paciente paciente = iterator.next();
+            if (paciente.getDNIPaciente() == dniPaciente) {
+                boolean sePuedeDarDeBaja = paciente.chequearSiSePuedeDarDeBaja();
+                if (sePuedeDarDeBaja) {
+                    iterator.remove();
+                }
+            }
+        }
     }
 
     public void modificarPaciente(int dniPaciente) {

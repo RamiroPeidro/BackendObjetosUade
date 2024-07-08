@@ -18,9 +18,6 @@ public class Practica {
     private void getValoresCriticos() {
     }
 
-    private void chequearSiSePuedeDarDeBaja(int codigoPractica) { //TODO: Deberia devolver un boolean?
-    }
-
     private void deletePaciente() {
     }
 
