@@ -110,7 +110,7 @@ public class Peticion {
     // Método para chequear si tiene resultados críticos
     public boolean chequearSiTieneResultadosCriticos() {
         for (Resultado resultado : listaResultados) {
-            if (resultado.tieneValoresCriticos()) {
+            if (resultado.isValorCritico()) {
                 return true;
             }
         }

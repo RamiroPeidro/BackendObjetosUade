@@ -7,32 +7,66 @@ public class Practica {
     private int codigoPractica;
     private String nombrePractica;
     private String grupo;
-    private List<Valor> valoresCriticos; //TODO: Valor deberia ser una clase abstracta segun el profe.
-    private Boolean valorReservado;
+    private List<RangoValor> rangoValores;
     private Float cantHorasResultados;
     private Boolean habilitada;
-    private List<Valor> rangoValores;
 
-    //TODO: Hace falta agregar todos los get????? no lo creo
-
-    private void getValoresCriticos() {
+    // Constructor
+    public Practica(int codigoPractica, String nombrePractica, String grupo, List<RangoValor> rangoValores, Float cantHorasResultados, Boolean habilitada) {
+        this.codigoPractica = codigoPractica;
+        this.nombrePractica = nombrePractica;
+        this.grupo = grupo;
+        this.rangoValores = rangoValores;
+        this.cantHorasResultados = cantHorasResultados;
+        this.habilitada = habilitada;
     }
 
-    private void deletePaciente() {
+    // Getters y Setters
+    public int getCodigoPractica() {
+        return codigoPractica;
     }
 
-    private void getHabilitada() {
+    public void setCodigoPractica(int codigoPractica) {
+        this.codigoPractica = codigoPractica;
     }
 
-    private void getValorReservado() {
+    public String getNombrePractica() {
+        return nombrePractica;
     }
 
-    private void getGrupo() {
+    public void setNombrePractica(String nombrePractica) {
+        this.nombrePractica = nombrePractica;
     }
 
-    private void getNombrePractica() {
+    public String getGrupo() {
+        return grupo;
     }
 
-    private void getRangoValores() {
+    public void setGrupo(String grupo) {
+        this.grupo = grupo;
+    }
+
+    public List<RangoValor> getRangoValores() {
+        return rangoValores;
+    }
+
+    public void setRangoValores(List<RangoValor> rangoValores) {
+        this.rangoValores = rangoValores;
+    }
+
+    public Float getCantHorasResultados() {
+        return cantHorasResultados;
+    }
+
+    public void setCantHorasResultados(Float cantHorasResultados) {
+        this.cantHorasResultados = cantHorasResultados;
+    }
+
+    public Boolean getHabilitada() {
+        return habilitada;
+    }
+
+    public void setHabilitada(Boolean habilitada) {
+        this.habilitada = habilitada;
     }
 }

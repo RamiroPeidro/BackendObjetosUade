@@ -61,16 +61,11 @@ public class PacienteService {
     }
 
     public void darBajaPaciente(int dniPaciente) {
-        List<Paciente> pacientes = pacienteDAO.findAll();
-        Iterator<Paciente> iterator = pacientes.iterator();
-        while (iterator.hasNext()) {
-            Paciente paciente = iterator.next();
-            if (paciente.getDNIPaciente() == dniPaciente) {
-                boolean sePuedeDarDeBaja = paciente.chequearSiSePuedeDarDeBaja();
-                if (sePuedeDarDeBaja) {
-                    iterator.remove();
-                    pacienteDAO.delete(paciente);
-                }
+        Paciente paciente = pacienteDAO.findById(dniPaciente);
+        if (paciente != null) {
+            boolean sePuedeDarDeBaja = paciente.chequearSiSePuedeDarDeBaja();
+            if (sePuedeDarDeBaja) {
+                pacienteDAO.delete(paciente);
             }
         }
     }
