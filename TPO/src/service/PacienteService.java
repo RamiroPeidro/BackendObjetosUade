@@ -1,6 +1,7 @@
 package service;
 
 import Daos.PacienteDAO;
+import Daos.PeticionDAO;
 import Dtos.PacienteDTO;
 import model.Paciente;
 import model.Peticion;
@@ -9,15 +10,16 @@ import model.Practica;
 import model.Sucursal;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class PacienteService {
 
     private final PacienteDAO pacienteDAO;
+    private final PeticionDAO peticionDAO;
 
     public PacienteService() {
         this.pacienteDAO = new PacienteDAO();
+        this.peticionDAO = new PeticionDAO();
     }
 
     public void recibirPaciente() {
@@ -44,20 +46,17 @@ public class PacienteService {
     public void darAltaPaciente(PacienteDTO pacienteDTO) {
         List<Peticion> peticiones = new ArrayList<>(); // Convertir IDs de peticiones a objetos Peticion si es necesario
         Email email = new Email(pacienteDTO.getMail()); // Crear el Value Object Email
-        Paciente paciente = new Paciente(
-                pacienteDTO.getNombre(),
-                pacienteDTO.getDni(),
-                pacienteDTO.getDomicilio(),
-                email,
-                pacienteDTO.getSexo(),
-                pacienteDTO.getEdad(),
-                peticiones
-        );
+        Paciente paciente = convertirDTOaPaciente(pacienteDTO, peticiones);
         pacienteDAO.create(paciente);
     }
 
-    public List<Paciente> getPacientes() {
-        return pacienteDAO.findAll();
+    public List<PacienteDTO> getPacientes() {
+        List<Paciente> pacientes = pacienteDAO.findAll();
+        List<PacienteDTO> pacienteDTOs = new ArrayList<>();
+        for (Paciente paciente : pacientes) {
+            pacienteDTOs.add(convertirPacienteADTO(paciente));
+        }
+        return pacienteDTOs;
     }
 
     public void darBajaPaciente(int dniPaciente) {
@@ -91,4 +90,31 @@ public class PacienteService {
         // Implementar lógica de listar peticiones críticas
     }
 
+    // Método para convertir Paciente a PacienteDTO
+    private PacienteDTO convertirPacienteADTO(Paciente paciente) {
+        PacienteDTO pacienteDTO = new PacienteDTO();
+        pacienteDTO.setDni(paciente.getDNIPaciente());
+        pacienteDTO.setNombre(paciente.getNombre());
+        pacienteDTO.setDomicilio(paciente.getDomicilio());
+        pacienteDTO.setMail(paciente.getMail().getValue());
+        pacienteDTO.setSexo(paciente.getSexo());
+        pacienteDTO.setEdad(paciente.getEdad());
+        // Convertir peticiones si es necesario
+        return pacienteDTO;
+    }
+
+    // Método para convertir PacienteDTO a Paciente
+    private Paciente convertirDTOaPaciente(PacienteDTO pacienteDTO, List<Peticion> peticiones) {
+        Email email = new Email(pacienteDTO.getMail());
+        Paciente paciente = new Paciente(
+                pacienteDTO.getNombre(),
+                pacienteDTO.getDni(),
+                pacienteDTO.getDomicilio(),
+                email,
+                pacienteDTO.getSexo(),
+                pacienteDTO.getEdad(),
+                peticiones
+        );
+        return paciente;
+    }
 }

@@ -2,13 +2,13 @@ package Dtos;
 
 public class ResultadoDTO {
 
-    private float valor;
+    private String valor;
     private int practicaId; // Usamos el ID de la práctica para referenciarla
     private boolean valorCritico;
     private boolean valorReservado;
 
     // Constructor
-    public ResultadoDTO(float valor, int practicaId, boolean valorCritico, boolean valorReservado) {
+    public ResultadoDTO(String valor, int practicaId, boolean valorCritico, boolean valorReservado) {
         this.valor = valor;
         this.practicaId = practicaId;
         this.valorCritico = valorCritico;
@@ -16,11 +16,11 @@ public class ResultadoDTO {
     }
 
     // Getters y Setters
-    public float getValor() {
+    public String getValor() {
         return valor;
     }
 
-    public void setValor(float valor) {
+    public void setValor(String valor) {
         this.valor = valor;
     }
 

@@ -12,7 +12,7 @@ public class PeticionDTO {
     private Date fechaCalculadaDeEntrega;
     private int sucursalId; // Solo almacenamos el ID de la sucursal
     private List<Integer> listaPracticasIds; // Lista de IDs de prácticas
-    private List<Integer> listaResultadosIds; // Lista de IDs de resultados
+    private List<ResultadoDTO> listaResultados;
 
     // Getters y Setters
     public int getIdPeticion() {
@@ -79,11 +79,11 @@ public class PeticionDTO {
         this.listaPracticasIds = listaPracticasIds;
     }
 
-    public List<Integer> getListaResultadosIds() {
-        return listaResultadosIds;
+    public List<ResultadoDTO> getListaResultados() {
+        return listaResultados;
     }
 
-    public void setListaResultadosIds(List<Integer> listaResultadosIds) {
-        this.listaResultadosIds = listaResultadosIds;
+    public void setListaResultados(List<ResultadoDTO> listaResultadosIds) {
+        this.listaResultados = listaResultadosIds;
     }
 }

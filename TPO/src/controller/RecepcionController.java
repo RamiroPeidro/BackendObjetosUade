@@ -1,51 +1,44 @@
 package controller;
 
 import Dtos.PacienteDTO;
-import model.Paciente;
-import model.Peticion;
-import model.Practica;
-import model.Sucursal;
+import Dtos.ResultadoDTO;
+import Dtos.PeticionDTO;
 import service.PacienteService;
+import service.PeticionService;
 
 import java.util.List;
 
 public class RecepcionController {
 
     private PacienteService pacienteService;
+    private PeticionService peticionService;
 
     public RecepcionController() {
         this.pacienteService = new PacienteService();
+        this.peticionService = new PeticionService();
     }
 
     public void recibirPaciente() {
         // Implementar lógica de recibir paciente si es necesario
     }
 
-    public void cargarPeticion(Paciente paciente, String obraSocial,
-                               Practica practica, Sucursal sucursal) {
+    public void cargarPeticion(PacienteDTO pacienteDTO, String obraSocial, int practicaId, int sucursalId) {
         // Implementar lógica de cargar petición si es necesario
     }
 
     public void darBajaPeticion(int numeroPeticion) {
-        // Delegar al servicio
-        pacienteService.darBajaPeticion(numeroPeticion);
+        peticionService.darBajaPeticion(numeroPeticion);
     }
 
     public void modificarPeticion(int numeroPeticion) {
-        // Delegar al servicio
-        pacienteService.modificarPeticion(numeroPeticion);
-    }
-
-    public void consultarResultado(int idPeticion) {
-        // Delegar al servicio
-        pacienteService.consultarResultado(idPeticion);
+        peticionService.modificarPeticion(numeroPeticion);
     }
 
     public void darAltaPaciente(PacienteDTO pacienteDTO) {
         pacienteService.darAltaPaciente(pacienteDTO);
     }
 
-    public List<Paciente> getPacientes() {
+    public List<PacienteDTO> getPacientes() {
         return pacienteService.getPacientes();
     }
 
@@ -57,11 +50,11 @@ public class RecepcionController {
         pacienteService.modificarPaciente(paciente);
     }
 
-    public void solicitarResultados(int idPeticion) {
-        pacienteService.solicitarResultados(idPeticion);
+    public List<ResultadoDTO> solicitarResultados(int idPeticion) {
+        return peticionService.solicitarResultados(idPeticion);
     }
 
-    public void listarPeticionesCriticas() {
-        pacienteService.listarPeticionesCriticas();
+    public List<PeticionDTO> listarPeticionesCriticas() {
+        return peticionService.listarPeticionesCriticas();
     }
 }

@@ -47,7 +47,7 @@ public class Paciente {
         this.domicilio = domicilio;
     }
 
-    public Object getMail() {
+    public Email getMail() {
         return mail;
     }
 
