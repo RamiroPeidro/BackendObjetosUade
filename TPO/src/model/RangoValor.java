@@ -44,6 +44,6 @@ public class RangoValor {
 
     // Método para verificar si el valor es reservado
     public boolean esReservado(float valor) {
-        return valor > maxValor + umbralReservado;
+        return valor > maxValor + umbralReservado || valor < minValor - umbralReservado;
     }
 }

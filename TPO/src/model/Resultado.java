@@ -44,21 +44,13 @@ public class Resultado {
 
     // Método para verificar si el resultado tiene valores críticos
     private boolean verificarValorCritico() {
-        for (RangoValor rango : practica.getRangoValores()) {
-            if (rango.esCritico(this.valor)) {
-                return true;
-            }
-        }
-        return false;
+        RangoValor rango = practica.getRangoValores();
+        return rango.esCritico(this.valor);
     }
 
     // Método para verificar si el resultado tiene valores reservados
     private boolean verificarValorReservado() {
-        for (RangoValor rango : practica.getRangoValores()) {
-            if (rango.esReservado(this.valor)) {
-                return true;
-            }
-        }
-        return false;
+        RangoValor rango = practica.getRangoValores();
+        return rango.esReservado(this.valor);
     }
 }

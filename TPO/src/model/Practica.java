@@ -7,12 +7,12 @@ public class Practica {
     private int codigoPractica;
     private String nombrePractica;
     private String grupo;
-    private List<RangoValor> rangoValores;
+    private RangoValor rangoValores;
     private Float cantHorasResultados;
     private Boolean habilitada;
 
     // Constructor
-    public Practica(int codigoPractica, String nombrePractica, String grupo, List<RangoValor> rangoValores, Float cantHorasResultados, Boolean habilitada) {
+    public Practica(int codigoPractica, String nombrePractica, String grupo, RangoValor rangoValores, Float cantHorasResultados, Boolean habilitada) {
         this.codigoPractica = codigoPractica;
         this.nombrePractica = nombrePractica;
         this.grupo = grupo;
@@ -46,11 +46,11 @@ public class Practica {
         this.grupo = grupo;
     }
 
-    public List<RangoValor> getRangoValores() {
+    public RangoValor getRangoValores() {
         return rangoValores;
     }
 
-    public void setRangoValores(List<RangoValor> rangoValores) {
+    public void setRangoValores(RangoValor rangoValores) {
         this.rangoValores = rangoValores;
     }
 

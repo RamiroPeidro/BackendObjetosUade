@@ -1,18 +1,16 @@
 package Dtos;
 
-import java.util.List;
-
 public class PracticaDTO {
 
     private int codigoPractica;
     private String nombrePractica;
     private String grupo;
-    private List<RangoValorDTO> rangoValores;
+    private RangoValorDTO rangoValores;
     private Float cantHorasResultados;
     private Boolean habilitada;
 
     // Constructor
-    public PracticaDTO(int codigoPractica, String nombrePractica, String grupo, List<RangoValorDTO> rangoValores, Float cantHorasResultados, Boolean habilitada) {
+    public PracticaDTO(int codigoPractica, String nombrePractica, String grupo, RangoValorDTO rangoValores, Float cantHorasResultados, Boolean habilitada) {
         this.codigoPractica = codigoPractica;
         this.nombrePractica = nombrePractica;
         this.grupo = grupo;
@@ -46,11 +44,11 @@ public class PracticaDTO {
         this.grupo = grupo;
     }
 
-    public List<RangoValorDTO> getRangoValores() {
+    public RangoValorDTO getRangoValores() {
         return rangoValores;
     }
 
-    public void setRangoValores(List<RangoValorDTO> rangoValores) {
+    public void setRangoValores(RangoValorDTO rangoValores) {
         this.rangoValores = rangoValores;
     }
 
