@@ -1,8 +1,10 @@
 package service;
 
 import Daos.PacienteDAO;
+import Dtos.PacienteDTO;
 import model.Paciente;
 import model.Peticion;
+import model.Email;
 import model.Practica;
 import model.Sucursal;
 
@@ -39,8 +41,18 @@ public class PacienteService {
         // Implementar lógica de consultar resultado
     }
 
-    public void darAltaPaciente(String nombre, int dni, String domicilio, Object mail, String sexo, int edad, List<Peticion> peticionesDelPaciente) {
-        Paciente paciente = new Paciente(nombre, dni, domicilio, mail, sexo, edad, peticionesDelPaciente);
+    public void darAltaPaciente(PacienteDTO pacienteDTO) {
+        List<Peticion> peticiones = new ArrayList<>(); // Convertir IDs de peticiones a objetos Peticion si es necesario
+        Email email = new Email(pacienteDTO.getMail()); // Crear el Value Object Email
+        Paciente paciente = new Paciente(
+                pacienteDTO.getNombre(),
+                pacienteDTO.getDni(),
+                pacienteDTO.getDomicilio(),
+                email,
+                pacienteDTO.getSexo(),
+                pacienteDTO.getEdad(),
+                peticiones
+        );
         pacienteDAO.create(paciente);
     }
 
@@ -63,10 +75,16 @@ public class PacienteService {
         }
     }
 
-    public void modificarPaciente(Paciente paciente) {
-        Paciente pacienteExistente = pacienteDAO.findById(paciente.getDNIPaciente());
+    public void modificarPaciente(PacienteDTO pacienteDTO) {
+        Paciente pacienteExistente = pacienteDAO.findById(pacienteDTO.getDni());
         if (pacienteExistente != null) {
-            pacienteDAO.update(paciente);
+            pacienteExistente.setNombre(pacienteDTO.getNombre());
+            pacienteExistente.setDomicilio(pacienteDTO.getDomicilio());
+            pacienteExistente.setMail(new Email(pacienteDTO.getMail()));
+            pacienteExistente.setSexo(pacienteDTO.getSexo());
+            pacienteExistente.setEdad(pacienteDTO.getEdad());
+            // Actualizar las peticiones si es necesario
+            pacienteDAO.update(pacienteExistente);
         }
     }
 
@@ -77,4 +95,5 @@ public class PacienteService {
     public void listarPeticionesCriticas() {
         // Implementar lógica de listar peticiones críticas
     }
+
 }

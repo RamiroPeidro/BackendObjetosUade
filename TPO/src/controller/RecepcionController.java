@@ -1,5 +1,6 @@
 package controller;
 
+import Dtos.PacienteDTO;
 import model.Paciente;
 import model.Peticion;
 import model.Practica;
@@ -40,8 +41,8 @@ public class RecepcionController {
         pacienteService.consultarResultado(idPeticion);
     }
 
-    public void darAltaPaciente(String nombre, int dni, String domicilio, Object mail, String sexo, int edad, List<Peticion> peticionesDelPaciente) {
-        pacienteService.darAltaPaciente(nombre, dni, domicilio, mail, sexo, edad, peticionesDelPaciente);
+    public void darAltaPaciente(PacienteDTO pacienteDTO) {
+        pacienteService.darAltaPaciente(pacienteDTO);
     }
 
     public List<Paciente> getPacientes() {
@@ -52,7 +53,7 @@ public class RecepcionController {
         pacienteService.darBajaPaciente(dniPaciente);
     }
 
-    public void modificarPaciente(Paciente paciente) {
+    public void modificarPaciente(PacienteDTO paciente) {
         pacienteService.modificarPaciente(paciente);
     }
 

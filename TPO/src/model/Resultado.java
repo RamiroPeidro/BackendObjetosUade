@@ -15,7 +15,9 @@ public class Resultado {
     public void getResultados() {
     }
 
-    public void tieneValoresCriticos() { ////TODO: Tiene que devolver un boolean? agregar en el diagrama.
+    public boolean tieneValoresCriticos() {
+        return true;////TODO: Tiene que devolver un boolean? agregar en el diagrama.
+        //TODO falta hacer la logica
     }
 
     public void chequearSiEsValorReservado() { //TODO: Tiene que devolver un boolean? agregar en el diagrama
@@ -26,5 +28,5 @@ public class Resultado {
     }
 
     public void chequearSiEsValorCritico() {
-    } //TODO: No es lo mismo que tieneValoresCriticos????????
+    } //TODO: No es lo mismo que tieneValoresCriticos???????? sip
 }
