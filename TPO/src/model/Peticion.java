@@ -65,7 +65,8 @@ public class Peticion {
     public void getListaResultados() {
     } //TODO: Esta duplicado en el diagrama de clases, eliminarlo.
 
-    public void chequearSiLaPeticionEstaFinalizada() {
+    public Boolean chequearSiLaPeticionEstaFinalizada() {
+        return true;
     }
 
     public void getSucursal() {

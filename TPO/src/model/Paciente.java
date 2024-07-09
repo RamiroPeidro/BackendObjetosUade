@@ -12,12 +12,25 @@ public class Paciente {
     private int edad;
     List<Peticion> peticionesDelPaciente;
 
-    public void getDniPaciente() { //TODO: Cambiar a que devuelva un int, hace falta poner el get explicito?
+    public Paciente(String nombre, int dni, String domicilio, Object mail, String sexo, int edad, List<Peticion> peticionesDelPaciente) {
+        this.nombre = nombre;
+        this.dni = dni;
+        this.domicilio = domicilio;
+        this.mail = mail;
+        this.sexo = sexo;
+        this.edad = edad;
+        this.peticionesDelPaciente = peticionesDelPaciente;
     }
 
-    public void getPeticionPaciente() { //TODO: Cambiar a que devuelva una peticion, hace falta poner el get explicito?
+    public int getDNIPaciente() {
+        return this.dni;
     }
 
-    public void chequearSiSePuedeDarDeBaja() { //TODO: Renombrar, pasarle parametros, devolver boolean.
+    public Boolean chequearSiSePuedeDarDeBaja() {
+        for (Peticion peticion : peticionesDelPaciente) {
+            return peticion.chequearSiLaPeticionEstaFinalizada();
+        }
+        return false;
+        // TODO: Renombrar, pasarle parametros, devolver boolean.
     }
 }
