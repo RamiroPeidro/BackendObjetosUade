@@ -6,22 +6,24 @@ import java.util.List;
 public class Peticion {
 
     private int idPeticion;
+
+    //TODO ver si va esta relacion
     private Paciente paciente;
     private String obraSocial;
     private Date fechaCarga;
-    private Practica practicaAsociada;
+
+    //TODO ver si hay que ponerlo
     private Date fechaCalculadaDeEntrega;
     private Sucursal sucursal;
     private List<Practica> listaPracticas;
     private List<Resultado> listaResultados;
 
     // Constructor
-    public Peticion(int idPeticion, Paciente paciente, String obraSocial, Date fechaCarga, Practica practicaAsociada, Date fechaCalculadaDeEntrega, Sucursal sucursal, List<Practica> listaPracticas, List<Resultado> listaResultados) {
+    public Peticion(int idPeticion, Paciente paciente, String obraSocial, Date fechaCarga,  Date fechaCalculadaDeEntrega, Sucursal sucursal, List<Practica> listaPracticas, List<Resultado> listaResultados) {
         this.idPeticion = idPeticion;
         this.paciente = paciente;
         this.obraSocial = obraSocial;
         this.fechaCarga = fechaCarga;
-        this.practicaAsociada = practicaAsociada;
         this.fechaCalculadaDeEntrega = fechaCalculadaDeEntrega;
         this.sucursal = sucursal;
         this.listaPracticas = listaPracticas;
@@ -61,13 +63,6 @@ public class Peticion {
         this.fechaCarga = fechaCarga;
     }
 
-    public Practica getPracticaAsociada() {
-        return practicaAsociada;
-    }
-
-    public void setPracticaAsociada(Practica practicaAsociada) {
-        this.practicaAsociada = practicaAsociada;
-    }
 
     public Date getFechaCalculadaDeEntrega() {
         return fechaCalculadaDeEntrega;
@@ -103,6 +98,9 @@ public class Peticion {
 
     // Método para chequear si la petición está finalizada
     //TODO si ya tiene un resultado es que la peticion esta finalizada ?? ahi te lo cambie
+    //quiero chequear si la peticion esta finalizada -> cuando esta finalizada? cuando tiene
+
+    //TODO le agregaria un atributo al resultado para saber si esta finalizado o no
     public Boolean chequearSiLaPeticionEstaFinalizada() {
         return !listaResultados.isEmpty();
     }

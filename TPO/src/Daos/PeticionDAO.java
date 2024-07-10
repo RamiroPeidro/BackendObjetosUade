@@ -42,4 +42,11 @@ public class PeticionDAO extends GenericDAOImpl<Peticion, Integer> {
     public void delete(Peticion peticion) {
         peticiones.remove(peticion);
     }
+
+    public int getLastInsertId() {
+        if (peticiones.isEmpty()) {
+            return 0;
+        }
+        return peticiones.get(peticiones.size() - 1).getIdPeticion();
+    }
 }

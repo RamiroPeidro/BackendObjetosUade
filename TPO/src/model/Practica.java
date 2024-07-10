@@ -1,5 +1,7 @@
 package model;
 
+import Dtos.ResultadoDTO;
+
 import java.util.List;
 
 public class Practica {
@@ -10,6 +12,7 @@ public class Practica {
     private RangoValor rangoValores;
     private Float cantHorasResultados;
     private Boolean habilitada;
+    private Resultado resultado;
 
     // Constructor
     public Practica(int codigoPractica, String nombrePractica, String grupo, RangoValor rangoValores, Float cantHorasResultados, Boolean habilitada) {
@@ -19,6 +22,7 @@ public class Practica {
         this.rangoValores = rangoValores;
         this.cantHorasResultados = cantHorasResultados;
         this.habilitada = habilitada;
+        this.resultado = null;
     }
 
     // Getters y Setters
@@ -68,5 +72,12 @@ public class Practica {
 
     public void setHabilitada(Boolean habilitada) {
         this.habilitada = habilitada;
+    }
+
+    public Resultado getResultado() {
+        return resultado;
+    }
+    public void setResultado(Resultado resultado) {
+        this.resultado = resultado;
     }
 }

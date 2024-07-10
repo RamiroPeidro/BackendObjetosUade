@@ -8,7 +8,6 @@ public class PeticionDTO {
     private int pacienteId; // Solo almacenamos el ID del paciente
     private String obraSocial;
     private Date fechaCarga;
-    private int practicaAsociadaId; // Solo almacenamos el ID de la práctica
     private Date fechaCalculadaDeEntrega;
     private int sucursalId; // Solo almacenamos el ID de la sucursal
     private List<Integer> listaPracticasIds; // Lista de IDs de prácticas
@@ -47,13 +46,6 @@ public class PeticionDTO {
         this.fechaCarga = fechaCarga;
     }
 
-    public int getPracticaAsociadaId() {
-        return practicaAsociadaId;
-    }
-
-    public void setPracticaAsociadaId(int practicaAsociadaId) {
-        this.practicaAsociadaId = practicaAsociadaId;
-    }
 
     public Date getFechaCalculadaDeEntrega() {
         return fechaCalculadaDeEntrega;

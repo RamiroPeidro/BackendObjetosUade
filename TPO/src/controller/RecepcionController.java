@@ -18,12 +18,16 @@ public class RecepcionController {
         this.peticionService = new PeticionService();
     }
 
-    public void recibirPaciente() {
+    public void registrarPaciente() {
         // Implementar lógica de recibir paciente si es necesario
     }
 
-    public void cargarPeticion(PacienteDTO pacienteDTO, String obraSocial, int practicaId, int sucursalId) {
-        // Implementar lógica de cargar petición si es necesario
+    public void cargarPeticion(int Dni, String obraSocial, int sucursalId) {
+        peticionService.cargarPeticion(Dni, obraSocial, sucursalId);
+    }
+
+    public void asociarPracticaAPeticion(int idPeticion, int practicaId) {
+        peticionService.asociarPracticaAPeticion(idPeticion, practicaId);
     }
 
     public void darBajaPeticion(int numeroPeticion) {

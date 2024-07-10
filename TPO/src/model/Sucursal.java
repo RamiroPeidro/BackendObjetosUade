@@ -5,6 +5,8 @@ import java.util.List;
 public class Sucursal {
     private int numero;
     private String direccion;
+
+    //TODO agregar la relacion en el diagrama
     private Usuario responsableTecnico;
     private List<Peticion> peticionesDeSucursal;
 
@@ -42,6 +44,12 @@ public class Sucursal {
     }
 
     // Método para verificar si se puede dar de baja la sucursal
+    //TODO agregalo en el diagrama
+
+    //sucursal no puede ser eliminada si tiene una peticion con resultados.
+
+
+    //creo una peticiion -> le creo ya de base todos los resultados en false -> por que? porque despues puedo chequear cuales estan finalizados y cuales no.
     public boolean chequearSiSePuedeDarDeBajaSucursal() {
         for (Peticion peticion : peticionesDeSucursal) {
             if (!peticion.chequearSiLaPeticionEstaFinalizada()) {

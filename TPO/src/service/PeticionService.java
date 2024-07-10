@@ -1,21 +1,149 @@
 package service;
 
 import Daos.PeticionDAO;
+import Daos.PacienteDAO;
+import Daos.SucursalDAO;
+import Daos.PracticaDAO;
 import Dtos.PeticionDTO;
 import Dtos.ResultadoDTO;
+import Dtos.PacienteDTO;
 import model.Peticion;
 import model.Practica;
+import model.Paciente;
 import model.Resultado;
+import model.Sucursal;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class PeticionService {
-
+    private ResultadoService resultadoService;
     private PeticionDAO peticionDAO;
+    private PacienteDAO pacienteDAO;
+    private SucursalDAO sucursalDAO;
+    private PracticaDAO practicaDAO;
 
     public PeticionService() {
         this.peticionDAO = new PeticionDAO();
+        this.resultadoService = new ResultadoService();
+        this.pacienteDAO = new PacienteDAO();
+        this.sucursalDAO = new SucursalDAO();
+        this.practicaDAO = new PracticaDAO();
+    }
+
+    public void cargarPeticion(int Dni, String obraSocial, int sucursalId) {
+        Paciente paciente = pacienteDAO.findById(Dni);
+        if (paciente == null) {
+            throw new IllegalArgumentException("Paciente no encontrado");
+        }
+
+        Sucursal sucursal = sucursalDAO.findById(sucursalId);
+        if (sucursal == null) {
+            throw new IllegalArgumentException("Sucursal no encontrada");
+        }
+
+        Peticion nuevaPeticion = new Peticion(
+                generarNuevoId(),
+                paciente,
+                obraSocial,
+                new Date(),
+                new Date(Long.MAX_VALUE),
+                sucursal,
+                new ArrayList<>(),
+                new ArrayList<>()
+        );
+
+        peticionDAO.create(nuevaPeticion);
+    }
+
+    public void asociarPracticaAPeticion(int idPeticion, int practicaId) {
+        Peticion peticion = peticionDAO.findById(idPeticion);
+        if (peticion == null) {
+            throw new IllegalArgumentException("Peticion no encontrada");
+        }
+
+        Practica practica = practicaDAO.findById(practicaId);
+        if (practica == null) {
+            throw new IllegalArgumentException("Practica no encontrada");
+        }
+
+        peticion.getListaPracticas().add(practica);
+        Resultado nuevoResultado = new Resultado(0, practica);
+        peticion.getListaResultados().add(nuevoResultado);
+
+        // Calcular la nueva fechaCalculadaDeEntrega
+        Date nuevaFechaCalculadaDeEntrega = calcularFechaEntrega(peticion, practica);
+        peticion.setFechaCalculadaDeEntrega(nuevaFechaCalculadaDeEntrega);
+
+        peticionDAO.update(peticion);
+    }
+
+
+    private int generarNuevoId() {
+        return peticionDAO.getLastInsertId() + 1;
+    }
+
+
+    private Date calcularFechaEntrega(Peticion peticion, Practica nuevaPractica) {
+        // Inicialmente, establecemos la fechaCalculadaDeEntrega como la fechaCarga más las cantHorasResultados de la nueva práctica
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(peticion.getFechaCarga());
+        calendar.add(Calendar.HOUR_OF_DAY, nuevaPractica.getCantHorasResultados().intValue());
+        Date nuevaFechaEntrega = calendar.getTime();
+
+        // Comparamos con las fechas de entrega calculadas previamente y establecemos la más lejana
+        for (Practica practica : peticion.getListaPracticas()) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(peticion.getFechaCarga());
+            cal.add(Calendar.HOUR_OF_DAY, practica.getCantHorasResultados().intValue());
+            Date fechaEntrega = cal.getTime();
+            if (fechaEntrega.after(nuevaFechaEntrega)) {
+                nuevaFechaEntrega = fechaEntrega;
+            }
+        }
+
+        return nuevaFechaEntrega;
+    }
+
+    public void cargarResultadoEnPractica(int idPeticion, int idPractica, float valor) {
+        Peticion peticion = peticionDAO.findById(idPeticion);
+        if (peticion == null) {
+            throw new IllegalArgumentException("Peticion no encontrada");
+        }
+
+        Practica practica = obtenerPracticaPorId(peticion, idPractica);
+        if (practica == null) {
+            throw new IllegalArgumentException("Practica no encontrada en la peticion");
+        }
+
+        Resultado resultado = obtenerResultadoPorPractica(peticion, practica);
+        if (resultado == null) {
+            throw new IllegalArgumentException("Resultado no encontrado para la práctica en la petición");
+        }
+
+        resultado.setValor(valor);
+        resultado.setFinalizado(true);
+        peticionDAO.update(peticion);
+    }
+
+    private Practica obtenerPracticaPorId(Peticion peticion, int practicaId) {
+        for (Practica practica : peticion.getListaPracticas()) {
+            if (practica.getCodigoPractica() == practicaId) {
+                return practica;
+            }
+        }
+        return null;
+    }
+
+    private Resultado obtenerResultadoPorPractica(Peticion peticion, Practica practica) {
+        for (Resultado resultado : peticion.getListaResultados()) {
+            if (resultado.getPractica().equals(practica)) {
+                return resultado;
+            }
+        }
+        return null;
     }
 
     public void darBajaPeticion(int numeroPeticion) {
@@ -30,7 +158,6 @@ public class PeticionService {
     public void modificarPeticion(int numeroPeticion) {
         Peticion peticion = peticionDAO.findById(numeroPeticion);
         if (peticion != null) {
-            // Implementar lógica de modificación si es necesario
             peticionDAO.update(peticion);
         } else {
             throw new IllegalArgumentException("Peticion no encontrada");
@@ -92,7 +219,6 @@ public class PeticionService {
         peticionDTO.setPacienteId(peticion.getPaciente().getDNIPaciente());
         peticionDTO.setObraSocial(peticion.getObraSocial());
         peticionDTO.setFechaCarga(peticion.getFechaCarga());
-        peticionDTO.setPracticaAsociadaId(peticion.getPracticaAsociada().getCodigoPractica());
         peticionDTO.setFechaCalculadaDeEntrega(peticion.getFechaCalculadaDeEntrega());
         peticionDTO.setSucursalId(peticion.getSucursal().getNumero());
 
