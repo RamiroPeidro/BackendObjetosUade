@@ -1,28 +1,22 @@
-package model;
+package Dtos;
 
-import Dtos.ResultadoDTO;
-
-import java.util.List;
-
-public class Practica {
+public class PracticaDTO {
 
     private int codigoPractica;
     private String nombrePractica;
     private String grupo;
-    private RangoValor rangoValores;
+    private RangoValorDTO rangoValores;
     private Float cantHorasResultados;
     private Boolean habilitada;
-    private Resultado resultado;
 
     // Constructor
-    public Practica(int codigoPractica, String nombrePractica, String grupo, RangoValor rangoValores, Float cantHorasResultados, Boolean habilitada) {
+    public PracticaDTO(int codigoPractica, String nombrePractica, String grupo, RangoValorDTO rangoValores, Float cantHorasResultados, Boolean habilitada) {
         this.codigoPractica = codigoPractica;
         this.nombrePractica = nombrePractica;
         this.grupo = grupo;
         this.rangoValores = rangoValores;
         this.cantHorasResultados = cantHorasResultados;
         this.habilitada = habilitada;
-        this.resultado = null;
     }
 
     // Getters y Setters
@@ -50,11 +44,11 @@ public class Practica {
         this.grupo = grupo;
     }
 
-    public RangoValor getRangoValores() {
+    public RangoValorDTO getRangoValores() {
         return rangoValores;
     }
 
-    public void setRangoValores(RangoValor rangoValores) {
+    public void setRangoValores(RangoValorDTO rangoValores) {
         this.rangoValores = rangoValores;
     }
 
@@ -72,12 +66,5 @@ public class Practica {
 
     public void setHabilitada(Boolean habilitada) {
         this.habilitada = habilitada;
-    }
-
-    public Resultado getResultado() {
-        return resultado;
-    }
-    public void setResultado(Resultado resultado) {
-        this.resultado = resultado;
     }
 }

@@ -1,13 +1,22 @@
 package controller;
 
-import java.util.List;
+import service.PeticionService;
+import model.Practica;
 
 public class LaboratoristaController {
 
-    public void cargarResultados(List<Integer> listaPeticion) { //TODO: No deberia ser una List<Integer>? en el diagrama esta como List<idPeticion>
+    private PeticionService peticionService;
+
+    public LaboratoristaController() {
+        this.peticionService = new PeticionService();
     }
 
-    public void eliminarResultados() {  //TODO: Agregar id peticion como parametro.
+
+    public void cargarResultado(float valor, int idPeticion, int idPractica) {
+        peticionService.cargarResultadoEnPractica(idPeticion, idPractica, valor);
     }
 
+    public void eliminarResultado(int idResultado) {
+        // Implementar lógica para eliminar resultado si es necesario
+    }
 }

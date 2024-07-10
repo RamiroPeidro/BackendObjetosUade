@@ -1,66 +1,64 @@
 package controller;
 
-import model.Paciente;
-import model.Peticion;
-import model.Practica;
-import model.Sucursal;
+import Dtos.PacienteDTO;
+import Dtos.ResultadoDTO;
+import Dtos.PeticionDTO;
+import service.PacienteService;
+import service.PeticionService;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class RecepcionController {
 
-    private final List<Paciente> listaPacientes = new ArrayList<>();
+    private PacienteService pacienteService;
+    private PeticionService peticionService;
 
-    public void recibirPaciente() {
+    public RecepcionController() {
+        this.pacienteService = new PacienteService();
+        this.peticionService = new PeticionService();
     }
 
-    public void cargarPeticion(Paciente paciente, String obraSocial,
-                               Practica practica, Sucursal sucursal) {
+    public void registrarPaciente() {
+        // Implementar lógica de recibir paciente si es necesario
     }
 
-    public void darBajaPeticion() { //TODO: Agregar numero peticion como parametro.
+    public void cargarPeticion(int Dni, String obraSocial, int sucursalId) {
+        peticionService.cargarPeticion(Dni, obraSocial, sucursalId);
     }
 
-    public void modificarPeticion() { //TODO: Agregar numero peticion como parametro.
+    public void asociarPracticaAPeticion(int idPeticion, int practicaId) {
+        peticionService.asociarPracticaAPeticion(idPeticion, practicaId);
     }
 
-    public void consultarResultado() { //TODO: Agregar id peticion como parametro.
+    public void darBajaPeticion(int numeroPeticion) {
+        peticionService.darBajaPeticion(numeroPeticion);
     }
 
-    //Dar de alta paciente - agregar paciente al sistema.
-    public void darAltaPaciente(String nombre, int dni, String domicilio, Object mail, String sexo, int edad, List<Peticion> peticionesDelPaciente) {
-        Paciente paciente = new Paciente(nombre, dni, domicilio, mail, sexo, edad, peticionesDelPaciente);
-        listaPacientes.add(paciente);
+    public void modificarPeticion(int numeroPeticion) {
+        peticionService.modificarPeticion(numeroPeticion);
     }
 
-    //Devuelve la lista de pacientes.
-    public List<Paciente> getPacientes() {
-        return listaPacientes;
+    public void darAltaPaciente(PacienteDTO pacienteDTO) {
+        pacienteService.darAltaPaciente(pacienteDTO);
     }
 
-    /** Diagrama de secuencia 1: **/
+    public List<PacienteDTO> getPacientes() {
+        return pacienteService.getPacientes();
+    }
+
     public void darBajaPaciente(int dniPaciente) {
-        List<Paciente> pacientes = getPacientes();
-        Iterator<Paciente> iterator = pacientes.iterator();
-        while (iterator.hasNext()) {
-            Paciente paciente = iterator.next();
-            if (paciente.getDNIPaciente() == dniPaciente) {
-                boolean sePuedeDarDeBaja = paciente.chequearSiSePuedeDarDeBaja();
-                if (sePuedeDarDeBaja) {
-                    iterator.remove();
-                }
-            }
-        }
+        pacienteService.darBajaPaciente(dniPaciente);
     }
 
-    public void modificarPaciente(int dniPaciente) {
+    public void modificarPaciente(PacienteDTO paciente) {
+        pacienteService.modificarPaciente(paciente);
     }
 
-    public void solicitarResultados(int idPeticion) {
+    public List<ResultadoDTO> solicitarResultados(int idPeticion) {
+        return peticionService.solicitarResultados(idPeticion);
     }
 
-    public void listarPeticionesCriticas() {
+    public List<PeticionDTO> listarPeticionesCriticas() {
+        return peticionService.listarPeticionesCriticas();
     }
 }

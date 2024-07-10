@@ -2,29 +2,66 @@ package model;
 
 public class Resultado {
 
-    private String valor; //TODO: Ver en el diagrama de clases, no dice ni tipo ni si es privado.
+    private float valor;
     private Practica practica;
 
-    //TODO: Tambien revisar los get y arraglarlos en caso de que sea necesario ponerlos.
-    public void getValor() {
+    private boolean finalizado;
+    private boolean valorCritico;
+    private boolean valorReservado;
+
+    // Constructor
+    public Resultado(float valor, Practica practica) {
+        this.valor = valor;
+        this.practica = practica;
+        this.finalizado = false;
+        this.valorCritico = verificarValorCritico();
+        this.valorReservado = verificarValorReservado();
     }
 
-    public void tieneValoresReservados() { //TODO: Tiene que devolver un boolean? agregar en el diagrama.
+    // Getters y Setters
+    public float getValor() {
+        return valor;
     }
 
-    public void getResultados() {
+    public void setValor(float valor) {
+        this.valor = valor;
+        this.valorCritico = verificarValorCritico();
+        this.valorReservado = verificarValorReservado();
     }
 
-    public void tieneValoresCriticos() { ////TODO: Tiene que devolver un boolean? agregar en el diagrama.
+    public Practica getPractica() {
+        return practica;
     }
 
-    public void chequearSiEsValorReservado() { //TODO: Tiene que devolver un boolean? agregar en el diagrama
-        //TODO: No es lo mismo que tieneValoresReservados???
+    public void setPractica(Practica practica) {
+        this.practica = practica;
     }
 
-    public void getInformacionPracticaAsociada() {
+    public void setFinalizado(boolean finalizado) {
+        this.finalizado = finalizado;
     }
 
-    public void chequearSiEsValorCritico() {
-    } //TODO: No es lo mismo que tieneValoresCriticos????????
+    public boolean isFinalizado() {
+        return finalizado;
+    }
+
+    public boolean isValorCritico() {
+        return valorCritico;
+    }
+
+    public boolean isValorReservado() {
+        return valorReservado;
+    }
+
+    // Método para verificar si el resultado tiene valores críticos
+    private boolean verificarValorCritico() {
+        RangoValor rango = practica.getRangoValores();
+        return rango.esCritico(this.valor);
+    }
+
+    // Método para verificar si el resultado tiene valores reservados
+    private boolean verificarValorReservado() {
+        RangoValor rango = practica.getRangoValores();
+        return rango.esReservado(this.valor);
+    }
 }

@@ -1,27 +1,16 @@
-package model;
+package Dtos;
 
 import java.util.Date;
 
-public class Usuario {
+public class UsuarioDTO {
 
     private String nombreUsuario;
-    private Email mail; // Cambiado de Object a Email
+    private String mail; // Usamos String para facilitar la transferencia de datos
     private String password;
     private String nombre;
     private String domicilio;
     private int dni;
     private Date fechaNacimiento;
-
-    // Constructor
-    public Usuario(String nombreUsuario, Email mail, String password, String nombre, String domicilio, int dni, Date fechaNacimiento) {
-        this.nombreUsuario = nombreUsuario;
-        this.mail = mail;
-        this.password = password;
-        this.nombre = nombre;
-        this.domicilio = domicilio;
-        this.dni = dni;
-        this.fechaNacimiento = fechaNacimiento;
-    }
 
     // Getters y setters
     public String getNombreUsuario() {
@@ -32,11 +21,11 @@ public class Usuario {
         this.nombreUsuario = nombreUsuario;
     }
 
-    public Email getMail() {
+    public String getMail() {
         return mail;
     }
 
-    public void setMail(Email mail) {
+    public void setMail(String mail) {
         this.mail = mail;
     }
 
