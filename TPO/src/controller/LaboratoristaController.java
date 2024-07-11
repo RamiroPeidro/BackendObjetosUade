@@ -16,7 +16,11 @@ public class LaboratoristaController {
         peticionService.cargarResultadoEnPractica(idPeticion, idPractica, valor);
     }
 
-    public void eliminarResultado(int idResultado) {
-        // Implementar lógica para eliminar resultado si es necesario
+    public void eliminarResultado(int idPeticion, int idPractica) {
+        peticionService.eliminarResultadoDePractica(idPeticion, idPractica);
+    }
+
+    public void modificarResultado(int idPeticion, int idPractica, float nuevoValor, boolean finalizado) {
+        peticionService.modificarResultadoDePractica(idPeticion, idPractica, nuevoValor, finalizado);
     }
 }

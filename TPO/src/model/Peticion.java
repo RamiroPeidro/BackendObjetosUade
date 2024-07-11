@@ -17,6 +17,8 @@ public class Peticion {
     private Sucursal sucursal;
     private List<Practica> listaPracticas;
     private List<Resultado> listaResultados;
+    private boolean peticionFinalizada; // Nuevo atributo
+
 
     // Constructor
     public Peticion(int idPeticion, Paciente paciente, String obraSocial, Date fechaCarga,  Date fechaCalculadaDeEntrega, Sucursal sucursal, List<Practica> listaPracticas, List<Resultado> listaResultados) {
@@ -28,6 +30,7 @@ public class Peticion {
         this.sucursal = sucursal;
         this.listaPracticas = listaPracticas;
         this.listaResultados = listaResultados;
+        this.peticionFinalizada = chequearSiLaPeticionEstaFinalizada();
     }
 
     // Getters y Setters
@@ -96,16 +99,23 @@ public class Peticion {
         this.listaResultados = listaResultados;
     }
 
-    // Método para chequear si la petición está finalizada
-    //TODO si ya tiene un resultado es que la peticion esta finalizada ?? ahi te lo cambie
-    //quiero chequear si la peticion esta finalizada -> cuando esta finalizada? cuando tiene
-
-    //TODO le agregaria un atributo al resultado para saber si esta finalizado o no
-    public Boolean chequearSiLaPeticionEstaFinalizada() {
-        return !listaResultados.isEmpty();
+    public boolean isPeticionFinalizada() {
+        return peticionFinalizada;
     }
 
-    // Método para chequear si tiene resultados críticos
+    public void setPeticionFinalizada(boolean peticionFinalizada) {
+        this.peticionFinalizada = peticionFinalizada;
+    }
+
+    public Boolean chequearSiLaPeticionEstaFinalizada() {
+        for (Resultado resultado : listaResultados) {
+            if (!resultado.isFinalizado()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean chequearSiTieneResultadosCriticos() {
         for (Resultado resultado : listaResultados) {
             if (resultado.isValorCritico()) {

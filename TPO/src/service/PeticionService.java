@@ -125,8 +125,36 @@ public class PeticionService {
 
         resultado.setValor(valor);
         resultado.setFinalizado(true);
+
+        peticion.setPeticionFinalizada(peticion.chequearSiLaPeticionEstaFinalizada());
+
         peticionDAO.update(peticion);
     }
+
+    public void modificarResultadoDePractica(int idPeticion, int idPractica, float nuevoValor, boolean finalizado) {
+        Peticion peticion = peticionDAO.findById(idPeticion);
+        if (peticion == null) {
+            throw new IllegalArgumentException("Peticion no encontrada");
+        }
+
+        Practica practica = obtenerPracticaPorId(peticion, idPractica);
+        if (practica == null) {
+            throw new IllegalArgumentException("Practica no encontrada en la peticion");
+        }
+
+        Resultado resultado = obtenerResultadoPorPractica(peticion, practica);
+        if (resultado == null) {
+            throw new IllegalArgumentException("Resultado no encontrado para la práctica en la petición");
+        }
+
+        resultado.setValor(nuevoValor);
+        resultado.setFinalizado(finalizado);
+
+        peticion.setPeticionFinalizada(peticion.chequearSiLaPeticionEstaFinalizada());
+
+        peticionDAO.update(peticion);
+    }
+
 
     private Practica obtenerPracticaPorId(Peticion peticion, int practicaId) {
         for (Practica practica : peticion.getListaPracticas()) {
@@ -145,6 +173,8 @@ public class PeticionService {
         }
         return null;
     }
+
+
 
     public void darBajaPeticion(int numeroPeticion) {
         Peticion peticion = peticionDAO.findById(numeroPeticion);
@@ -199,6 +229,29 @@ public class PeticionService {
 
         return resultadoDTOs;
     }
+
+    public void eliminarResultadoDePractica(int idPeticion, int idPractica) {
+        Peticion peticion = peticionDAO.findById(idPeticion);
+        if (peticion == null) {
+            throw new IllegalArgumentException("Peticion no encontrada");
+        }
+
+        Practica practica = obtenerPracticaPorId(peticion, idPractica);
+        if (practica == null) {
+            throw new IllegalArgumentException("Practica no encontrada en la peticion");
+        }
+
+        Resultado resultado = obtenerResultadoPorPractica(peticion, practica);
+        if (resultado == null) {
+            throw new IllegalArgumentException("Resultado no encontrado para la práctica en la petición");
+        }
+
+        peticion.getListaResultados().remove(resultado);
+        peticion.setPeticionFinalizada(peticion.chequearSiLaPeticionEstaFinalizada());
+
+        peticionDAO.update(peticion);
+    }
+
 
     public List<PeticionDTO> listarPeticionesCriticas() {
         List<Peticion> peticiones = peticionDAO.findAll();
