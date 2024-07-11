@@ -194,11 +194,7 @@ public class PeticionService {
         }
     }
 
-    public List<ResultadoDTO> solicitarResultados(int idPeticion) {
-        return consultarResultado(idPeticion);
-    }
-
-    private List<ResultadoDTO> consultarResultado(int idPeticion) {
+    public List<ResultadoDTO> consultarResultado(int idPeticion) {
         Peticion peticion = peticionDAO.findById(idPeticion);
         if (peticion == null) {
             throw new IllegalArgumentException("Peticion no encontrada");
@@ -211,7 +207,8 @@ public class PeticionService {
             int practicaId = resultado.getPractica().getCodigoPractica();
             String valor;
 
-            if (resultado.isValorReservado() || resultado.isValorCritico()) {
+            //TODO retirar por sucursal refiere solo a reservado y no a critico?
+            if (resultado.isValorReservado()) {
                 valor = "Retirar por sucursal";
             } else {
                 valor = String.valueOf(resultado.getValor());

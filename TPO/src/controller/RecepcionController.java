@@ -51,7 +51,7 @@ public class RecepcionController {
     }
 
     public List<ResultadoDTO> solicitarResultados(int idPeticion) {
-        return peticionService.solicitarResultados(idPeticion);
+        return peticionService.consultarResultado(idPeticion);
     }
 
     public List<PeticionDTO> listarPeticionesCriticas() {
