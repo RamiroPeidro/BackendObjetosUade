@@ -37,9 +37,15 @@ public class AdministradorView extends JFrame {
         add(txtNombreUsuario);
         // Añadir más campos según sea necesario...
 
-        btnAltaUsuario = new JButton("Alta Usuario");
+        btnAltaUsuario = new JButton("Dar Alta Usuario");
         btnAltaUsuario.setBounds(150, 200, 200, 30);
         add(btnAltaUsuario);
+        btnModificarUsuario = new JButton("Modificar Usuario");
+        btnModificarUsuario.setBounds(150, 225, 200, 30);
+        add(btnModificarUsuario);
+        btnBajaUsuario = new JButton("Dar Baja Usuario");
+        btnBajaUsuario.setBounds(150, 250, 200, 30);
+        add(btnBajaUsuario);
 
         btnAltaUsuario.addActionListener(new ActionListener() {
             @Override
@@ -52,18 +58,24 @@ public class AdministradorView extends JFrame {
         });
 
         // Gestión de Sucursales
-        JLabel lblSucursal = new JLabel("Gestión de Sucursales");
-        lblSucursal.setBounds(50, 250, 200, 30);
-        add(lblSucursal);
-
-        txtNumeroSucursal = new JTextField();
-        txtNumeroSucursal.setBounds(150, 300, 200, 30);
-        add(txtNumeroSucursal);
+//        JLabel lblSucursal = new JLabel("Gestión de Sucursales");
+//        lblSucursal.setBounds(50, 250, 200, 30);
+//        add(lblSucursal);
+//
+//        txtNumeroSucursal = new JTextField();
+//        txtNumeroSucursal.setBounds(150, 300, 200, 30);
+//        add(txtNumeroSucursal);
         // Añadir más campos según sea necesario...
 
         btnAltaSucursal = new JButton("Alta Sucursal");
-        btnAltaSucursal.setBounds(150, 400, 200, 30);
+        btnAltaSucursal.setBounds(150, 300, 200, 30);
         add(btnAltaSucursal);
+        btnModificarSucursal = new JButton("Modificar Sucursal");
+        btnModificarSucursal.setBounds(150, 325, 200, 30);
+        add(btnModificarSucursal);
+        btnBajaSucursal = new JButton("Baja Sucursal");
+        btnBajaSucursal.setBounds(150, 350, 200, 30);
+        add(btnBajaSucursal);
 
         btnAltaSucursal.addActionListener(new ActionListener() {
             @Override
@@ -75,46 +87,64 @@ public class AdministradorView extends JFrame {
             }
         });
 
-        // Gestión de Prácticas
-        JLabel lblPractica = new JLabel("Gestión de Prácticas");
-        lblPractica.setBounds(50, 450, 200, 30);
-        add(lblPractica);
 
+        //Practicas
+        JLabel lblCodigoPractica = new JLabel("Codigo Practica:");
+        lblCodigoPractica.setBounds(50, 530, 100, 30);
+        add(lblCodigoPractica);
         txtCodigoPractica = new JTextField();
-        txtCodigoPractica.setBounds(150, 500, 200, 30);
+        txtCodigoPractica.setBounds(150, 530, 200, 30);
         add(txtCodigoPractica);
-        // Añadir más campos según sea necesario...
+        JLabel lblNombrePractica = new JLabel("Nombre Practica:");
+        lblNombrePractica.setBounds(50, 560, 100, 30);
+        add(lblNombrePractica);
         txtNombrePractica = new JTextField();
-        txtNombrePractica.setBounds(150, 530, 200, 30);
+        txtNombrePractica.setBounds(150, 560, 200, 30);
         add(txtNombrePractica);
-
+        JLabel lblGrupo = new JLabel("Grupo:");
+        lblGrupo.setBounds(50, 590, 100, 30);
+        add(lblGrupo);
         txtGrupo = new JTextField();
-        txtGrupo.setBounds(150, 560, 200, 30);
+        txtGrupo.setBounds(150, 590, 200, 30);
         add(txtGrupo);
-
+        JLabel lblMinValor = new JLabel("Min Valor:");
+        lblMinValor.setBounds(50, 620, 100, 30);
+        add(lblMinValor);
         txtMinValor = new JTextField();
-        txtMinValor.setBounds(150, 590, 200, 30);
+        txtMinValor.setBounds(150, 620, 200, 30);
         add(txtMinValor);
-
+        JLabel lblMaxValor = new JLabel("Max Valor:");
+        lblMaxValor.setBounds(50, 650, 100, 30);
+        add(lblMaxValor);
         txtMaxValor = new JTextField();
-        txtMaxValor.setBounds(150, 620, 200, 30);
+        txtMaxValor.setBounds(150, 650, 200, 30);
         add(txtMaxValor);
-
+        JLabel lblUmbral = new JLabel("Umbral:");
+        lblUmbral.setBounds(50, 680, 100, 30);
+        add(lblUmbral);
         txtUmbral = new JTextField();
-        txtUmbral.setBounds(150, 650, 200, 30);
+        txtUmbral.setBounds(150, 680, 200, 30);
         add(txtUmbral);
-
+        JLabel lblCantHoras = new JLabel("Cant Horas:");
+        lblCantHoras.setBounds(50, 710, 100, 30);
+        add(lblCantHoras);
         txtCantHoras = new JTextField();
-        txtCantHoras.setBounds(150, 680, 200, 30);
+        txtCantHoras.setBounds(150, 710, 200, 30);
         add(txtCantHoras);
 
         txtHabilitada = new JTextField();
         txtHabilitada.setBounds(150, 710, 200, 30);
         add(txtHabilitada);
 
-        btnAltaPractica = new JButton("Alta Práctica");
+        btnAltaPractica = new JButton("Dar Alta Práctica");
         btnAltaPractica.setBounds(150, 740, 200, 30);
         add(btnAltaPractica);
+        btnModificarPractica = new JButton("Modificar Práctica");
+        btnModificarPractica.setBounds(150, 765, 200, 30);
+        add(btnModificarPractica);
+        btnBajaPractica = new JButton("Dar Baja Práctica");
+        btnBajaPractica.setBounds(150, 790, 200, 30);
+        add(btnBajaPractica);
 
         btnAltaPractica.addActionListener(new ActionListener() {
             @Override
