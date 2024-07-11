@@ -5,10 +5,19 @@ import model.Practica;
 
 public class LaboratoristaController {
 
+    private static LaboratoristaController instance = null;
     private PeticionService peticionService;
+
 
     public LaboratoristaController() {
         this.peticionService = new PeticionService();
+    }
+
+    public static LaboratoristaController getInstance() {
+        if (instance == null) {
+            instance = new LaboratoristaController();
+        }
+        return instance;
     }
 
 
