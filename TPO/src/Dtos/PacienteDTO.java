@@ -11,6 +11,20 @@ public class PacienteDTO {
     private int edad;
     private List<Integer> peticionesIds; // Lista de IDs de peticiones asociadas
 
+    // Constructor vacío
+    public PacienteDTO() {}
+
+    // Constructor completo
+    public PacienteDTO(String nombre, int dni, String domicilio, String mail, String sexo, int edad, List<Integer> peticionesIds) {
+        this.nombre = nombre;
+        this.dni = dni;
+        this.domicilio = domicilio;
+        this.mail = mail;
+        this.sexo = sexo;
+        this.edad = edad;
+        this.peticionesIds = peticionesIds;
+    }
+
     // Getters y setters
     public String getNombre() {
         return nombre;

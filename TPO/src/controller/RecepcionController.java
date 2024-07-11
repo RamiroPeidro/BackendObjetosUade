@@ -9,15 +9,21 @@ import service.PeticionService;
 import java.util.List;
 
 public class RecepcionController {
-
+    private static RecepcionController instance = null;
     private PacienteService pacienteService;
     private PeticionService peticionService;
 
-    public RecepcionController() {
+    private RecepcionController() {
         this.pacienteService = new PacienteService();
         this.peticionService = new PeticionService();
     }
 
+    public static RecepcionController getInstance() {
+        if (instance == null) {
+            instance = new RecepcionController();
+        }
+        return instance;
+    }
     public void cargarPeticion(int Dni, String obraSocial, int sucursalId) {
         peticionService.cargarPeticion(Dni, obraSocial, sucursalId);
     }
