@@ -43,16 +43,22 @@ public class Sucursal {
         this.peticionesDeSucursal = peticionesDeSucursal;
     }
 
-    // Método para verificar si se puede dar de baja la sucursal
-    //TODO agregalo en el diagrama
 
-    //sucursal no puede ser eliminada si tiene una peticion con resultados.
+    //sucursal se puede dar de baja? ---> recorro todas las peticiones que tiene la sucursal ->> recorro todos los resultados de cada peticio menor
+    //Digamos, sucursal A tiene -> m peticiones -> recorro todos los resultados n.
+    //Cada vez que quiero bajar una sucursal tengo un O(n x m)
+
+    //peticiones puede ser infinito, resultados es finito, por eso en terminos practiso es O(m x n) pero con 0 <= n <= K, con K finito, a terminos practicos max 50?
+
+    //a casos practicos como sabesmos
+
+    //Tenes un atributo en la peticion que sea, finalizada o no, te ahorras recorrer todos sus resultados.
+    //O(n) -> O(n) --> MUCHO MEJOR
 
 
-    //creo una peticiion -> le creo ya de base todos los resultados en false -> por que? porque despues puedo chequear cuales estan finalizados y cuales no.
     public boolean chequearSiSePuedeDarDeBajaSucursal() {
         for (Peticion peticion : peticionesDeSucursal) {
-            if (!peticion.chequearSiLaPeticionEstaFinalizada()) {
+            if (!peticion.isPeticionFinalizada()) {
                 return false;
             }
         }

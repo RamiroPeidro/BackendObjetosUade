@@ -12,6 +12,7 @@ public class PeticionDTO {
     private int sucursalId; // Solo almacenamos el ID de la sucursal
     private List<Integer> listaPracticasIds; // Lista de IDs de prácticas
     private List<ResultadoDTO> listaResultados;
+    private boolean peticionFinalizada;
 
     // Getters y Setters
     public int getIdPeticion() {
@@ -77,5 +78,13 @@ public class PeticionDTO {
 
     public void setListaResultados(List<ResultadoDTO> listaResultadosIds) {
         this.listaResultados = listaResultadosIds;
+    }
+
+    public boolean isPeticionFinalizada() {
+        return peticionFinalizada;
+    }
+
+    public void setPeticionFinalizada(boolean peticionFinalizada) {
+        this.peticionFinalizada = peticionFinalizada;
     }
 }

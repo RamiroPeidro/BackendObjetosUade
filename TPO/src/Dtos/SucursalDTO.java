@@ -5,7 +5,7 @@ import java.util.List;
 public class SucursalDTO {
     private int numero;
     private String direccion;
-    private String responsableTecnico; // Asumimos que responsableTecnico es el nombre del usuario responsable
+    private UsuarioDTO responsableTecnico; // Ahora es un UsuarioDTO
     private List<Integer> peticionesIds; // Lista de IDs de peticiones asociadas
 
     // Getters y setters
@@ -25,11 +25,11 @@ public class SucursalDTO {
         this.direccion = direccion;
     }
 
-    public String getResponsableTecnico() {
+    public UsuarioDTO getResponsableTecnico() {
         return responsableTecnico;
     }
 
-    public void setResponsableTecnico(String responsableTecnico) {
+    public void setResponsableTecnico(UsuarioDTO responsableTecnico) {
         this.responsableTecnico = responsableTecnico;
     }
 

@@ -1,7 +1,12 @@
 package controller;
 
 import Dtos.SucursalDTO;
+import Dtos.UsuarioDTO;
+import Dtos.PracticaDTO;
+import model.Practica;
+import service.PracticaService;
 import service.SucursalService;
+import service.UsuarioService;
 
 import java.util.Date;
 
@@ -9,10 +14,14 @@ public class AdministradorController {
 
     private static AdministradorController instance = null;
     private SucursalService sucursalService;
+    private UsuarioService usuarioService;
+    private PracticaService practicaService;
 
     // Constructor privado para singleton
     private AdministradorController() {
         this.sucursalService = new SucursalService();
+        this.usuarioService = new UsuarioService();
+        this.practicaService = new PracticaService();
     }
 
     public static AdministradorController getInstance() {
@@ -22,33 +31,40 @@ public class AdministradorController {
         return instance;
     }
 
-    public void darDeAltaSucursal(SucursalDTO sucursalDTO, String email, String password, String nombre, String domicilio, int dni, Date fechaNacimiento) {
-        sucursalService.createSucursal(sucursalDTO, email, password, nombre, domicilio, dni, fechaNacimiento);
+    public void darDeAltaSucursal(SucursalDTO sucursalDTO, UsuarioDTO responsableTecnicoDTO) {
+        sucursalService.createSucursal(sucursalDTO, responsableTecnicoDTO);
     }
 
     public void darBajaSucursal(int numeroSucursalBaja, int sucursalDestinoPeticiones) {
         sucursalService.darBajaSucursal(numeroSucursalBaja, sucursalDestinoPeticiones);
     }
 
-    public void modificarSucursal() { //TODO: Agregar numero de sucursal como parametro.
+    public void modificarSucursal(SucursalDTO sucursalDTO, UsuarioDTO responsableTecnicoDTO) {
+        sucursalService.modificarSucursal(sucursalDTO, responsableTecnicoDTO);
     }
 
-    public void darAltaUsuario() {
+    public void darAltaUsuario(UsuarioDTO usuarioDTO) {
+        usuarioService.darAltaUsuario(usuarioDTO);
     }
 
-    public void darBajaUsuario() { //TODO: Agregar numero usuario como parametro.
+    public void darBajaUsuario(int dniUsuario) {
+        usuarioService.darBajaUsuario(dniUsuario);
     }
 
-    public void modificarUsuario() { //TODO: Agregar numero usuario como parametro.
+    public void modificarUsuario(UsuarioDTO usuarioDTO) {
+        usuarioService.modificarUsuario(usuarioDTO);
     }
 
-    public void darAltaPractica() {
+    public void darAltaPractica(PracticaDTO practicaDTO) {
+        practicaService.darAltaPractica(practicaDTO);
     }
 
     public void darBajaPractica(int codigoPractica) {
+        practicaService.darBajaPractica(codigoPractica);
     }
 
-    public void modificarPractica() { //TODO: Agregar codigo practica como parametro.
+    public void modificarPractica(PracticaDTO practicaDTO) {
+        practicaService.modificarPractica(practicaDTO);
     }
 
 }
