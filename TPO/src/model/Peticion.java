@@ -6,21 +6,17 @@ import java.util.List;
 public class Peticion {
 
     private int idPeticion;
-
-    //TODO ver si va esta relacion
     private Paciente paciente;
     private String obraSocial;
     private Date fechaCarga;
-
-    //TODO ver si hay que ponerlo
     private Date fechaCalculadaDeEntrega;
     private Sucursal sucursal;
     private List<Practica> listaPracticas;
     private List<Resultado> listaResultados;
-    private boolean peticionFinalizada; // Nuevo atributo
+    private boolean peticionFinalizada;
 
 
-    // Constructor
+    // Constructor Peticion
     public Peticion(int idPeticion, Paciente paciente, String obraSocial, Date fechaCarga,  Date fechaCalculadaDeEntrega, Sucursal sucursal, List<Practica> listaPracticas, List<Resultado> listaResultados) {
         this.idPeticion = idPeticion;
         this.paciente = paciente;
@@ -66,7 +62,6 @@ public class Peticion {
         this.fechaCarga = fechaCarga;
     }
 
-
     public Date getFechaCalculadaDeEntrega() {
         return fechaCalculadaDeEntrega;
     }
@@ -74,7 +69,6 @@ public class Peticion {
     public void setFechaCalculadaDeEntrega(Date fechaCalculadaDeEntrega) {
         this.fechaCalculadaDeEntrega = fechaCalculadaDeEntrega;
     }
-
     public Sucursal getSucursal() {
         return sucursal;
     }
@@ -107,13 +101,9 @@ public class Peticion {
         this.peticionFinalizada = peticionFinalizada;
     }
 
-    public Boolean chequearSiLaPeticionEstaFinalizada() {
-        for (Resultado resultado : listaResultados) {
-            if (!resultado.isFinalizado()) {
-                return false;
-            }
-        }
-        return true;
+
+    public boolean chequearSiLaPeticionEstaFinalizada() {
+        return listaPracticas.size() == listaResultados.size();
     }
 
     public boolean chequearSiTieneResultadosCriticos() {
@@ -125,13 +115,4 @@ public class Peticion {
         return false;
     }
 
-    // Método para obtener el mensaje de retiro por sucursal
-    public String mostrarMensaje(int idSucursal) {
-        return "Retirar por sucursal " + idSucursal;
-    }
-
-    // Método para mostrar los resultados
-    public List<Resultado> mostrarResultados() {
-        return listaResultados;
-    }
 }

@@ -4,8 +4,6 @@ public class Resultado {
 
     private float valor;
     private Practica practica;
-
-    private boolean finalizado;
     private boolean valorCritico;
     private boolean valorReservado;
 
@@ -13,7 +11,6 @@ public class Resultado {
     public Resultado(float valor, Practica practica) {
         this.valor = valor;
         this.practica = practica;
-        this.finalizado = false;
         this.valorCritico = verificarValorCritico();
         this.valorReservado = verificarValorReservado();
     }
@@ -35,14 +32,6 @@ public class Resultado {
 
     public void setPractica(Practica practica) {
         this.practica = practica;
-    }
-
-    public void setFinalizado(boolean finalizado) {
-        this.finalizado = finalizado;
-    }
-
-    public boolean isFinalizado() {
-        return finalizado;
     }
 
     public boolean isValorCritico() {
