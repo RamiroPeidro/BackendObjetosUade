@@ -12,7 +12,7 @@ public class Practica {
     private RangoValor rangoValores;
     private Float cantHorasResultados;
     private Boolean habilitada;
-    private Resultado resultado;
+    //private Resultado resultado;
 
     // Constructor
     public Practica(int codigoPractica, String nombrePractica, String grupo, RangoValor rangoValores, Float cantHorasResultados, Boolean habilitada) {
@@ -22,7 +22,7 @@ public class Practica {
         this.rangoValores = rangoValores;
         this.cantHorasResultados = cantHorasResultados;
         this.habilitada = habilitada;
-        this.resultado = null;
+        //this.resultado = null;
     }
 
     // Getters y Setters
@@ -74,10 +74,10 @@ public class Practica {
         this.habilitada = habilitada;
     }
 
-    public Resultado getResultado() {
+    /*public Resultado getResultado() {
         return resultado;
     }
     public void setResultado(Resultado resultado) {
         this.resultado = resultado;
-    }
+    }*/
 }
