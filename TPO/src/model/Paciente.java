@@ -7,19 +7,18 @@ public class Paciente {
     private int dni;
     private String nombre;
     private String domicilio;
-    private Email mail;
+    private Email email;
     private String sexo;
     private int edad;
     List<Peticion> peticionesDelPaciente;
 
-    public Paciente(String nombre, int dni, String domicilio, Email mail, String sexo, int edad, List<Peticion> peticionesDelPaciente) {
+    public Paciente(String nombre, int dni, String domicilio, Email email, String sexo, int edad) {
         this.nombre = nombre;
         this.dni = dni;
         this.domicilio = domicilio;
-        this.mail = mail;
+        this.email = email;
         this.sexo = sexo;
         this.edad = edad;
-        this.peticionesDelPaciente = peticionesDelPaciente;
     }
 
     // Getters y setters
@@ -47,12 +46,12 @@ public class Paciente {
         this.domicilio = domicilio;
     }
 
-    public Email getMail() {
-        return mail;
+    public Email getEmail() {
+        return email;
     }
 
-    public void setMail(Email mail) {
-        this.mail = mail;
+    public void setEmail(Email email) {
+        this.email = email;
     }
 
     public String getSexo() {

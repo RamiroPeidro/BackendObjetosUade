@@ -6,7 +6,7 @@ public class PacienteDTO {
     private String nombre;
     private int dni;
     private String domicilio;
-    private String mail;
+    private String email;
     private String sexo;
     private int edad;
     private List<Integer> peticionesIds; // Lista de IDs de peticiones asociadas
@@ -15,11 +15,11 @@ public class PacienteDTO {
     public PacienteDTO() {}
 
     // Constructor completo
-    public PacienteDTO(String nombre, int dni, String domicilio, String mail, String sexo, int edad, List<Integer> peticionesIds) {
+    public PacienteDTO(String nombre, int dni, String domicilio, String email, String sexo, int edad, List<Integer> peticionesIds) {
         this.nombre = nombre;
         this.dni = dni;
         this.domicilio = domicilio;
-        this.mail = mail;
+        this.email = email;
         this.sexo = sexo;
         this.edad = edad;
         this.peticionesIds = peticionesIds;
@@ -50,12 +50,12 @@ public class PacienteDTO {
         this.domicilio = domicilio;
     }
 
-    public String getMail() {
-        return mail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSexo() {

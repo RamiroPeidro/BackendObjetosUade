@@ -10,12 +10,15 @@ import Dtos.PracticaDTO;
 import Dtos.RangoValorDTO;
 
 public class AdministradorView extends JFrame {
-    private JTextField txtNombreUsuario, txtMail, txtPassword, txtNombre, txtDomicilio, txtDni;
+    //txt y btn Usuario
+    private JTextField txtNombreUsuario, txtMailUsuario, txtPassword, txtNombre, txtDomicilio, txtDni, txtFechaNacimiento;
     private JButton btnAltaUsuario, btnBajaUsuario, btnModificarUsuario;
 
-    private JTextField txtNumeroSucursal, txtDireccion;
+    //txt y btn Sucursal
+    private JTextField txtNumeroSucursal, txtDireccion, txtResponsableTecnico, txtNumeroSucursalBaja, txtNumeroSucursalDestionPeticiones;
     private JButton btnAltaSucursal, btnBajaSucursal, btnModificarSucursal;
 
+    //txt y btn Practica
     private JTextField txtCodigoPractica, txtNombrePractica, txtGrupo, txtMinValor, txtMaxValor, txtUmbral, txtCantHoras, txtHabilitada;
     private JButton btnAltaPractica, btnBajaPractica, btnModificarPractica;
 
@@ -24,27 +27,65 @@ public class AdministradorView extends JFrame {
     public AdministradorView() {
         adminController = AdministradorController.getInstance();
         setTitle("Administrador");
-        setSize(800, 600);
+        setSize(1300, 1200);
         setLayout(null);
 
-        // Gestión de Usuarios
-        JLabel lblUsuario = new JLabel("Gestión de Usuarios");
-        lblUsuario.setBounds(50, 50, 200, 30);
+        //USUARIO
+        JLabel lblUsuario = new JLabel("USUARIO");
+        lblUsuario.setBounds(200, 50, 200, 30);
         add(lblUsuario);
 
+        JLabel lblNombreUsuario = new JLabel("Nombre Usuario:");
+        lblNombreUsuario.setBounds(100, 100, 150, 30);
+        add(lblNombreUsuario);
         txtNombreUsuario = new JTextField();
-        txtNombreUsuario.setBounds(150, 100, 200, 30);
+        txtNombreUsuario.setBounds(220, 100, 200, 30);
         add(txtNombreUsuario);
-        // Añadir más campos según sea necesario...
+        JLabel lblMailUsuario = new JLabel("Mail Usuario:");
+        lblMailUsuario.setBounds(100, 125, 150, 30);
+        add(lblMailUsuario);
+        txtMailUsuario = new JTextField();
+        txtMailUsuario.setBounds(220, 125, 200, 30);
+        add(txtMailUsuario);
+        JLabel lblPassword = new JLabel("Password:");
+        lblPassword.setBounds(100, 150, 150, 30);
+        add(lblPassword);
+        txtPassword = new JTextField();
+        txtPassword.setBounds(220, 150, 200, 30);
+        add(txtPassword);
+        JLabel lblNombre = new JLabel("Nombre:");
+        lblNombre.setBounds(100, 175, 150, 30);
+        add(lblNombre);
+        txtNombre = new JTextField();
+        txtNombre.setBounds(220, 175, 200, 30);
+        add(txtNombre);
+        JLabel lblDomicilio = new JLabel("Domicilio:");
+        lblDomicilio.setBounds(100, 200, 150, 30);
+        add(lblDomicilio);
+        txtDomicilio = new JTextField();
+        txtDomicilio.setBounds(220, 200, 200, 30);
+        add(txtDomicilio);
+        JLabel lblDNI = new JLabel("DNI:");
+        lblDNI.setBounds(100, 225, 150, 30);
+        add(lblDNI);
+        txtDni = new JTextField();
+        txtDni.setBounds(220, 225, 200, 30);
+        add(txtDni);
+        JLabel lblFechaNacimiento = new JLabel("Fecha Nacimiento:");
+        lblFechaNacimiento.setBounds(100, 250, 150, 30);
+        add(lblFechaNacimiento);
+        txtFechaNacimiento = new JTextField();
+        txtFechaNacimiento.setBounds(220, 250, 200, 30);
+        add(txtFechaNacimiento);
 
         btnAltaUsuario = new JButton("Dar Alta Usuario");
-        btnAltaUsuario.setBounds(150, 200, 200, 30);
+        btnAltaUsuario.setBounds(150, 400, 200, 30);
         add(btnAltaUsuario);
         btnModificarUsuario = new JButton("Modificar Usuario");
-        btnModificarUsuario.setBounds(150, 225, 200, 30);
+        btnModificarUsuario.setBounds(150, 425, 200, 30);
         add(btnModificarUsuario);
         btnBajaUsuario = new JButton("Dar Baja Usuario");
-        btnBajaUsuario.setBounds(150, 250, 200, 30);
+        btnBajaUsuario.setBounds(150, 450, 200, 30);
         add(btnBajaUsuario);
 
         btnAltaUsuario.addActionListener(new ActionListener() {
@@ -57,24 +98,51 @@ public class AdministradorView extends JFrame {
             }
         });
 
-        // Gestión de Sucursales
-//        JLabel lblSucursal = new JLabel("Gestión de Sucursales");
-//        lblSucursal.setBounds(50, 250, 200, 30);
-//        add(lblSucursal);
-//
-//        txtNumeroSucursal = new JTextField();
-//        txtNumeroSucursal.setBounds(150, 300, 200, 30);
-//        add(txtNumeroSucursal);
-        // Añadir más campos según sea necesario...
 
-        btnAltaSucursal = new JButton("Alta Sucursal");
-        btnAltaSucursal.setBounds(150, 300, 200, 30);
+        //SUCURSAL
+        JLabel lblSucursal = new JLabel("SUCURSAL");
+        lblSucursal.setBounds(600, 50, 200, 30);
+        add(lblSucursal);
+
+        JLabel lblNumeroSucursal = new JLabel("Numero Sucursal:");
+        lblNumeroSucursal.setBounds(500, 100, 150, 30);
+        add(lblNumeroSucursal);
+        txtNumeroSucursal = new JTextField();
+        txtNumeroSucursal.setBounds(650, 100, 200, 30);
+        add(txtNumeroSucursal);
+        JLabel lblDireccion = new JLabel("Direccion:");
+        lblDireccion.setBounds(500, 125, 150, 30);
+        add(lblDireccion);
+        txtDireccion = new JTextField();
+        txtDireccion.setBounds(650, 125, 200, 30);
+        add(txtDireccion);
+        JLabel lblResponsableTecnico = new JLabel("Responsable Tecnico:");
+        lblResponsableTecnico.setBounds(500, 150, 150, 30);
+        add(lblResponsableTecnico);
+        txtResponsableTecnico = new JTextField();
+        txtResponsableTecnico.setBounds(650, 150, 200, 30);
+        add(txtResponsableTecnico);
+
+        btnAltaSucursal = new JButton("Dar Alta Sucursal");
+        btnAltaSucursal.setBounds(550, 400, 200, 30);
         add(btnAltaSucursal);
         btnModificarSucursal = new JButton("Modificar Sucursal");
-        btnModificarSucursal.setBounds(150, 325, 200, 30);
+        btnModificarSucursal.setBounds(550, 425, 200, 30);
         add(btnModificarSucursal);
-        btnBajaSucursal = new JButton("Baja Sucursal");
-        btnBajaSucursal.setBounds(150, 350, 200, 30);
+        JLabel lblNumeroSucursalBaja = new JLabel("Numero Sucursal Baja:");
+        lblNumeroSucursalBaja.setBounds(580, 475, 200, 30);
+        add(lblNumeroSucursalBaja);
+        txtNumeroSucursalBaja = new JTextField();
+        txtNumeroSucursalBaja.setBounds(550, 500, 200, 30);
+        add(txtNumeroSucursalBaja);
+        JLabel lblNumeroSucursalDestionPeticiones = new JLabel("Numero Sucursal Destion Peticiones:");
+        lblNumeroSucursalDestionPeticiones.setBounds(535, 525, 250, 30);
+        add(lblNumeroSucursalDestionPeticiones);
+        txtNumeroSucursalDestionPeticiones = new JTextField();
+        txtNumeroSucursalDestionPeticiones.setBounds(550, 550, 200, 30);
+        add(txtNumeroSucursalDestionPeticiones);
+        btnBajaSucursal = new JButton("Dar Baja Sucursal");
+        btnBajaSucursal.setBounds(550, 575, 200, 30);
         add(btnBajaSucursal);
 
         btnAltaSucursal.addActionListener(new ActionListener() {
@@ -87,63 +155,68 @@ public class AdministradorView extends JFrame {
             }
         });
 
+        //PRACTICA
+        JLabel lblPractica = new JLabel("PRACTICA");
+        lblPractica.setBounds(1000, 50, 200, 30);
+        add(lblPractica);
 
-        //Practicas
         JLabel lblCodigoPractica = new JLabel("Codigo Practica:");
-        lblCodigoPractica.setBounds(50, 530, 100, 30);
+        lblCodigoPractica.setBounds(900, 100, 150, 30);
         add(lblCodigoPractica);
         txtCodigoPractica = new JTextField();
-        txtCodigoPractica.setBounds(150, 530, 200, 30);
+        txtCodigoPractica.setBounds(1020, 100, 200, 30);
         add(txtCodigoPractica);
         JLabel lblNombrePractica = new JLabel("Nombre Practica:");
-        lblNombrePractica.setBounds(50, 560, 100, 30);
+        lblNombrePractica.setBounds(900, 125, 150, 30);
         add(lblNombrePractica);
         txtNombrePractica = new JTextField();
-        txtNombrePractica.setBounds(150, 560, 200, 30);
+        txtNombrePractica.setBounds(1020, 125, 200, 30);
         add(txtNombrePractica);
         JLabel lblGrupo = new JLabel("Grupo:");
-        lblGrupo.setBounds(50, 590, 100, 30);
+        lblGrupo.setBounds(900, 150, 100, 30);
         add(lblGrupo);
         txtGrupo = new JTextField();
-        txtGrupo.setBounds(150, 590, 200, 30);
+        txtGrupo.setBounds(1020, 150, 200, 30);
         add(txtGrupo);
         JLabel lblMinValor = new JLabel("Min Valor:");
-        lblMinValor.setBounds(50, 620, 100, 30);
+        lblMinValor.setBounds(900, 175, 100, 30);
         add(lblMinValor);
         txtMinValor = new JTextField();
-        txtMinValor.setBounds(150, 620, 200, 30);
+        txtMinValor.setBounds(1020, 175, 200, 30);
         add(txtMinValor);
         JLabel lblMaxValor = new JLabel("Max Valor:");
-        lblMaxValor.setBounds(50, 650, 100, 30);
+        lblMaxValor.setBounds(900, 200, 100, 30);
         add(lblMaxValor);
         txtMaxValor = new JTextField();
-        txtMaxValor.setBounds(150, 650, 200, 30);
+        txtMaxValor.setBounds(1020, 200, 200, 30);
         add(txtMaxValor);
         JLabel lblUmbral = new JLabel("Umbral:");
-        lblUmbral.setBounds(50, 680, 100, 30);
+        lblUmbral.setBounds(900, 225, 100, 30);
         add(lblUmbral);
         txtUmbral = new JTextField();
-        txtUmbral.setBounds(150, 680, 200, 30);
+        txtUmbral.setBounds(1020, 225, 200, 30);
         add(txtUmbral);
         JLabel lblCantHoras = new JLabel("Cant Horas:");
-        lblCantHoras.setBounds(50, 710, 100, 30);
+        lblCantHoras.setBounds(900, 250, 100, 30);
         add(lblCantHoras);
         txtCantHoras = new JTextField();
-        txtCantHoras.setBounds(150, 710, 200, 30);
+        txtCantHoras.setBounds(1020, 250, 200, 30);
         add(txtCantHoras);
-
+        JLabel lblHabilitada = new JLabel("Habilitada:");
+        lblHabilitada.setBounds(900, 275, 100, 30);
+        add(lblHabilitada);
         txtHabilitada = new JTextField();
-        txtHabilitada.setBounds(150, 710, 200, 30);
+        txtHabilitada.setBounds(1020, 275, 200, 30);
         add(txtHabilitada);
 
         btnAltaPractica = new JButton("Dar Alta Práctica");
-        btnAltaPractica.setBounds(150, 740, 200, 30);
+        btnAltaPractica.setBounds(950, 400, 200, 30);
         add(btnAltaPractica);
         btnModificarPractica = new JButton("Modificar Práctica");
-        btnModificarPractica.setBounds(150, 765, 200, 30);
+        btnModificarPractica.setBounds(950, 425, 200, 30);
         add(btnModificarPractica);
         btnBajaPractica = new JButton("Dar Baja Práctica");
-        btnBajaPractica.setBounds(150, 790, 200, 30);
+        btnBajaPractica.setBounds(950, 450, 200, 30);
         add(btnBajaPractica);
 
         btnAltaPractica.addActionListener(new ActionListener() {

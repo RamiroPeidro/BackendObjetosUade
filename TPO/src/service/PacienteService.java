@@ -45,8 +45,8 @@ public class PacienteService {
 
     public void darAltaPaciente(PacienteDTO pacienteDTO) {
         List<Peticion> peticiones = new ArrayList<>(); // Convertir IDs de peticiones a objetos Peticion si es necesario
-        Email email = new Email(pacienteDTO.getMail()); // Crear el Value Object Email
-        Paciente paciente = convertirDTOaPaciente(pacienteDTO, peticiones);
+        Email email = new Email(pacienteDTO.getEmail()); // Crear el Value Object Email
+        Paciente paciente = convertirDTOaPaciente(pacienteDTO);
         pacienteDAO.create(paciente);
     }
 
@@ -74,7 +74,7 @@ public class PacienteService {
         if (pacienteExistente != null) {
             pacienteExistente.setNombre(pacienteDTO.getNombre());
             pacienteExistente.setDomicilio(pacienteDTO.getDomicilio());
-            pacienteExistente.setMail(new Email(pacienteDTO.getMail()));
+            pacienteExistente.setEmail(new Email(pacienteDTO.getEmail()));
             pacienteExistente.setSexo(pacienteDTO.getSexo());
             pacienteExistente.setEdad(pacienteDTO.getEdad());
             // Actualizar las peticiones si es necesario
@@ -96,7 +96,7 @@ public class PacienteService {
         pacienteDTO.setDni(paciente.getDNIPaciente());
         pacienteDTO.setNombre(paciente.getNombre());
         pacienteDTO.setDomicilio(paciente.getDomicilio());
-        pacienteDTO.setMail(paciente.getMail().getValue());
+        pacienteDTO.setEmail(paciente.getEmail().getValue());
         pacienteDTO.setSexo(paciente.getSexo());
         pacienteDTO.setEdad(paciente.getEdad());
         // Convertir peticiones si es necesario
@@ -104,16 +104,15 @@ public class PacienteService {
     }
 
     // Método para convertir PacienteDTO a Paciente
-    private Paciente convertirDTOaPaciente(PacienteDTO pacienteDTO, List<Peticion> peticiones) {
-        Email email = new Email(pacienteDTO.getMail());
+    private Paciente convertirDTOaPaciente(PacienteDTO pacienteDTO) {
+        Email email = new Email(pacienteDTO.getEmail());
         Paciente paciente = new Paciente(
                 pacienteDTO.getNombre(),
                 pacienteDTO.getDni(),
                 pacienteDTO.getDomicilio(),
                 email,
                 pacienteDTO.getSexo(),
-                pacienteDTO.getEdad(),
-                peticiones
+                pacienteDTO.getEdad()
         );
         return paciente;
     }

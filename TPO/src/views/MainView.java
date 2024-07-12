@@ -15,7 +15,6 @@ public class MainView extends JFrame {
     private JButton btnLaboratorista;
     private JButton btnRecepcionista;
 
-
     //lista que guarda las practicas harcodeadas
     private List<Practica> harcodedPracticas = new ArrayList<>();
 
