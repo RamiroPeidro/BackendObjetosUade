@@ -6,7 +6,6 @@ import Daos.SucursalDAO;
 import Daos.PracticaDAO;
 import Dtos.PeticionDTO;
 import Dtos.ResultadoDTO;
-import Dtos.PacienteDTO;
 import model.Peticion;
 import model.Practica;
 import model.Paciente;

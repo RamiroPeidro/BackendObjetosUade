@@ -3,12 +3,9 @@ package controller;
 import Dtos.SucursalDTO;
 import Dtos.UsuarioDTO;
 import Dtos.PracticaDTO;
-import model.Practica;
 import service.PracticaService;
 import service.SucursalService;
 import service.UsuarioService;
-
-import java.util.Date;
 
 public class AdministradorController {
 
