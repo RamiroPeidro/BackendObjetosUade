@@ -6,6 +6,7 @@ public class Resultado {
     private Practica practica;
     private boolean valorCritico;
     private boolean valorReservado;
+    private boolean finalizado;
 
     // Constructor
     public Resultado(float valor, Practica practica) {
@@ -24,6 +25,10 @@ public class Resultado {
         this.valor = valor;
         this.valorCritico = verificarValorCritico();
         this.valorReservado = verificarValorReservado();
+    }
+
+    public void setFinalizado(boolean finalizado) {
+        this.finalizado = finalizado;
     }
 
     public Practica getPractica() {
