@@ -39,7 +39,7 @@ public class PacienteService {
         // Implementar lógica de modificar petición
     }
 
-    public void consultarResultado(int idPeticion) {
+    public void solicitarResultado(int idPeticion) {
         // Implementar lógica de consultar resultado
     }
 

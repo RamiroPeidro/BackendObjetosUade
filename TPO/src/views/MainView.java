@@ -1,8 +1,14 @@
 package views;
 
+import com.sun.tools.javac.Main;
+import model.Practica;
+import model.RangoValor;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainView extends JFrame {
     private JButton btnAdministrador;

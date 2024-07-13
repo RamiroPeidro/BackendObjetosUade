@@ -194,7 +194,7 @@ public class PeticionService {
         }
     }
 
-    public List<ResultadoDTO> consultarResultado(int idPeticion) {
+    public List<ResultadoDTO> solicitarResultado(int idPeticion) {
         Peticion peticion = peticionDAO.findById(idPeticion);
         if (peticion == null) {
             throw new IllegalArgumentException("Peticion no encontrada");

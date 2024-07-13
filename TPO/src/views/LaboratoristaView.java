@@ -3,12 +3,17 @@ package views;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
 import controller.LaboratoristaController;
+import datos.PracticaManager;
+import model.Practica;
 
 public class LaboratoristaView extends JFrame {
     private JTextField txtValor, txtIdPeticion, txtIdPractica;
-    private JCheckBox chkFinalizado, chkValorCritico, chkValorReservado;
     private JButton btnCargarResultado, btnEliminarResultado, btnModificarResultado;
+
+    private JList<String> practicaList;
 
     private LaboratoristaController laboratoristaController;
 
@@ -18,45 +23,49 @@ public class LaboratoristaView extends JFrame {
         setSize(800, 600);
         setLayout(null);
 
+        //RESULTADO
+        JLabel lblResultado = new JLabel("RESULTADO");
+        lblResultado.setBounds(350, 50, 200, 30);
+        add(lblResultado);
+
         JLabel lblValor = new JLabel("Valor:");
-        lblValor.setBounds(50, 50, 100, 30);
+        lblValor.setBounds(250, 100, 150, 30);
         add(lblValor);
-
         txtValor = new JTextField();
-        txtValor.setBounds(150, 50, 200, 30);
+        txtValor.setBounds(370, 100, 200, 30);
         add(txtValor);
-
-        JLabel lblIdPeticion = new JLabel("ID Petición:");
-        lblIdPeticion.setBounds(50, 100, 100, 30);
-        add(lblIdPeticion);
-
+        JLabel lblPeticion = new JLabel("Peticion:");
+        lblPeticion.setBounds(250, 125, 150, 30);
+        add(lblPeticion);
         txtIdPeticion = new JTextField();
-        txtIdPeticion.setBounds(150, 100, 200, 30);
+        txtIdPeticion.setBounds(370, 125, 200, 30);
         add(txtIdPeticion);
+        JLabel lblPractica = new JLabel("Practica:");
+        lblPractica.setBounds(250, 150, 150, 30);
+        add(lblPractica);
 
-        JLabel lblIdPractica = new JLabel("ID Práctica:");
-        lblIdPractica.setBounds(50, 150, 100, 30);
-        add(lblIdPractica);
-
-        txtIdPractica = new JTextField();
-        txtIdPractica.setBounds(150, 150, 200, 30);
-        add(txtIdPractica);
-
-        chkFinalizado = new JCheckBox("Finalizado");
-        chkFinalizado.setBounds(50, 200, 200, 30);
-        add(chkFinalizado);
+        //picklist de prácticas
+        List<Practica> practicas = PracticaManager.getHarcodedPracticas();
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        for (Practica practica : practicas) {
+            listModel.addElement(practica.getNombrePractica());
+        }
+        practicaList = new JList<>(listModel);
+        practicaList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        JScrollPane scrollPane = new JScrollPane(practicaList);
+        scrollPane.setBounds(370, 160, 200, 100);
+        add(scrollPane);
 
         btnCargarResultado = new JButton("Cargar Resultado");
-        btnCargarResultado.setBounds(50, 350, 200, 30);
+        btnCargarResultado.setBounds(300, 400, 200, 30);
         add(btnCargarResultado);
-
+        btnModificarResultado = new JButton("Modificar Resultado");
+        btnModificarResultado.setBounds(300, 425, 200, 30);
+        add(btnModificarResultado);
         btnEliminarResultado = new JButton("Eliminar Resultado");
-        btnEliminarResultado.setBounds(50, 400, 200, 30);
+        btnEliminarResultado.setBounds(300, 450, 200, 30);
         add(btnEliminarResultado);
 
-        btnModificarResultado = new JButton("Modificar Resultado");
-        btnModificarResultado.setBounds(50, 450, 200, 30);
-        add(btnModificarResultado);
 
         btnCargarResultado.addActionListener(new ActionListener() {
             @Override
@@ -82,14 +91,14 @@ public class LaboratoristaView extends JFrame {
         btnModificarResultado.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                float valor = Float.parseFloat(txtValor.getText());
+                /*float valor = Float.parseFloat(txtValor.getText());
                 int idPeticion = Integer.parseInt(txtIdPeticion.getText());
                 int idPractica = Integer.parseInt(txtIdPractica.getText());
                 boolean finalizado = chkFinalizado.isSelected();
                 boolean valorCritico = chkValorCritico.isSelected();
                 boolean valorReservado = chkValorReservado.isSelected();
                 laboratoristaController.modificarResultado(idPeticion, idPractica, valor, finalizado);
-                JOptionPane.showMessageDialog(null, "Resultado modificado exitosamente");
+                JOptionPane.showMessageDialog(null, "Resultado modificado exitosamente");*/
             }
         });
 
