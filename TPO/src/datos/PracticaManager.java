@@ -9,15 +9,15 @@ public class PracticaManager {
     private static List<Practica> harcodedPracticas = new ArrayList<>();
 
     static {
-        RangoValor rango1 = new RangoValor(5, 10, 30);
-        RangoValor rango2 = new RangoValor(20, 40, 80);
-        RangoValor rango3 = new RangoValor(300, 600, 100);
-        RangoValor rango4 = new RangoValor(1100, 2200, 3000);
+        RangoValor rango1 = new RangoValor(5, 10);
+        RangoValor rango2 = new RangoValor(20, 40);
+        RangoValor rango3 = new RangoValor(300, 600);
+        RangoValor rango4 = new RangoValor(1100, 2200);
 
-        Practica practica1 = new Practica(1, "Hemograma Completo", "Hematología", rango1, 24.0f, true);
-        Practica practica2 = new Practica(2, "Perfil Lipídico", "Química Clínica", rango2, 48.0f, true);
-        Practica practica3 = new Practica(3, "Protrombina", "Coagulación", rango3, 60.0f, true);
-        Practica practica4 = new Practica(4, "Panel de Hormonas Tiroideas", "Endocrinología", rango4, 80.0f, true);
+        Practica practica1 = new Practica(1, "Hemograma Completo", "Hematología", rango1, 24.0f, true,false);
+        Practica practica2 = new Practica(2, "Perfil Lipídico", "Química Clínica", rango2, 48.0f, true,false);
+        Practica practica3 = new Practica(3, "Protrombina", "Coagulación", rango3, 60.0f, true,false);
+        Practica practica4 = new Practica(4, "Panel de Hormonas Tiroideas", "Endocrinología", rango4, 80.0f, true,false);
 
         harcodedPracticas.add(practica1);
         harcodedPracticas.add(practica2);

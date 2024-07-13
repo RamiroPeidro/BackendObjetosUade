@@ -231,7 +231,7 @@ public class AdministradorView extends JFrame {
                 float cantHorasResultados = Float.parseFloat(txtCantHoras.getText());
                 boolean habilitada = Boolean.parseBoolean(txtHabilitada.getText());
 
-                RangoValorDTO rangoValorDTO = new RangoValorDTO(minValor, maxValor, umbral);
+                RangoValorDTO rangoValorDTO = new RangoValorDTO(minValor, maxValor);
                 PracticaDTO practicaDTO = new PracticaDTO(codigoPractica, nombrePractica, grupo, rangoValorDTO, cantHorasResultados, habilitada, false);
 
                 adminController.darAltaPractica(practicaDTO);
