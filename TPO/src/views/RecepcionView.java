@@ -10,8 +10,10 @@ import controller.RecepcionController;
 import Dtos.PacienteDTO;
 import Dtos.PeticionDTO;
 import Dtos.ResultadoDTO;
+import datos.PeticionManager;
 import model.Practica;
 import datos.PracticaManager;
+import model.Resultado;
 
 public class RecepcionView extends JFrame {
 
@@ -57,12 +59,37 @@ public class RecepcionView extends JFrame {
         btnConsultarResultados.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                solicitarResultados();
+                int idPeticion = Integer.parseInt(txtIDPeticionAConsultar.getText());
+
+                List<Resultado> resultados = recepcionController.solicitarResultados(idPeticion);
+
+                //si a la condicion del if le agregamos ! podemos ver la peticion, tambien se pueden setear algunos resultados en true para mostarlo. los resultados por default estan en false, pero se me tira como que ninguna peticion esta finalizada.
+                if (PeticionManager.getPeticionById(idPeticion).chequearSiLaPeticionEstaFinalizada()) {
+                    PeticionView peticionView = new PeticionView(resultados);
+                    peticionView.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "La petición aún no está finalizada, todavía no se pueden chequear sus resultados.");
+                }
+            }
+        });
+
+
+
+        //LISTAR PETICIONES CRITICAS
+        btnListarPeticionesCriticas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                PeticionesResultadosValoresCriticos peticionesResultadosValoresCriticos = new PeticionesResultadosValoresCriticos(recepcionController.listarPeticionesCriticas());
+                peticionesResultadosValoresCriticos.setVisible(true);
             }
         });
 
         setVisible(true);
     }
+
+
+
 
     private void initComponents() {
 
@@ -86,7 +113,7 @@ public class RecepcionView extends JFrame {
         txtDarBajaPaciente = new JTextField();
         txtDarBajaPaciente.setBounds(100, 350, 150, 30);
         add(txtDarBajaPaciente);
-        btnDarBajaPaciente = addButton("Dar Baja Paciente", 100, 375);
+        btnDarBajaPaciente = addButton("Dar Baja Paciente", 60, 375);
 
 
         JLabel lblTituloPeticion = new JLabel("PETICION");
@@ -124,15 +151,15 @@ public class RecepcionView extends JFrame {
         txtIDPeticionAConsultar = new JTextField();
         txtIDPeticionAConsultar.setBounds(500, 500, 150, 30);
         add(txtIDPeticionAConsultar);
-        btnConsultarResultados = addButton("Resultados Petición", 500, 525);
+        btnConsultarResultados = addButton("Solicitar Resultados Petición", 460, 525);
 
 
-        btnListarPeticionesCriticas = addButton("Peticiones Criticas", 500, 600);
+        btnListarPeticionesCriticas = addButton("Listar Peticiones Criticas", 460, 600);
     }
 
     private JButton addButton(String text, int x, int y) {
         JButton button = new JButton(text);
-        button.setBounds(x, y, 150, 30);
+        button.setBounds(x, y, 230, 30);
         add(button);
         return button;
     }
@@ -159,22 +186,6 @@ public class RecepcionView extends JFrame {
     }
 
 
-    /*private void cargarPeticion() {
-        int dni = Integer.parseInt(txtDNI.getText());
-        String obraSocial = txtObraSocial.getText();
-        int sucursalId = Integer.parseInt(txtSucursalId.getText());
-
-        // Obtener las prácticas seleccionadas
-        List<String> selectedPracticas = practicaList.getSelectedValuesList();
-        List<Practica> practicasSeleccionadas = new ArrayList<>();
-        for (String practicaNombre : selectedPracticas) {
-            practicasSeleccionadas.add(PracticaManager.getPracticaByName(practicaNombre));
-        }
-
-        recepcionController.cargarPeticion(dni, obraSocial, sucursalId, practicasSeleccionadas);
-        JOptionPane.showMessageDialog(this, "Petición cargada exitosamente");
-    }*/
-
     private void modificarPeticion () {
         int peticionId = Integer.parseInt(txtPeticionId.getText());
         recepcionController.modificarPeticion(peticionId);
@@ -187,28 +198,6 @@ public class RecepcionView extends JFrame {
         JOptionPane.showMessageDialog(this, "Petición eliminada exitosamente");
     }
 
-    private void solicitarResultados () {
-        int peticionId = Integer.parseInt(txtIDPeticionAConsultar.getText());
-        List<ResultadoDTO> resultados = recepcionController.solicitarResultados(peticionId);
-
-        String[] columnNames = {"Valor", "ID Práctica", "Crítico", "Reservado"};
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-
-        for (ResultadoDTO resultado : resultados) {
-            Object[] row = {
-                    resultado.getValor(),
-                    resultado.getPracticaId(),
-                    resultado.isValorCritico(),
-                    resultado.isValorReservado()
-            };
-            model.addRow(row);
-        }
-
-        JTable table = new JTable(model);
-        JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(50, 600, 900, 150);
-        add(scrollPane);
-    }
 
     public static void main (String[]args){
         new RecepcionView();

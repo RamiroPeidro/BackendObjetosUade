@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class Peticion {
 
 
     // Constructor
-    public Peticion(int idPeticion, Paciente paciente, String obraSocial, Date fechaCarga,  Date fechaCalculadaDeEntrega, Sucursal sucursal, List<Practica> listaPracticas, List<Resultado> listaResultados) {
+    public Peticion(int idPeticion, Paciente paciente, String obraSocial, Date fechaCarga,  Date fechaCalculadaDeEntrega, Sucursal sucursal, List<Practica> listaPracticas) {
         this.idPeticion = idPeticion;
         this.paciente = paciente;
         this.obraSocial = obraSocial;
@@ -29,7 +30,7 @@ public class Peticion {
         this.fechaCalculadaDeEntrega = fechaCalculadaDeEntrega;
         this.sucursal = sucursal;
         this.listaPracticas = listaPracticas;
-        this.listaResultados = listaResultados;
+        this.listaResultados = new ArrayList<>();
         this.peticionFinalizada = chequearSiLaPeticionEstaFinalizada();
     }
 
@@ -109,21 +110,26 @@ public class Peticion {
 
     public Boolean chequearSiLaPeticionEstaFinalizada() {
         for (Resultado resultado : listaResultados) {
-            if (!resultado.isFinalizado()) {
+            if (resultado.isFinalizado()) {
                 return false;
             }
         }
         return true;
     }
 
+
+    //LISTAR PETICIONES CRITICAS
     public boolean chequearSiTieneResultadosCriticos() {
+
         for (Resultado resultado : listaResultados) {
-            if (resultado.isValorCritico()) {
+            if (!resultado.isValorCritico()) {
                 return true;
             }
         }
         return false;
     }
+
+
 
     // Método para obtener el mensaje de retiro por sucursal
     public String mostrarMensaje(int idSucursal) {

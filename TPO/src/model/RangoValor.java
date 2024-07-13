@@ -28,7 +28,8 @@ public class RangoValor {
     }
 
 
-    // Método para verificar si el valor es crítico
+
+    //LISTAR PETICIONES CRITICAS
     public boolean esCritico(float valor) {
         return valor < minValor || valor > maxValor;
     }

@@ -3,6 +3,9 @@ package controller;
 import Dtos.PacienteDTO;
 import Dtos.ResultadoDTO;
 import Dtos.PeticionDTO;
+import datos.PeticionManager;
+import model.Peticion;
+import model.Resultado;
 import service.PacienteService;
 import service.PeticionService;
 
@@ -12,6 +15,8 @@ public class RecepcionController {
     private static RecepcionController instance = null;
     private PacienteService pacienteService;
     private PeticionService peticionService;
+
+    private PeticionManager peticionManager;
 
     private RecepcionController() {
         this.pacienteService = new PacienteService();
@@ -57,11 +62,20 @@ public class RecepcionController {
         pacienteService.modificarPaciente(paciente);
     }
 
-    public List<ResultadoDTO> solicitarResultados(int idPeticion) {
+    /*public List<ResultadoDTO> solicitarResultados(int idPeticion) {
         return peticionService.solicitarResultado(idPeticion);
+    }*/
+
+    public List<Resultado> solicitarResultados(int idPeticion) {
+        return PeticionManager.getListaResultadosPeticion(idPeticion);
     }
 
-    public List<PeticionDTO> listarPeticionesCriticas() {
-        return peticionService.listarPeticionesCriticas();
+
+
+
+    //LISTAR PETICIONES CRITICAS
+    public List<Peticion> listarPeticionesCriticas() {
+        this.peticionManager = new PeticionManager();
+        return peticionManager.listarPeticionesCriticas();
     }
 }

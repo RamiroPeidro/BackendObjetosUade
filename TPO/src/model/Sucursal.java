@@ -1,14 +1,22 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Sucursal {
     private int numero;
     private String direccion;
-
-    //TODO agregar la relacion en el diagrama
     private Usuario responsableTecnico;
     private List<Peticion> peticionesDeSucursal;
+
+    /*public Sucursal(int numero, String direccion, Usuario responsableTecnico) {
+        this.numero = numero;
+        this.direccion = direccion;
+        this.responsableTecnico = responsableTecnico;
+        this.peticionesDeSucursal = new ArrayList<>();
+    }*/
+
+
 
     // Getters y setters
     public int getNumero() {

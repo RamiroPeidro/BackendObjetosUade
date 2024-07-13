@@ -9,7 +9,7 @@ import java.util.List;
 public class PacienteManager {
 
     private static List<Paciente> harcodedPacientes = new ArrayList<>();
-    private static  List<Peticion> peticionesVacias = new ArrayList<>();
+    private static List<Peticion> peticionesVacias = new ArrayList<>();
 
     static {
         Paciente paciente1 = new Paciente("Juan", 37845123, "Corrientes 5620", new Email("juan.perez@example.com"), "masculino", 30, peticionesVacias);
@@ -25,5 +25,14 @@ public class PacienteManager {
 
     public static List<Paciente> getHarcordedPacientes() {
         return harcodedPacientes;
+    }
+
+    public static Paciente buscarPorDni(int dni) {
+        for (Paciente paciente : harcodedPacientes) {
+            if (paciente.getDNIPaciente() == dni) {
+                return paciente;
+            }
+        }
+        return null;
     }
 }

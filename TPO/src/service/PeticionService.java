@@ -51,7 +51,6 @@ public class PeticionService {
                 new Date(),
                 new Date(Long.MAX_VALUE),
                 sucursal,
-                new ArrayList<>(),
                 new ArrayList<>()
         );
 
@@ -70,7 +69,7 @@ public class PeticionService {
         }
 
         peticion.getListaPracticas().add(practica);
-        Resultado nuevoResultado = new Resultado(0, practica, peticion);
+        Resultado nuevoResultado = new Resultado(0, practica,peticion);
         peticion.getListaResultados().add(nuevoResultado);
 
         // Calcular la nueva fechaCalculadaDeEntrega

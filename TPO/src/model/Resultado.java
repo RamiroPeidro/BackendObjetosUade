@@ -15,6 +15,7 @@ public class Resultado {
         this.practica = practica;
         this.finalizado = false;
         this.valorCritico = verificarValorCritico();
+        //this.valorCritico = true;
         this.valorReservado = verificarValorReservado();
         this.peticion = peticion;
     }
@@ -33,6 +34,10 @@ public class Resultado {
     public Practica getPractica() {
         return practica;
     }
+    public Peticion getPeticion() {
+        return peticion;
+    }
+
 
     public void setPractica(Practica practica) {
         this.practica = practica;
@@ -54,11 +59,15 @@ public class Resultado {
         return valorReservado;
     }
 
-    // Método para verificar si el resultado tiene valores críticos
+
+
+    //LISTAR PETICIONES CRITICAS
     private boolean verificarValorCritico() {
         RangoValor rango = practica.getRangoValores();
         return rango.esCritico(this.valor);
     }
+
+
 
     // Método para verificar si el resultado tiene valores reservados
     private boolean verificarValorReservado() {
