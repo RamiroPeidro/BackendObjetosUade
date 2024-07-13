@@ -8,6 +8,14 @@ public class SucursalDTO {
     private UsuarioDTO responsableTecnico; // Ahora es un UsuarioDTO
     private List<Integer> peticionesIds; // Lista de IDs de peticiones asociadas
 
+    // Constructor
+    public SucursalDTO(int numero, String direccion, UsuarioDTO responsableTecnico, List<Integer> peticionesIds) {
+        this.numero = numero;
+        this.direccion = direccion;
+        this.responsableTecnico = responsableTecnico;
+        this.peticionesIds = peticionesIds;
+    }
+
     // Getters y setters
     public int getNumero() {
         return numero;

@@ -8,8 +8,6 @@ import service.PracticaService;
 import service.SucursalService;
 import service.UsuarioService;
 
-import java.util.Date;
-
 public class AdministradorController {
 
     private static AdministradorController instance = null;
@@ -31,8 +29,8 @@ public class AdministradorController {
         return instance;
     }
 
-    public void darDeAltaSucursal(SucursalDTO sucursalDTO, UsuarioDTO responsableTecnicoDTO) {
-        sucursalService.createSucursal(sucursalDTO, responsableTecnicoDTO);
+    public void darDeAltaSucursal(SucursalDTO sucursalDTO) {
+        sucursalService.createSucursal(sucursalDTO);
     }
 
     public void darBajaSucursal(int numeroSucursalBaja, int sucursalDestinoPeticiones) {
@@ -67,4 +65,7 @@ public class AdministradorController {
         practicaService.modificarPractica(practicaDTO);
     }
 
+    public void asociarResponsableTecnico(int numeroSucursal, int dniResponsableTecnico) {
+        sucursalService.asociarResponsableTecnico(numeroSucursal, dniResponsableTecnico);
+    }
 }

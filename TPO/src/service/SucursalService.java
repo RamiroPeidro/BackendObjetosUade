@@ -2,6 +2,7 @@ package service;
 
 import Daos.SucursalDAO;
 import Daos.PeticionDAO;
+import Daos.UsuarioDAO;
 import Dtos.SucursalDTO;
 import Dtos.UsuarioDTO;
 import model.Sucursal;
@@ -17,10 +18,12 @@ public class SucursalService {
 
     private SucursalDAO sucursalDAO;
     private PeticionDAO peticionDAO;
+    private UsuarioDAO usuarioDAO;
 
     public SucursalService() {
         this.sucursalDAO = new SucursalDAO();
         this.peticionDAO = new PeticionDAO();
+        this.usuarioDAO = new UsuarioDAO();
     }
 
     public void darBajaSucursal(int numeroSucursalBaja, int sucursalDestinoPeticiones) {
@@ -58,8 +61,8 @@ public class SucursalService {
         return convertirASucursalDTO(sucursal);
     }
 
-    public void createSucursal(SucursalDTO sucursalDTO, UsuarioDTO responsableTecnicoDTO) {
-        Sucursal sucursal = convertirASucursal(sucursalDTO, responsableTecnicoDTO);
+    public void createSucursal(SucursalDTO sucursalDTO) {
+        Sucursal sucursal = convertirASucursal(sucursalDTO);
         sucursalDAO.create(sucursal);
     }
 
@@ -98,42 +101,43 @@ public class SucursalService {
         sucursalDAO.update(sucursalExistente);
     }
 
+    public void asociarResponsableTecnico(int numeroSucursal, int dniResponsableTecnico) {
+        Sucursal sucursalExistente = sucursalDAO.findByNumero(numeroSucursal);
+        if (sucursalExistente == null) {
+            throw new IllegalArgumentException("Sucursal no encontrada");
+        }
+
+        Usuario responsableTecnico = usuarioDAO.findById(dniResponsableTecnico);
+        if (responsableTecnico == null) {
+            throw new IllegalArgumentException("Usuario no encontrado");
+        }
+
+        sucursalExistente.setResponsableTecnico(responsableTecnico);
+        sucursalDAO.update(sucursalExistente);
+    }
+
     // Métodos de conversión
 
     private SucursalDTO convertirASucursalDTO(Sucursal sucursal) {
-        SucursalDTO sucursalDTO = new SucursalDTO();
-        sucursalDTO.setNumero(sucursal.getNumero());
-        sucursalDTO.setDireccion(sucursal.getDireccion());
-        sucursalDTO.setResponsableTecnico(convertirAUsuarioDTO(sucursal.getResponsableTecnico()));
-
         List<Integer> peticionesIds = new ArrayList<>();
         for (Peticion peticion : sucursal.getPeticionesDeSucursal()) {
             peticionesIds.add(peticion.getIdPeticion());
         }
-        sucursalDTO.setPeticionesIds(peticionesIds);
 
-        return sucursalDTO;
+        return new SucursalDTO(
+                sucursal.getNumero(),
+                sucursal.getDireccion(),
+                convertirAUsuarioDTO(sucursal.getResponsableTecnico()),
+                peticionesIds
+        );
     }
 
-    private Sucursal convertirASucursal(SucursalDTO sucursalDTO, UsuarioDTO responsableTecnicoDTO) {
+
+    private Sucursal convertirASucursal(SucursalDTO sucursalDTO) {
         Sucursal sucursal = new Sucursal();
         sucursal.setNumero(sucursalDTO.getNumero());
         sucursal.setDireccion(sucursalDTO.getDireccion());
 
-        // Crear Email y Usuario
-        Email emailObj = new Email(responsableTecnicoDTO.getMail());
-        Usuario responsableTecnico = new Usuario(
-                responsableTecnicoDTO.getNombreUsuario(),
-                emailObj,
-                responsableTecnicoDTO.getPassword(),
-                responsableTecnicoDTO.getNombre(),
-                responsableTecnicoDTO.getDomicilio(),
-                responsableTecnicoDTO.getDni(),
-                responsableTecnicoDTO.getFechaNacimiento()
-        );
-        sucursal.setResponsableTecnico(responsableTecnico);
-
-        // Convertir los IDs de peticiones a objetos Peticion
         List<Peticion> peticiones = new ArrayList<>();
         for (Integer id : sucursalDTO.getPeticionesIds()) {
             Peticion peticion = peticionDAO.findById(id);
@@ -146,16 +150,19 @@ public class SucursalService {
         return sucursal;
     }
 
-    private UsuarioDTO convertirAUsuarioDTO(Usuario usuario) {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setNombreUsuario(usuario.getNombreUsuario());
-        usuarioDTO.setMail(usuario.getMail().getValue());
-        usuarioDTO.setPassword(usuario.getPassword());
-        usuarioDTO.setNombre(usuario.getNombre());
-        usuarioDTO.setDomicilio(usuario.getDomicilio());
-        usuarioDTO.setDni(usuario.getDni());
-        usuarioDTO.setFechaNacimiento(usuario.getFechaNacimiento());
 
-        return usuarioDTO;
+    private UsuarioDTO convertirAUsuarioDTO(Usuario usuario) {
+        if (usuario == null) {
+            return null;
+        }
+        return new UsuarioDTO(
+                usuario.getNombreUsuario(),
+                usuario.getMail().getValue(),
+                usuario.getPassword(),
+                usuario.getNombre(),
+                usuario.getDomicilio(),
+                usuario.getDni(),
+                usuario.getFechaNacimiento()
+        );
     }
 }

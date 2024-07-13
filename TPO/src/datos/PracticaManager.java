@@ -14,10 +14,10 @@ public class PracticaManager {
         RangoValor rango3 = new RangoValor(300, 600, 100);
         RangoValor rango4 = new RangoValor(1100, 2200, 3000);
 
-        Practica practica1 = new Practica(1, "Hemograma Completo", "Hematología", rango1, 24.0f, true);
-        Practica practica2 = new Practica(2, "Perfil Lipídico", "Química Clínica", rango2, 48.0f, true);
-        Practica practica3 = new Practica(3, "Protrombina", "Coagulación", rango3, 60.0f, true);
-        Practica practica4 = new Practica(4, "Panel de Hormonas Tiroideas", "Endocrinología", rango4, 80.0f, true);
+        Practica practica1 = new Practica(1, "Hemograma Completo", "Hematología", rango1, 24.0f, true, false);
+        Practica practica2 = new Practica(2, "Perfil Lipídico", "Química Clínica", rango2, 48.0f, true, false);
+        Practica practica3 = new Practica(3, "Protrombina", "Coagulación", rango3, 60.0f, true, true);
+        Practica practica4 = new Practica(4, "Panel de Hormonas Tiroideas", "Endocrinología", rango4, 80.0f, true, false);
 
         harcodedPracticas.add(practica1);
         harcodedPracticas.add(practica2);

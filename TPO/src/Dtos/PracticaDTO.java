@@ -1,5 +1,7 @@
 package Dtos;
 
+import java.util.List;
+
 public class PracticaDTO {
 
     private int codigoPractica;

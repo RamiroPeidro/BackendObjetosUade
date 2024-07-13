@@ -1,8 +1,13 @@
+// Ajustar la posición de los componentes de la vista de Administrador
+
 package views;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Date;
+
 import controller.AdministradorController;
 import Dtos.SucursalDTO;
 import Dtos.UsuarioDTO;
@@ -15,11 +20,12 @@ public class AdministradorView extends JFrame {
     private JButton btnAltaUsuario, btnBajaUsuario, btnModificarUsuario;
 
     //txt y btn Sucursal
-    private JTextField txtNumeroSucursal, txtDireccion, txtResponsableTecnico, txtNumeroSucursalBaja, txtNumeroSucursalDestionPeticiones;
-    private JButton btnAltaSucursal, btnBajaSucursal, btnModificarSucursal;
+    private JTextField txtNumeroSucursal, txtDireccion, txtResponsableTecnico, txtNumeroSucursalBaja, txtNumeroSucursalDestionPeticiones, txtDniResponsableTecnico;
+    private JButton btnAltaSucursal, btnBajaSucursal, btnModificarSucursal, btnAsociarResponsableTecnico;
 
     //txt y btn Practica
     private JTextField txtCodigoPractica, txtNombrePractica, txtGrupo, txtMinValor, txtMaxValor, txtUmbral, txtCantHoras, txtHabilitada;
+    private JCheckBox chkEsReservada;
     private JButton btnAltaPractica, btnBajaPractica, btnModificarPractica;
 
     private AdministradorController adminController;
@@ -91,13 +97,20 @@ public class AdministradorView extends JFrame {
         btnAltaUsuario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                UsuarioDTO usuarioDTO = new UsuarioDTO();
+                UsuarioDTO usuarioDTO = new UsuarioDTO(
+                        txtNombreUsuario.getText(),
+                        txtMailUsuario.getText(),
+                        txtPassword.getText(),
+                        txtNombre.getText(),
+                        txtDomicilio.getText(),
+                        Integer.parseInt(txtDni.getText()),
+                        new Date() // Necesitarás convertir el texto a una fecha válida
+                );
                 // Rellenar usuarioDTO con los datos de los campos
                 adminController.darAltaUsuario(usuarioDTO);
                 JOptionPane.showMessageDialog(null, "Usuario dado de alta exitosamente");
             }
         });
-
 
         //SUCURSAL
         JLabel lblSucursal = new JLabel("SUCURSAL");
@@ -116,12 +129,6 @@ public class AdministradorView extends JFrame {
         txtDireccion = new JTextField();
         txtDireccion.setBounds(650, 125, 200, 30);
         add(txtDireccion);
-        JLabel lblResponsableTecnico = new JLabel("Responsable Tecnico:");
-        lblResponsableTecnico.setBounds(500, 150, 150, 30);
-        add(lblResponsableTecnico);
-        txtResponsableTecnico = new JTextField();
-        txtResponsableTecnico.setBounds(650, 150, 200, 30);
-        add(txtResponsableTecnico);
 
         btnAltaSucursal = new JButton("Dar Alta Sucursal");
         btnAltaSucursal.setBounds(550, 400, 200, 30);
@@ -129,29 +136,70 @@ public class AdministradorView extends JFrame {
         btnModificarSucursal = new JButton("Modificar Sucursal");
         btnModificarSucursal.setBounds(550, 425, 200, 30);
         add(btnModificarSucursal);
+
         JLabel lblNumeroSucursalBaja = new JLabel("Numero Sucursal Baja:");
         lblNumeroSucursalBaja.setBounds(580, 475, 200, 30);
         add(lblNumeroSucursalBaja);
         txtNumeroSucursalBaja = new JTextField();
         txtNumeroSucursalBaja.setBounds(550, 500, 200, 30);
         add(txtNumeroSucursalBaja);
-        JLabel lblNumeroSucursalDestionPeticiones = new JLabel("Numero Sucursal Destion Peticiones:");
+
+        JLabel lblNumeroSucursalDestionPeticiones = new JLabel("Numero Sucursal Destino Peticiones:");
         lblNumeroSucursalDestionPeticiones.setBounds(535, 525, 250, 30);
         add(lblNumeroSucursalDestionPeticiones);
         txtNumeroSucursalDestionPeticiones = new JTextField();
         txtNumeroSucursalDestionPeticiones.setBounds(550, 550, 200, 30);
         add(txtNumeroSucursalDestionPeticiones);
+
         btnBajaSucursal = new JButton("Dar Baja Sucursal");
         btnBajaSucursal.setBounds(550, 575, 200, 30);
         add(btnBajaSucursal);
 
+        JLabel lblDniResponsableTecnico = new JLabel("DNI Responsable Técnico:");
+        lblDniResponsableTecnico.setBounds(550, 625, 200, 30);
+        add(lblDniResponsableTecnico);
+        txtDniResponsableTecnico = new JTextField();
+        txtDniResponsableTecnico.setBounds(550, 650, 200, 30);
+        add(txtDniResponsableTecnico);
+
+        btnAsociarResponsableTecnico = new JButton("Asociar Responsable Técnico");
+        btnAsociarResponsableTecnico.setBounds(550, 700, 200, 30);
+        add(btnAsociarResponsableTecnico);
+
         btnAltaSucursal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SucursalDTO sucursalDTO = new SucursalDTO();
+                // Crear el SucursalDTO con los datos capturados
+                SucursalDTO sucursalDTO = new SucursalDTO(
+                        Integer.parseInt(txtNumeroSucursal.getText()),
+                        txtDireccion.getText(),
+                        null, // Inicialmente sin responsable técnico
+                        new ArrayList<>() // Lista vacía de peticiones
+                );
+
                 // Rellenar sucursalDTO con los datos de los campos
-                adminController.darDeAltaSucursal(sucursalDTO, new UsuarioDTO()); // Asumimos que se pasa un UsuarioDTO vacío
+                adminController.darDeAltaSucursal(sucursalDTO);
                 JOptionPane.showMessageDialog(null, "Sucursal dada de alta exitosamente");
+            }
+        });
+
+        btnBajaSucursal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int numeroSucursalBaja = Integer.parseInt(txtNumeroSucursalBaja.getText());
+                int sucursalDestinoPeticiones = Integer.parseInt(txtNumeroSucursalDestionPeticiones.getText());
+                adminController.darBajaSucursal(numeroSucursalBaja, sucursalDestinoPeticiones);
+                JOptionPane.showMessageDialog(null, "Sucursal dada de baja exitosamente");
+            }
+        });
+
+        btnAsociarResponsableTecnico.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int numeroSucursal = Integer.parseInt(txtNumeroSucursal.getText());
+                int dniResponsableTecnico = Integer.parseInt(txtDniResponsableTecnico.getText());
+                adminController.asociarResponsableTecnico(numeroSucursal, dniResponsableTecnico);
+                JOptionPane.showMessageDialog(null, "Responsable técnico asociado exitosamente");
             }
         });
 
@@ -208,6 +256,12 @@ public class AdministradorView extends JFrame {
         txtHabilitada = new JTextField();
         txtHabilitada.setBounds(1020, 275, 200, 30);
         add(txtHabilitada);
+        JLabel lblEsReservada = new JLabel("Es Reservada:");
+        lblEsReservada.setBounds(900, 300, 100, 30);
+        add(lblEsReservada);
+        chkEsReservada = new JCheckBox();
+        chkEsReservada.setBounds(1020, 300, 200, 30);
+        add(chkEsReservada);
 
         btnAltaPractica = new JButton("Dar Alta Práctica");
         btnAltaPractica.setBounds(950, 400, 200, 30);
@@ -230,9 +284,10 @@ public class AdministradorView extends JFrame {
                 float umbral = Float.parseFloat(txtUmbral.getText());
                 float cantHorasResultados = Float.parseFloat(txtCantHoras.getText());
                 boolean habilitada = Boolean.parseBoolean(txtHabilitada.getText());
+                boolean esReservada = chkEsReservada.isSelected();
 
                 RangoValorDTO rangoValorDTO = new RangoValorDTO(minValor, maxValor, umbral);
-                PracticaDTO practicaDTO = new PracticaDTO(codigoPractica, nombrePractica, grupo, rangoValorDTO, cantHorasResultados, habilitada, false);
+                PracticaDTO practicaDTO = new PracticaDTO(codigoPractica, nombrePractica, grupo, rangoValorDTO, cantHorasResultados, habilitada, esReservada);
 
                 adminController.darAltaPractica(practicaDTO);
                 JOptionPane.showMessageDialog(null, "Práctica dada de alta exitosamente");
