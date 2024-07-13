@@ -232,7 +232,7 @@ public class AdministradorView extends JFrame {
                 boolean habilitada = Boolean.parseBoolean(txtHabilitada.getText());
 
                 RangoValorDTO rangoValorDTO = new RangoValorDTO(minValor, maxValor, umbral);
-                PracticaDTO practicaDTO = new PracticaDTO(codigoPractica, nombrePractica, grupo, rangoValorDTO, cantHorasResultados, habilitada);
+                PracticaDTO practicaDTO = new PracticaDTO(codigoPractica, nombrePractica, grupo, rangoValorDTO, cantHorasResultados, habilitada, false);
 
                 adminController.darAltaPractica(practicaDTO);
                 JOptionPane.showMessageDialog(null, "Práctica dada de alta exitosamente");
