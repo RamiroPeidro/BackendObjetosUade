@@ -32,6 +32,7 @@ public class RecepcionController {
         peticionService.asociarPracticaAPeticion(idPeticion, practicaId);
     }
 
+
     public void darBajaPeticion(int numeroPeticion) {
         peticionService.darBajaPeticion(numeroPeticion);
     }

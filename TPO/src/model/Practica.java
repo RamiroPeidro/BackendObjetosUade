@@ -12,17 +12,19 @@ public class Practica {
     private RangoValor rangoValores;
     private Float cantHorasResultados;
     private Boolean habilitada;
-    private Resultado resultado;
+    private Boolean esReservada;
+//    private Resultado resultado;
 
     // Constructor
-    public Practica(int codigoPractica, String nombrePractica, String grupo, RangoValor rangoValores, Float cantHorasResultados, Boolean habilitada) {
+    public Practica(int codigoPractica, String nombrePractica, String grupo, RangoValor rangoValores, Float cantHorasResultados, Boolean habilitada, Boolean esReservada) {
         this.codigoPractica = codigoPractica;
         this.nombrePractica = nombrePractica;
         this.grupo = grupo;
         this.rangoValores = rangoValores;
         this.cantHorasResultados = cantHorasResultados;
         this.habilitada = habilitada;
-        this.resultado = null;
+        this.esReservada = esReservada;
+//        this.resultado = null;
     }
 
     // Getters y Setters
@@ -74,10 +76,18 @@ public class Practica {
         this.habilitada = habilitada;
     }
 
-    public Resultado getResultado() {
-        return resultado;
+    public Boolean getEsReservada() {
+        return esReservada;
     }
-    public void setResultado(Resultado resultado) {
-        this.resultado = resultado;
+
+    public void setEsReservada(Boolean esReservada) {
+        this.esReservada = esReservada;
     }
+
+//    public Resultado getResultado() {
+//        return resultado;
+//    }
+//    public void setResultado(Resultado resultado) {
+//        this.resultado = resultado;
+//    }
 }

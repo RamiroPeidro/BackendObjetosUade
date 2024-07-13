@@ -8,15 +8,17 @@ public class PracticaDTO {
     private RangoValorDTO rangoValores;
     private Float cantHorasResultados;
     private Boolean habilitada;
+    private Boolean esReservada;
 
     // Constructor
-    public PracticaDTO(int codigoPractica, String nombrePractica, String grupo, RangoValorDTO rangoValores, Float cantHorasResultados, Boolean habilitada) {
+    public PracticaDTO(int codigoPractica, String nombrePractica, String grupo, RangoValorDTO rangoValores, Float cantHorasResultados, Boolean habilitada, Boolean esReservada) {
         this.codigoPractica = codigoPractica;
         this.nombrePractica = nombrePractica;
         this.grupo = grupo;
         this.rangoValores = rangoValores;
         this.cantHorasResultados = cantHorasResultados;
         this.habilitada = habilitada;
+        this.esReservada = esReservada;
     }
 
     // Getters y Setters
@@ -66,5 +68,13 @@ public class PracticaDTO {
 
     public void setHabilitada(Boolean habilitada) {
         this.habilitada = habilitada;
+    }
+
+    public Boolean getEsReservada() {
+        return esReservada;
+    }
+
+    public void setEsReservada(Boolean esReservada) {
+        this.esReservada = esReservada;
     }
 }

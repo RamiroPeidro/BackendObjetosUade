@@ -70,7 +70,7 @@ public class PeticionService {
         }
 
         peticion.getListaPracticas().add(practica);
-        Resultado nuevoResultado = new Resultado(0, practica);
+        Resultado nuevoResultado = new Resultado(0, practica, peticion);
         peticion.getListaResultados().add(nuevoResultado);
 
         // Calcular la nueva fechaCalculadaDeEntrega

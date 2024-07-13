@@ -4,18 +4,19 @@ public class Resultado {
 
     private float valor;
     private Practica practica;
-
+    private Peticion peticion;
     private boolean finalizado;
     private boolean valorCritico;
     private boolean valorReservado;
 
     // Constructor
-    public Resultado(float valor, Practica practica) {
+    public Resultado(float valor, Practica practica, Peticion peticion) {
         this.valor = valor;
         this.practica = practica;
         this.finalizado = false;
         this.valorCritico = verificarValorCritico();
         this.valorReservado = verificarValorReservado();
+        this.peticion = peticion;
     }
 
     // Getters y Setters
@@ -61,7 +62,6 @@ public class Resultado {
 
     // Método para verificar si el resultado tiene valores reservados
     private boolean verificarValorReservado() {
-        RangoValor rango = practica.getRangoValores();
-        return rango.esReservado(this.valor);
+        return this.practica.getEsReservada();
     }
 }

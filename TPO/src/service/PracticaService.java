@@ -46,7 +46,8 @@ public class PracticaService {
                 practicaDTO.getGrupo(),
                 rangoValores,
                 practicaDTO.getCantHorasResultados(),
-                practicaDTO.getHabilitada()
+                practicaDTO.getHabilitada(),
+                practicaDTO.getEsReservada()
         );
     }
 
@@ -66,7 +67,8 @@ public class PracticaService {
                 practica.getGrupo(),
                 rangoValorDTO,
                 practica.getCantHorasResultados(),
-                practica.getHabilitada()
+                practica.getHabilitada(),
+                practica.getEsReservada()
         );
     }
 }

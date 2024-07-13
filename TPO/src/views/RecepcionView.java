@@ -93,7 +93,7 @@ public class RecepcionView extends JFrame {
         lblTituloPeticion.setBounds(520, 15, 200, 30);
         add(lblTituloPeticion);
 
-        addLabelAndTextField("ID Petición:", 400, 50, txtPeticionId = new JTextField());
+//        addLabelAndTextField("ID Petición:", 400, 50, txtPeticionId = new JTextField());
         addLabelAndTextField("Obra Social:", 400, 75, txtObraSocial = new JTextField());
         addLabelAndTextField("ID Sucursal:", 400, 100, txtSucursalId = new JTextField());
         addLabelAndTextField("DNI Paciente:", 400, 125, txtDNIPaciente = new JTextField());
