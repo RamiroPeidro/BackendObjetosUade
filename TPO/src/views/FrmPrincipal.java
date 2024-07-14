@@ -1,6 +1,8 @@
 package views;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class FrmPrincipal extends JFrame {
 
@@ -9,6 +11,7 @@ public class FrmPrincipal extends JFrame {
     private JButton administradorButton;
     private JButton recepcionButton;
     private JButton laboratoristaButton;
+    private FrmPrincipal self;
 
     public FrmPrincipal(String titulo) {
         super(titulo);
@@ -28,10 +31,22 @@ public class FrmPrincipal extends JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+        this.asociarEventos();
 //        this.pack();
+        this.self = this;
+
     }
 
+    private void asociarEventos() {
+        laboratoristaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FrmLaboratorista frmLaboratorista = new FrmLaboratorista(self, "Laboratorista");
+                frmLaboratorista.setVisible(true);
+            }
+        });
+    }
     public static void main(String[] args) {
-        FrmPrincipal frame = new FrmPrincipal("Primer programa Swing");
+        FrmPrincipal frame = new FrmPrincipal("Sistema de Laboratorio");
     }
 }

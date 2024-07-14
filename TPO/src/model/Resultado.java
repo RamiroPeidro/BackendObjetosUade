@@ -1,5 +1,7 @@
 package model;
 
+import Dtos.ResultadoDTO;
+
 public class Resultado {
 
     private float valor;
@@ -63,5 +65,16 @@ public class Resultado {
     // Método para verificar si el resultado tiene valores reservados
     private boolean verificarValorReservado() {
         return this.practica.getEsReservada();
+    }
+
+    public ResultadoDTO toDTO() {
+        return new ResultadoDTO(
+                String.valueOf(this.valor),
+                this.practica.getCodigoPractica(),
+                this.peticion.getIdPeticion(),
+                this.finalizado,
+                this.valorCritico,
+                this.valorReservado
+        );
     }
 }

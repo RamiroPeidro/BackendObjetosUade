@@ -7,7 +7,19 @@ import java.util.List;
 
 public class PeticionDAO extends GenericDAOImpl<Peticion, Integer> {
 
-    private List<Peticion> peticiones = new ArrayList<>();
+    private static PeticionDAO instance;
+    private List<Peticion> peticiones;
+
+    private PeticionDAO() {
+        this.peticiones = new ArrayList<>();
+    }
+
+    public static PeticionDAO getInstance() {
+        if (instance == null) {
+            instance = new PeticionDAO();
+        }
+        return instance;
+    }
 
     @Override
     public Peticion findById(Integer id) {
@@ -21,7 +33,7 @@ public class PeticionDAO extends GenericDAOImpl<Peticion, Integer> {
 
     @Override
     public List<Peticion> findAll() {
-        return peticiones;
+        return new ArrayList<>(peticiones);
     }
 
     @Override

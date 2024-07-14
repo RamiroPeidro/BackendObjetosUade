@@ -13,7 +13,7 @@ public class UsuarioService {
     private UsuarioDAO usuarioDAO;
 
     public UsuarioService() {
-        this.usuarioDAO = new UsuarioDAO();
+        this.usuarioDAO = UsuarioDAO.getInstance();
     }
 
     public void darAltaUsuario(UsuarioDTO usuarioDTO) {
@@ -54,16 +54,18 @@ public class UsuarioService {
     }
 
     public UsuarioDTO convertirUsuarioADTO(Usuario usuario) {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setNombreUsuario(usuario.getNombreUsuario());
-        usuarioDTO.setMail(usuario.getMail().getValue());
-        usuarioDTO.setPassword(usuario.getPassword());
-        usuarioDTO.setNombre(usuario.getNombre());
-        usuarioDTO.setDomicilio(usuario.getDomicilio());
-        usuarioDTO.setDni(usuario.getDni());
-        usuarioDTO.setFechaNacimiento(usuario.getFechaNacimiento());
-        return usuarioDTO;
+        return new UsuarioDTO(
+                usuario.getNombreUsuario(),
+                usuario.getMail().getValue(),
+                usuario.getPassword(),
+                usuario.getNombre(),
+                usuario.getDomicilio(),
+                usuario.getDni(),
+                usuario.getFechaNacimiento()
+        );
     }
+
+
 
     public List<UsuarioDTO> obtenerTodosLosUsuarios() {
         List<Usuario> usuarios = usuarioDAO.findAll();

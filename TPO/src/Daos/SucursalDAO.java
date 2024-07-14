@@ -6,8 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SucursalDAO extends GenericDAOImpl<Sucursal, Integer> {
+    private static SucursalDAO instance;
+    private List<Sucursal> sucursales;
 
-    private List<Sucursal> sucursales = new ArrayList<>();
+    private SucursalDAO() {
+        this.sucursales = new ArrayList<>();
+    }
+
+    public static SucursalDAO getInstance() {
+        if (instance == null) {
+            instance = new SucursalDAO();
+        }
+        return instance;
+    }
 
     @Override
     public Sucursal findById(Integer id) {
@@ -30,7 +41,7 @@ public class SucursalDAO extends GenericDAOImpl<Sucursal, Integer> {
 
     @Override
     public List<Sucursal> findAll() {
-        return sucursales;
+        return new ArrayList<>(sucursales);
     }
 
     @Override

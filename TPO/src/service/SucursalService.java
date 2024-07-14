@@ -19,8 +19,8 @@ public class SucursalService {
     private PeticionDAO peticionDAO;
 
     public SucursalService() {
-        this.sucursalDAO = new SucursalDAO();
-        this.peticionDAO = new PeticionDAO();
+        this.sucursalDAO = SucursalDAO.getInstance();
+        this.peticionDAO = PeticionDAO.getInstance();
     }
 
     public void darBajaSucursal(int numeroSucursalBaja, int sucursalDestinoPeticiones) {
@@ -101,19 +101,21 @@ public class SucursalService {
     // Métodos de conversión
 
     private SucursalDTO convertirASucursalDTO(Sucursal sucursal) {
-        SucursalDTO sucursalDTO = new SucursalDTO();
-        sucursalDTO.setNumero(sucursal.getNumero());
-        sucursalDTO.setDireccion(sucursal.getDireccion());
-        sucursalDTO.setResponsableTecnico(convertirAUsuarioDTO(sucursal.getResponsableTecnico()));
-
         List<Integer> peticionesIds = new ArrayList<>();
         for (Peticion peticion : sucursal.getPeticionesDeSucursal()) {
             peticionesIds.add(peticion.getIdPeticion());
         }
-        sucursalDTO.setPeticionesIds(peticionesIds);
+
+        SucursalDTO sucursalDTO = new SucursalDTO(
+                sucursal.getNumero(),
+                sucursal.getDireccion(),
+                convertirAUsuarioDTO(sucursal.getResponsableTecnico()),
+                peticionesIds
+        );
 
         return sucursalDTO;
     }
+
 
     private Sucursal convertirASucursal(SucursalDTO sucursalDTO, UsuarioDTO responsableTecnicoDTO) {
         Sucursal sucursal = new Sucursal();
@@ -147,15 +149,14 @@ public class SucursalService {
     }
 
     private UsuarioDTO convertirAUsuarioDTO(Usuario usuario) {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setNombreUsuario(usuario.getNombreUsuario());
-        usuarioDTO.setMail(usuario.getMail().getValue());
-        usuarioDTO.setPassword(usuario.getPassword());
-        usuarioDTO.setNombre(usuario.getNombre());
-        usuarioDTO.setDomicilio(usuario.getDomicilio());
-        usuarioDTO.setDni(usuario.getDni());
-        usuarioDTO.setFechaNacimiento(usuario.getFechaNacimiento());
-
-        return usuarioDTO;
+        return new UsuarioDTO(
+                usuario.getNombreUsuario(),
+                usuario.getMail().getValue(),
+                usuario.getPassword(),
+                usuario.getNombre(),
+                usuario.getDomicilio(),
+                usuario.getDni(),
+                usuario.getFechaNacimiento()
+        );
     }
 }

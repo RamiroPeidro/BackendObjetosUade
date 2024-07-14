@@ -11,7 +11,7 @@ public class PracticaService {
     private PracticaDAO practicaDAO;
 
     public PracticaService() {
-        this.practicaDAO = new PracticaDAO();
+        this.practicaDAO = PracticaDAO.getInstance();
     }
 
     public void darAltaPractica(PracticaDTO practicaDTO) {
