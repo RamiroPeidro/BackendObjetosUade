@@ -280,11 +280,14 @@ public class PeticionService {
             int practicaId = resultado.getPractica().getCodigoPractica();
             String valor;
 
-            if (resultado.isValorReservado() || resultado.isValorCritico()) {
-                valor = "Retirar por sucursal";
-            } else {
-                valor = String.valueOf(resultado.getValor());
-            }
+            //TODO ver si tiene que estar
+//            if (resultado.isValorCritico()) {
+//                valor = "Retirar por sucursal";
+//            } else {
+//                valor = String.valueOf(resultado.getValor());
+//            }
+
+            valor = String.valueOf(resultado.getValor());
 
             ResultadoDTO resultadoDTO = new ResultadoDTO(
                     valor,

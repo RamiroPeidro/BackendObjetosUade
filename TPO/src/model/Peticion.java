@@ -125,7 +125,6 @@ public class Peticion {
         return false;
     }
 
-    // Método para obtener el mensaje de retiro por sucursal
     public String mostrarMensaje(int idSucursal) {
         return "Retirar por sucursal " + idSucursal;
     }

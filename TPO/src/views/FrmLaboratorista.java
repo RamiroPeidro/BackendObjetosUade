@@ -6,9 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import controller.AdministradorController;
 import controller.LaboratoristaController;
-import controller.RecepcionController;
 import Dtos.PeticionDTO;
 
 public class FrmLaboratorista extends JDialog {
@@ -223,8 +221,6 @@ public class FrmLaboratorista extends JDialog {
     }
 
     public static void main(String[] args) {
-        AdministradorController.getInstance(); // Instanciar AdministradorController para cargar datos de prueba
-        RecepcionController.getInstance(); // Instanciar RecepcionController para cargar peticiones de prueba
         new FrmLaboratorista(null, "Laboratorista").setVisible(true);
     }
 }

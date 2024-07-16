@@ -1,5 +1,8 @@
 package views;
 
+import controller.AdministradorController;
+import controller.RecepcionController;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,9 +35,7 @@ public class FrmPrincipal extends JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.asociarEventos();
-//        this.pack();
         this.self = this;
-
     }
 
     private void asociarEventos() {
@@ -45,8 +46,19 @@ public class FrmPrincipal extends JFrame {
                 frmLaboratorista.setVisible(true);
             }
         });
+
+        administradorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FrmAdministrador frmAdministrador = new FrmAdministrador(self, "Administrador");
+                frmAdministrador.setVisible(true);
+            }
+        });
     }
+
     public static void main(String[] args) {
+        AdministradorController.getInstance(); // Instanciar AdministradorController para cargar datos de prueba
+        RecepcionController.getInstance(); // Instanciar RecepcionController para cargar peticiones de prueba
         FrmPrincipal frame = new FrmPrincipal("Sistema de Laboratorio");
     }
 }

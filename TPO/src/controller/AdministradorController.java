@@ -25,8 +25,8 @@ public class AdministradorController {
         this.usuarioService = new UsuarioService();
         this.practicaService = new PracticaService();
 
-        cargarPracticasDePrueba();
-        cargarSucursalDePrueba();
+        //TODO sacar
+        //cargarPracticasDePrueba();
     }
 
     public static AdministradorController getInstance() {
@@ -36,17 +36,19 @@ public class AdministradorController {
         return instance;
     }
 
-    public void darDeAltaSucursal(SucursalDTO sucursalDTO, UsuarioDTO responsableTecnicoDTO) {
-        sucursalService.createSucursal(sucursalDTO, responsableTecnicoDTO);
+    public void darDeAltaSucursal(SucursalDTO sucursalDTO, int dniResponsableTecnico) {
+        sucursalService.createSucursal(sucursalDTO, dniResponsableTecnico);
     }
+
 
     public void darBajaSucursal(int numeroSucursalBaja, int sucursalDestinoPeticiones) {
         sucursalService.darBajaSucursal(numeroSucursalBaja, sucursalDestinoPeticiones);
     }
 
-    public void modificarSucursal(SucursalDTO sucursalDTO, UsuarioDTO responsableTecnicoDTO) {
-        sucursalService.modificarSucursal(sucursalDTO, responsableTecnicoDTO);
+    public void modificarSucursal(SucursalDTO sucursalDTO, int dniResponsableTecnico) {
+        sucursalService.modificarSucursal(sucursalDTO, dniResponsableTecnico);
     }
+
 
     public void darAltaUsuario(UsuarioDTO usuarioDTO) {
         usuarioService.darAltaUsuario(usuarioDTO);
@@ -81,30 +83,6 @@ public class AdministradorController {
         darAltaPractica(practica1);
         darAltaPractica(practica2);
         darAltaPractica(practica3);
-    }
-
-    private void cargarSucursalDePrueba() {
-        // Crear un responsable técnico de prueba
-        UsuarioDTO responsableTecnico = new UsuarioDTO(
-                "tecnicoUser",      // nombreUsuario
-                "tecnico@example.com", // mail
-                "password123",      // password
-                "Responsable Técnico", // nombre
-                "Calle Tecnico 456",   // domicilio
-                12345678,           // dni
-                new Date()          // fechaNacimiento
-        );
-
-        // Crear una sucursal de prueba
-        SucursalDTO sucursal = new SucursalDTO(
-                1,                  // numero
-                "Sucursal Central", // direccion
-                responsableTecnico, // responsableTecnico
-                new ArrayList<>()   // peticionesIds
-        );
-
-        // Dar de alta la sucursal
-        darDeAltaSucursal(sucursal, responsableTecnico);
     }
 
 }
