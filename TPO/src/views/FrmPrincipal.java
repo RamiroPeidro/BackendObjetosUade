@@ -54,11 +54,17 @@ public class FrmPrincipal extends JFrame {
                 frmAdministrador.setVisible(true);
             }
         });
+
+        recepcionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FrmRecepcionista frmRecepcionista = new FrmRecepcionista(self, "Recepcionista");
+                frmRecepcionista.setVisible(true);
+            }
+        });
     }
 
     public static void main(String[] args) {
-        AdministradorController.getInstance(); // Instanciar AdministradorController para cargar datos de prueba
-        RecepcionController.getInstance(); // Instanciar RecepcionController para cargar peticiones de prueba
         FrmPrincipal frame = new FrmPrincipal("Sistema de Laboratorio");
     }
 }

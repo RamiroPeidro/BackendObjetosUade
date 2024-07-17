@@ -16,9 +16,6 @@ public class RecepcionController {
     private RecepcionController() {
         this.pacienteService = new PacienteService();
         this.peticionService = new PeticionService();
-
-        //TODO sacar
-        //cargarPeticionesDePrueba();
     }
 
     public static RecepcionController getInstance() {

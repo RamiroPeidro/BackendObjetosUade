@@ -24,9 +24,6 @@ public class AdministradorController {
         this.sucursalService = new SucursalService();
         this.usuarioService = new UsuarioService();
         this.practicaService = new PracticaService();
-
-        //TODO sacar
-        //cargarPracticasDePrueba();
     }
 
     public static AdministradorController getInstance() {
