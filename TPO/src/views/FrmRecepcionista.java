@@ -410,7 +410,7 @@ public class FrmRecepcionista extends JFrame {
         List<PeticionDTO> peticionesCriticas = recepcionController.listarPeticionesCriticas();
         txtResultados.setText("");
         for (PeticionDTO peticion : peticionesCriticas) {
-            txtResultados.append(peticion.toString() + "\n");
+            txtResultados.append("Petición ID: " + peticion.getIdPeticion() + "\n");
         }
     }
 

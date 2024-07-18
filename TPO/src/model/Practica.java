@@ -13,6 +13,7 @@ public class Practica {
     private Float cantHorasResultados;
     private Boolean habilitada;
     private Boolean esReservada;
+
 //    private Resultado resultado;
 
     // Constructor
