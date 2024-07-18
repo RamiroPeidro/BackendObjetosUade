@@ -434,6 +434,7 @@ public class FrmAdministrador extends JFrame {
         RangoValorDTO rangoValorDTO = new RangoValorDTO(minValor, maxValor);
         PracticaDTO practicaDTO = new PracticaDTO(codigo, nombre, grupo, rangoValorDTO, cantHorasResultados, habilitada, reservada);
         administradorController.darAltaPractica(practicaDTO);
+        JOptionPane.showMessageDialog(this, "Practica dada de alta exitosamente.");
     }
 
     private void bajaPractica() {
