@@ -189,39 +189,65 @@ public class PeticionService {
         }
     }
 
-    public List<ResultadoDTO> solicitarResultado(int idPeticion) {
+    //VIEW SOLICITAR RESULTADOS PETICION
+    /*public List<ResultadoDTO> solicitarResultado(int idPeticion) {
+        //aca encuentra la peticion (a partir de su id) en peticion DAO donde se guardan las peticiones que cargamos, y lo guarda en la variable peticion que despues la usa en este metodo
         Peticion peticion = peticionDAO.findById(idPeticion);
         if (peticion == null) {
             throw new IllegalArgumentException("Peticion no encontrada");
         }
-
+        //aca le pide SOLO la lista de resultados
         List<Resultado> resultados = peticion.getListaResultados();
         List<ResultadoDTO> resultadoDTOs = new ArrayList<>();
-
         for (Resultado resultado : resultados) {
             int practicaId = resultado.getPractica().getCodigoPractica();
             String valor;
-
             if (resultado.isValorReservado()) {
                 valor = "Retirar por sucursal";
             } else {
                 valor = String.valueOf(resultado.getValor());
             }
-
-            ResultadoDTO resultadoDTO = new ResultadoDTO(
-                    valor,
-                    practicaId,
-                    peticion.getIdPeticion(),
-                    resultado.isFinalizado(),
-                    resultado.isValorCritico(),
-                    resultado.isValorReservado()
-            );
-
+            ResultadoDTO resultadoDTO = new ResultadoDTO(valor, practicaId, peticion.getIdPeticion(), resultado.isFinalizado(), resultado.isValorCritico(), resultado.isValorReservado());
             resultadoDTOs.add(resultadoDTO);
         }
-
         return resultadoDTOs;
-    }
+    }*/
+    /*public PeticionDTO solicitarResultado(int idPeticion) {
+        // peticion es la peticion que encontre a partir de su id
+        Peticion peticion = peticionDAO.findById(idPeticion);
+        if (peticion == null) {
+            throw new IllegalArgumentException("Peticion no encontrada");
+        }
+        String nombrePaciente = peticion.getPaciente().getNombre();
+        String obraSocial = peticion.getObraSocial();
+        Date fecha = peticion.getFechaCarga();
+        String direccionSucursal = peticion.getSucursal().getDireccion();
+        List<Resultado> resultados = peticion.getListaResultados();
+
+        PeticionDTO peticionDTO;
+        List<ResultadoDTO> resultadoDTOs = new ArrayList<>();
+
+        for (Resultado resultado : resultados) {
+            String nombrePractica = resultado.getPractica().getNombrePractica();
+            String valorResultado;
+            String valorMinPractica = String.valueOf(resultado.getPractica().getRangoValores().getMinValor());
+            String valorMaxPractica = String.valueOf(resultado.getPractica().getRangoValores().getMaxValor());
+            String grupoPractica = resultado.getPractica().getGrupo();
+            int practicaId = resultado.getPractica().getCodigoPractica();
+            if (resultado.isValorReservado()) {
+                valorResultado = "Retirar por sucursal";
+            } else {
+                valorResultado = String.valueOf(resultado.getValor());
+            }
+
+            ResultadoDTO resultadoDTO = new ResultadoDTO(valorResultado, practicaId, idPeticion, resultado.isFinalizado(), resultado.isValorCritico(), resultado.isValorReservado());
+            resultadoDTOs.add(resultadoDTO);
+        }
+        return true;
+    }*/
+
+
+
 
     public void eliminarResultadoDePractica(int idPeticion, int idPractica) {
         Peticion peticion = peticionDAO.findById(idPeticion);
@@ -288,6 +314,8 @@ public class PeticionService {
 //            }
 
             valor = String.valueOf(resultado.getValor());
+
+            //PracticaDTO practicaDTO = new PracticaDTO(resultado.getPractica().getCodigoPractica(),resultado.getPractica().getNombrePractica(),resultado.getPractica().getGrupo(),resultado.getPractica().getRangoValores(),0f,true,false)
 
             ResultadoDTO resultadoDTO = new ResultadoDTO(
                     valor,

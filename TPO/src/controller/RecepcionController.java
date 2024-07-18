@@ -1,10 +1,12 @@
 package controller;
 
 import Dtos.PacienteDTO;
+import Dtos.PracticaDTO;
 import Dtos.ResultadoDTO;
 import Dtos.PeticionDTO;
 import service.PacienteService;
 import service.PeticionService;
+import service.PracticaService;
 
 import java.util.List;
 
@@ -12,10 +14,12 @@ public class RecepcionController {
     private static RecepcionController instance = null;
     private PacienteService pacienteService;
     private PeticionService peticionService;
+    private PracticaService practicaService;
 
     private RecepcionController() {
         this.pacienteService = new PacienteService();
         this.peticionService = new PeticionService();
+        this.practicaService = new PracticaService();
     }
 
     public static RecepcionController getInstance() {
@@ -57,13 +61,27 @@ public class RecepcionController {
         pacienteService.modificarPaciente(paciente);
     }
 
-    public List<ResultadoDTO> solicitarResultados(int idPeticion) {
-        return peticionService.solicitarResultado(idPeticion);
-    }
+
 
     public List<PeticionDTO> listarPeticionesCriticas() {
         return peticionService.listarPeticionesCriticas();
     }
+
+
+    //BOTON SOLICITAR RESULTADOS PETICION
+    /*public List<ResultadoDTO> solicitarResultados(int idPeticion) {
+            return peticionService.solicitarResultado(idPeticion);
+        }*/
+
+
+
+
+
+
+
+
+
+
 
     private void cargarPeticionesDePrueba() {
         // Crear pacientes de prueba

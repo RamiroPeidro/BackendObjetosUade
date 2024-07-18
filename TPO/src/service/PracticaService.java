@@ -1,8 +1,10 @@
 package service;
 
 import Daos.PracticaDAO;
+import Dtos.PeticionDTO;
 import Dtos.PracticaDTO;
 import Dtos.RangoValorDTO;
+import model.Peticion;
 import model.Practica;
 import model.RangoValor;
 
@@ -71,4 +73,7 @@ public class PracticaService {
                 practica.getEsReservada()
         );
     }
+
+    //VIEW SOLICITAR RESULTADOS PETICION
+
 }

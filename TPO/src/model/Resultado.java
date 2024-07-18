@@ -36,6 +36,8 @@ public class Resultado {
         return practica;
     }
 
+    public Peticion getPeticion(){return peticion;}
+
     public void setPractica(Practica practica) {
         this.practica = practica;
     }
@@ -67,14 +69,14 @@ public class Resultado {
         return this.practica.getEsReservada();
     }
 
-    public ResultadoDTO toDTO() {
+    /*public ResultadoDTO toDTO() {
         return new ResultadoDTO(
                 String.valueOf(this.valor),
-                this.practica.getCodigoPractica(),
+                this.practica,
                 this.peticion.getIdPeticion(),
                 this.finalizado,
                 this.valorCritico,
                 this.valorReservado
         );
-    }
+    }*/
 }

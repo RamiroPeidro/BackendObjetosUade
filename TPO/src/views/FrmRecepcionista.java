@@ -229,7 +229,7 @@ public class FrmRecepcionista extends JFrame {
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.NONE;
         JButton btnSolicitarResultados = new JButton("Solicitar Resultados");
-        btnSolicitarResultados.addActionListener(e -> solicitarResultados());
+        btnSolicitarResultados.addActionListener(e -> mostrarInformacionPeticion());
         pnlResultados.add(btnSolicitarResultados, gbc);
 
         gbc.gridy = 2;
@@ -386,7 +386,8 @@ public class FrmRecepcionista extends JFrame {
         }
     }
 
-    private void solicitarResultados() {
+    //BOTON SOLICITAR RESULTADOS PETICION
+    /*private void solicitarResultados() {
         String idPeticionStr = txtIdPeticionResultados.getText().trim();
 
         if (idPeticionStr.isEmpty()) {
@@ -404,7 +405,88 @@ public class FrmRecepcionista extends JFrame {
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "ID Petición debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }*/
+
+    //METODO A PARTE PARA PROBAR LA VIEW DE DEL BOTON SOLICITAR RESULTADOS
+    private void mostrarInformacionPeticion() {
+        Peticion peticion = new Peticion();
+        peticion.setPaciente("Juan Pérez");
+        peticion.setSexo("Masculino");
+        peticion.setEdad(35);
+        peticion.setObraSocial("OSDE");
+        peticion.setFecha("15/07/2024");
+        peticion.setSucursal("Sucursal Centro");
+
+        List<Resultado> listaResultados = new ArrayList<>();
+        listaResultados.add(new Resultado("Hemograma", "5.5", "4.0", "6.0"));
+        listaResultados.add(new Resultado("Glucosa", "7.0", "3.0", "7.0"));
+        listaResultados.add(new Resultado("Colesterol", "190", "120", "200"));
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Paciente: ").append(peticion.getPaciente()).append("\n");
+        sb.append("Sexo: ").append(peticion.getSexo()).append("\n");
+        sb.append("Edad: ").append(peticion.getEdad()).append("\n");
+        sb.append("Obra Social: ").append(peticion.getObraSocial()).append("\n");
+        sb.append("Fecha: ").append(peticion.getFecha()).append("\n");
+        sb.append("Sucursal: ").append(peticion.getSucursal()).append("\n\n");
+
+        sb.append("Practica\tResultado\tValor Minimo\tValor Maximo\n");
+        sb.append("--------------------------------------------------------\n");
+        for (Resultado resultado : listaResultados) {
+            sb.append(resultado.getPractica()).append("\t")
+                    .append(resultado.getResultado()).append("\t")
+                    .append(resultado.getValorMinimo()).append("\t")
+                    .append(resultado.getValorMaximo()).append("\n");
+        }
+
+        txtResultados.setText(sb.toString());
     }
+
+    // Clases simuladas para probar la vista asi no má
+    class Peticion {
+        private String paciente;
+        private String sexo;
+        private int edad;
+        private String obraSocial;
+        private String fecha;
+        private String sucursal;
+
+        public String getPaciente() { return paciente; }
+        public void setPaciente(String paciente) { this.paciente = paciente; }
+        public String getSexo() { return sexo; }
+        public void setSexo(String sexo) { this.sexo = sexo; }
+        public int getEdad() { return edad; }
+        public void setEdad(int edad) { this.edad = edad; }
+        public String getObraSocial() { return obraSocial; }
+        public void setObraSocial(String obraSocial) { this.obraSocial = obraSocial; }
+        public String getFecha() { return fecha; }
+        public void setFecha(String fecha) { this.fecha = fecha; }
+        public String getSucursal() { return sucursal; }
+        public void setSucursal(String sucursal) { this.sucursal = sucursal; }
+    }
+
+    class Resultado {
+        private String practica;
+        private String resultado;
+        private String valorMinimo;
+        private String valorMaximo;
+
+        // Constructor
+        public Resultado(String practica, String resultado, String valorMinimo, String valorMaximo) {
+            this.practica = practica;
+            this.resultado = resultado;
+            this.valorMinimo = valorMinimo;
+            this.valorMaximo = valorMaximo;
+        }
+
+        // Getters
+        public String getPractica() { return practica; }
+        public String getResultado() { return resultado; }
+        public String getValorMinimo() { return valorMinimo; }
+        public String getValorMaximo() { return valorMaximo; }
+    }
+
+
 
     private void listarPeticionesCriticas() {
         List<PeticionDTO> peticionesCriticas = recepcionController.listarPeticionesCriticas();
