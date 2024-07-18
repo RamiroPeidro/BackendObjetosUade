@@ -36,7 +36,6 @@ public class FrmAdministrador extends JFrame {
     private JTextField txtGrupoPractica;
     private JTextField txtMinValor;
     private JTextField txtMaxValor;
-    private JTextField txtUmbralReservado;
     private JTextField txtCantHorasResultados;
     private JCheckBox chkHabilitada;
     private JCheckBox chkReservada;
@@ -243,13 +242,6 @@ public class FrmAdministrador extends JFrame {
         txtMaxValor = new JTextField(10);
         pnlPracticas.add(txtMaxValor, gbc);
 
-        gbc.gridx = 2;
-        pnlPracticas.add(new JLabel("Umbral Reservado:"), gbc);
-
-        gbc.gridx = 3;
-        txtUmbralReservado = new JTextField(10);
-        pnlPracticas.add(txtUmbralReservado, gbc);
-
         gbc.gridx = 0;
         gbc.gridy = 3;
         pnlPracticas.add(new JLabel("Cant Horas Resultados:"), gbc);
@@ -259,15 +251,19 @@ public class FrmAdministrador extends JFrame {
         pnlPracticas.add(txtCantHorasResultados, gbc);
 
         gbc.gridx = 2;
+        gbc.gridy = 4;
+
         pnlPracticas.add(new JLabel("Habilitada:"), gbc);
 
         gbc.gridx = 3;
+        gbc.gridy = 4;
+
         chkHabilitada = new JCheckBox();
         pnlPracticas.add(chkHabilitada, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 4;
-        pnlPracticas.add(new JLabel("Reservada:"), gbc);
+        pnlPracticas.add(new JLabel("Con valores reservados:"), gbc);
 
         gbc.gridx = 1;
         chkReservada = new JCheckBox();
@@ -432,11 +428,10 @@ public class FrmAdministrador extends JFrame {
         String grupo = txtGrupoPractica.getText();
         float minValor = Float.parseFloat(txtMinValor.getText());
         float maxValor = Float.parseFloat(txtMaxValor.getText());
-        float umbralReservado = Float.parseFloat(txtUmbralReservado.getText());
         float cantHorasResultados = Float.parseFloat(txtCantHorasResultados.getText());
         boolean habilitada = chkHabilitada.isSelected();
         boolean reservada = chkReservada.isSelected();
-        RangoValorDTO rangoValorDTO = new RangoValorDTO(minValor, maxValor, umbralReservado);
+        RangoValorDTO rangoValorDTO = new RangoValorDTO(minValor, maxValor);
         PracticaDTO practicaDTO = new PracticaDTO(codigo, nombre, grupo, rangoValorDTO, cantHorasResultados, habilitada, reservada);
         administradorController.darAltaPractica(practicaDTO);
     }
@@ -462,7 +457,6 @@ public class FrmAdministrador extends JFrame {
             String grupo = txtGrupoPractica.getText().trim();
             float minValor = Float.parseFloat(txtMinValor.getText().trim());
             float maxValor = Float.parseFloat(txtMaxValor.getText().trim());
-            float umbralReservado = Float.parseFloat(txtUmbralReservado.getText().trim());
             float cantHorasResultados = Float.parseFloat(txtCantHorasResultados.getText().trim());
             boolean habilitada = chkHabilitada.isSelected();
             boolean reservada = chkReservada.isSelected();
@@ -471,7 +465,7 @@ public class FrmAdministrador extends JFrame {
                 throw new IllegalArgumentException("Todos los campos deben estar completos.");
             }
 
-            RangoValorDTO rangoValorDTO = new RangoValorDTO(minValor, maxValor, umbralReservado);
+            RangoValorDTO rangoValorDTO = new RangoValorDTO(minValor, maxValor);
             PracticaDTO practicaDTO = new PracticaDTO(codigo, nombre, grupo, rangoValorDTO, cantHorasResultados, habilitada, reservada);
             administradorController.modificarPractica(practicaDTO);
             JOptionPane.showMessageDialog(this, "Práctica modificada exitosamente.");

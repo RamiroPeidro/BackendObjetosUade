@@ -73,9 +73,9 @@ public class AdministradorController {
 
     private void cargarPracticasDePrueba() {
         // Crear prácticas de prueba
-        PracticaDTO practica1 = new PracticaDTO(101, "Hemograma Completo", "Hematología", new RangoValorDTO(0.0f, 100.0f, 10.0f), 24f, true, false);
-        PracticaDTO practica2 = new PracticaDTO(102, "Glucosa en Sangre", "Bioquímica", new RangoValorDTO(70.0f, 110.0f, 5.0f), 12f, true, false);
-        PracticaDTO practica3 = new PracticaDTO(103, "Perfil Lipídico", "Bioquímica", new RangoValorDTO(100.0f, 200.0f, 10.0f), 24f, true, true);
+        PracticaDTO practica1 = new PracticaDTO(101, "Hemograma Completo", "Hematología", new RangoValorDTO(0.0f, 100.0f), 24f, true, false);
+        PracticaDTO practica2 = new PracticaDTO(102, "Glucosa en Sangre", "Bioquímica", new RangoValorDTO(70.0f, 110.0f), 12f, true, false);
+        PracticaDTO practica3 = new PracticaDTO(103, "Perfil Lipídico", "Bioquímica", new RangoValorDTO(100.0f, 200.0f), 24f, true, true);
 
         darAltaPractica(practica1);
         darAltaPractica(practica2);

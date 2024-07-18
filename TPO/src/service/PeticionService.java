@@ -381,8 +381,7 @@ public class PeticionService {
     private PracticaDTO convertirPracticaADTO(Practica practica) {
         RangoValorDTO rangoValorDTO = new RangoValorDTO(
                 practica.getRangoValores().getMinValor(),
-                practica.getRangoValores().getMaxValor(),
-                practica.getRangoValores().getUmbralReservado()
+                practica.getRangoValores().getMaxValor()
         );
         return new PracticaDTO(
                 practica.getCodigoPractica(),

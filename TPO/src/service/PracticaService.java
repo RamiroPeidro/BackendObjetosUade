@@ -52,11 +52,11 @@ public class PracticaService {
     }
 
     private RangoValor convertirDTORangoValorAEntidad(RangoValorDTO rangoValorDTO) {
-        return new RangoValor(rangoValorDTO.getMinValor(), rangoValorDTO.getMaxValor(), rangoValorDTO.getUmbralReservado());
+        return new RangoValor(rangoValorDTO.getMinValor(), rangoValorDTO.getMaxValor());
     }
 
     private RangoValorDTO convertirEntidadARangoValorDTO(RangoValor rangoValor) {
-        return new RangoValorDTO(rangoValor.getMinValor(), rangoValor.getMaxValor(), rangoValor.getUmbralReservado());
+        return new RangoValorDTO(rangoValor.getMinValor(), rangoValor.getMaxValor());
     }
 
     public PracticaDTO convertirPracticaADTO(Practica practica) {
