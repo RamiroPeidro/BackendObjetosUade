@@ -7,10 +7,9 @@ import Dtos.ResultadoDTO;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.List;
 
 public class FrmRecepcionista extends JFrame {
@@ -141,7 +140,7 @@ public class FrmRecepcionista extends JFrame {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        pnlPeticiones.add(new JLabel("ID Petición:"), gbc);
+        pnlPeticiones.add(new JLabel("ID Petición (para baja/modificación):"), gbc);
 
         gbc.gridx = 1;
         txtIdPeticion = new JTextField(10);
@@ -234,7 +233,7 @@ public class FrmRecepcionista extends JFrame {
 
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        txtResultados = new JTextArea(10, 30);
+        txtResultados = new JTextArea(10, 50); // Cambiado el ancho de 30 a 50
         txtResultados.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(txtResultados);
         pnlResultados.add(scrollPane, gbc);
@@ -264,12 +263,17 @@ public class FrmRecepcionista extends JFrame {
             int edad = Integer.parseInt(edadStr);
             List<Integer> peticiones = new ArrayList<>();
             PacienteDTO pacienteDTO = new PacienteDTO(nombre, dni, domicilio, email, sexo, edad, peticiones);
-            recepcionController.darAltaPaciente(pacienteDTO);
-            JOptionPane.showMessageDialog(this, "Paciente dado de alta exitosamente.");
+            try {
+                recepcionController.darAltaPaciente(pacienteDTO);
+                JOptionPane.showMessageDialog(this, "Paciente dado de alta exitosamente.");
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "DNI y Edad deben ser números válidos.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 
     private void bajaPaciente() {
         String dniStr = txtDniPaciente.getText().trim();
@@ -314,6 +318,7 @@ public class FrmRecepcionista extends JFrame {
     }
 
     private void altaPeticion() {
+        String idPeticionStr = txtIdPeticion.getText().trim(); // Verificar si se ingresó un ID
         String dniStr = txtDniPeticion.getText().trim();
         String obraSocial = txtObraSocialPeticion.getText().trim();
         String sucursalIdStr = txtSucursalIdPeticion.getText().trim();
@@ -323,15 +328,21 @@ public class FrmRecepcionista extends JFrame {
             return;
         }
 
+        if (!idPeticionStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Al dar de alta una petición, no debe completar el campo ID Petición, se autogenera.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Salir del método si se ingresó un ID
+        }
+
         try {
             int dni = Integer.parseInt(dniStr);
             int sucursalId = Integer.parseInt(sucursalIdStr);
-            recepcionController.cargarPeticion(dni, obraSocial, sucursalId);
-            JOptionPane.showMessageDialog(this, "Petición dada de alta exitosamente.");
+            int nuevoIdPeticion = recepcionController.cargarPeticion(dni, obraSocial, sucursalId);
+            JOptionPane.showMessageDialog(this, "Petición dada de alta exitosamente. ID Petición: " + nuevoIdPeticion, "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "DNI y ID de Sucursal deben ser números válidos.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 
     private void bajaPeticion() {
         String idPeticionStr = txtIdPeticion.getText().trim();
@@ -379,14 +390,17 @@ public class FrmRecepcionista extends JFrame {
         try {
             int idPeticion = Integer.parseInt(idPeticionStr);
             int practicaId = Integer.parseInt(practicaIdStr);
-            recepcionController.asociarPracticaAPeticion(idPeticion, practicaId);
-            JOptionPane.showMessageDialog(this, "Práctica asociada a la petición exitosamente.");
+            try {
+                recepcionController.asociarPracticaAPeticion(idPeticion, practicaId);
+                JOptionPane.showMessageDialog(this, "Práctica asociada a la petición exitosamente.");
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "ID Petición y ID Práctica deben ser números válidos.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    //BOTON SOLICITAR RESULTADOS PETICION
     private void solicitarResultados() {
         String idPeticionStr = txtIdPeticionResultados.getText().trim();
 
@@ -398,95 +412,36 @@ public class FrmRecepcionista extends JFrame {
         try {
             int idPeticion = Integer.parseInt(idPeticionStr);
             List<ResultadoDTO> resultados = recepcionController.solicitarResultados(idPeticion);
-            txtResultados.setText("");
-            for (ResultadoDTO resultado : resultados) {
-                txtResultados.append(resultado.getValor() + "\n");
+
+            if (resultados.isEmpty()) {
+                txtResultados.setText("No se encontraron resultados para la petición ID: " + idPeticion);
+                return;
             }
+
+            StringBuilder sb = new StringBuilder();
+            ResultadoDTO primerResultado = resultados.get(0);
+
+            sb.append("Paciente: ").append(primerResultado.getNombrePaciente()).append("\n");
+            sb.append("Sexo: ").append(primerResultado.getSexoPaciente()).append("\n");
+            sb.append("Edad: ").append(primerResultado.getEdadPaciente()).append("\n");
+            sb.append("Mail: ").append(primerResultado.getMailPaciente()).append("\n\n");
+
+            Formatter formatter = new Formatter(sb);
+            formatter.format("%-20s %-20s %-20s\n", "Practica", "Resultado", "Rango Valores");
+            formatter.format("%-20s %-20s %-20s\n", "--------------------", "--------------------", "--------------------");
+
+            for (ResultadoDTO resultado : resultados) {
+                formatter.format("%-20s %-20s %-20s\n",
+                        resultado.getNombrePractica(),
+                        resultado.getValor(),
+                        resultado.getRangoValores());
+            }
+
+            txtResultados.setText(sb.toString());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "ID Petición debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-    //ESTE ES EL METODO QUE REEMPLAZARIA solicitarResultados() A PARA MOSTRAR TODOS LOS VALORES DE LA PETICION EN LA VIEW
-    private void solicitarResultadosPeticion() {
-        Peticion peticion = new Peticion();
-        peticion.setPaciente("Juan Pérez");
-        peticion.setSexo("Masculino");
-        peticion.setEdad(35);
-        peticion.setObraSocial("OSDE");
-        peticion.setFecha("15/07/2024");
-        peticion.setSucursal("Sucursal Centro");
-
-        List<Resultado> listaResultados = new ArrayList<>();
-        listaResultados.add(new Resultado("Hemograma", "5.5", "4.0", "6.0"));
-        listaResultados.add(new Resultado("Glucosa", "7.0", "3.0", "7.0"));
-        listaResultados.add(new Resultado("Colesterol", "190", "120", "200"));
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("Paciente: ").append(peticion.getPaciente()).append("\n");
-        sb.append("Sexo: ").append(peticion.getSexo()).append("\n");
-        sb.append("Edad: ").append(peticion.getEdad()).append("\n");
-        sb.append("Obra Social: ").append(peticion.getObraSocial()).append("\n");
-        sb.append("Fecha: ").append(peticion.getFecha()).append("\n");
-        sb.append("Sucursal: ").append(peticion.getSucursal()).append("\n\n");
-
-        sb.append("Practica\tResultado\tValor Minimo\tValor Maximo\n");
-        sb.append("--------------------------------------------------------\n");
-        for (Resultado resultado : listaResultados) {
-            sb.append(resultado.getPractica()).append("\t")
-                    .append(resultado.getResultado()).append("\t")
-                    .append(resultado.getValorMinimo()).append("\t")
-                    .append(resultado.getValorMaximo()).append("\n");
-        }
-
-        txtResultados.setText(sb.toString());
-    }
-
-    // Clases simuladas para probar la vista asi no má
-    class Peticion {
-        private String paciente;
-        private String sexo;
-        private int edad;
-        private String obraSocial;
-        private String fecha;
-        private String sucursal;
-
-        public String getPaciente() { return paciente; }
-        public void setPaciente(String paciente) { this.paciente = paciente; }
-        public String getSexo() { return sexo; }
-        public void setSexo(String sexo) { this.sexo = sexo; }
-        public int getEdad() { return edad; }
-        public void setEdad(int edad) { this.edad = edad; }
-        public String getObraSocial() { return obraSocial; }
-        public void setObraSocial(String obraSocial) { this.obraSocial = obraSocial; }
-        public String getFecha() { return fecha; }
-        public void setFecha(String fecha) { this.fecha = fecha; }
-        public String getSucursal() { return sucursal; }
-        public void setSucursal(String sucursal) { this.sucursal = sucursal; }
-    }
-
-    class Resultado {
-        private String practica;
-        private String resultado;
-        private String valorMinimo;
-        private String valorMaximo;
-
-        // Constructor
-        public Resultado(String practica, String resultado, String valorMinimo, String valorMaximo) {
-            this.practica = practica;
-            this.resultado = resultado;
-            this.valorMinimo = valorMinimo;
-            this.valorMaximo = valorMaximo;
-        }
-
-        // Getters
-        public String getPractica() { return practica; }
-        public String getResultado() { return resultado; }
-        public String getValorMinimo() { return valorMinimo; }
-        public String getValorMaximo() { return valorMaximo; }
-    }
-
-
 
     private void listarPeticionesCriticas() {
         List<PeticionDTO> peticionesCriticas = recepcionController.listarPeticionesCriticas();

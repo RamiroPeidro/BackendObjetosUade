@@ -62,6 +62,11 @@ public class SucursalService {
     }
 
     public void createSucursal(SucursalDTO sucursalDTO, int dniResponsableTecnico) {
+        Sucursal sucursalDAOByNumero = sucursalDAO.findByNumero(sucursalDTO.getNumero());
+        if (sucursalDAOByNumero != null) {
+            throw new IllegalArgumentException("Ya existe una sucursal con el número especificado");
+        }
+
         Usuario responsableTecnico = usuarioDAO.findById(dniResponsableTecnico);
         if (responsableTecnico == null) {
             throw new IllegalArgumentException("Responsable Técnico no encontrado");
@@ -70,6 +75,7 @@ public class SucursalService {
         Sucursal sucursal = convertirASucursal(sucursalDTO, responsableTecnicoDTO);
         sucursalDAO.create(sucursal);
     }
+
 
 
     public void modificarSucursal(SucursalDTO sucursalDTO, int dniResponsableTecnico) {

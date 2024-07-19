@@ -5,11 +5,7 @@ import Daos.PacienteDAO;
 import Daos.SucursalDAO;
 import Daos.PracticaDAO;
 import Dtos.*;
-import model.Peticion;
-import model.Practica;
-import model.Paciente;
-import model.Resultado;
-import model.Sucursal;
+import model.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,8 +27,8 @@ public class PeticionService {
         this.practicaDAO = PracticaDAO.getInstance();
     }
 
-    public void cargarPeticion(int Dni, String obraSocial, int sucursalId) {
-        Paciente paciente = pacienteDAO.findById(Dni);
+    public int cargarPeticion(int dni, String obraSocial, int sucursalId) {
+        Paciente paciente = pacienteDAO.findById(dni);
         if (paciente == null) {
             throw new IllegalArgumentException("Paciente no encontrado");
         }
@@ -54,7 +50,9 @@ public class PeticionService {
         );
 
         peticionDAO.create(nuevaPeticion);
+        return nuevaPeticion.getIdPeticion();
     }
+
 
     public void asociarPracticaAPeticion(int idPeticion, int practicaId) {
         Peticion peticion = peticionDAO.findById(idPeticion);
@@ -67,6 +65,10 @@ public class PeticionService {
             throw new IllegalArgumentException("Practica no encontrada");
         }
 
+        if (!practica.getHabilitada()) {
+            throw new IllegalArgumentException("La practica no está habilitada");
+        }
+
         peticion.getListaPracticas().add(practica);
         Resultado nuevoResultado = new Resultado(0, practica, peticion);
         peticion.getListaResultados().add(nuevoResultado);
@@ -77,6 +79,7 @@ public class PeticionService {
 
         peticionDAO.update(peticion);
     }
+
 
 
     private int generarNuevoId() {
@@ -190,65 +193,52 @@ public class PeticionService {
     }
 
 
-    //Necesito, con lo que devuelte este metodo, poder mostrar por pantalla: De Peticion --> obraSocial, fechacarga. De Paciente relacionado a Peticion --> nombre, sexo, edad. De Sucursal relacionada a Peticion --> nombre. De cada uno de los Resulatdos relacionados a Paciente --> valor. De cada Practica relacionada a Resultado --> nombre, grupo. De cada RangoValor relacionado a Practica --> minValor, maxValor.
     public List<ResultadoDTO> solicitarResultado(int idPeticion) {
         Peticion peticion = peticionDAO.findById(idPeticion);
         if (peticion == null) {
             throw new IllegalArgumentException("Peticion no encontrada");
         }
-        //aca le pide SOLO la lista de resultados
         List<Resultado> resultados = peticion.getListaResultados();
         List<ResultadoDTO> resultadoDTOs = new ArrayList<>();
         for (Resultado resultado : resultados) {
-            int practicaId = resultado.getPractica().getCodigoPractica();
+            Practica practica = resultado.getPractica();
+            int practicaId = practica.getCodigoPractica();
+            String nombrePractica = practica.getNombrePractica();
+            RangoValor rangoValores = practica.getRangoValores();
+            String rango = "Min: " + rangoValores.getMinValor() + " Max: " + rangoValores.getMaxValor();
             String valor;
             if (resultado.isValorReservado()) {
                 valor = "Retirar por sucursal";
             } else {
                 valor = String.valueOf(resultado.getValor());
             }
-            ResultadoDTO resultadoDTO = new ResultadoDTO(valor, practicaId, peticion.getIdPeticion(), resultado.isFinalizado(), resultado.isValorCritico(), resultado.isValorReservado());
+
+            Paciente paciente = peticion.getPaciente();
+            String nombrePaciente = paciente.getNombre();
+            String domicilioPaciente = paciente.getDomicilio();
+            String mailPaciente = paciente.getMail().getValue();
+            String sexoPaciente = paciente.getSexo();
+            int edadPaciente = paciente.getEdad();
+
+            ResultadoDTO resultadoDTO = new ResultadoDTO(
+                    valor,
+                    practicaId,
+                    nombrePractica,
+                    rango,
+                    peticion.getIdPeticion(),
+                    resultado.isFinalizado(),
+                    resultado.isValorCritico(),
+                    resultado.isValorReservado(),
+                    nombrePaciente,
+                    domicilioPaciente,
+                    mailPaciente,
+                    sexoPaciente,
+                    edadPaciente
+            );
             resultadoDTOs.add(resultadoDTO);
         }
         return resultadoDTOs;
     }
-
-
-    // ESTE ES solicitarResultado() PERO MODIFICADO PARA QUE ME DEVUELVA PeticionDTO. Pero rompe y esta a medio hacer.
-
-    /*public PeticionDTO solicitarResultado(int idPeticion) {
-        // peticion es la peticion que encontre a partir de su id
-        Peticion peticion = peticionDAO.findById(idPeticion);
-        if (peticion == null) {
-            throw new IllegalArgumentException("Peticion no encontrada");
-        }
-        String nombrePaciente = peticion.getPaciente().getNombre();
-        String obraSocial = peticion.getObraSocial();
-        Date fecha = peticion.getFechaCarga();
-        String direccionSucursal = peticion.getSucursal().getDireccion();
-        List<Resultado> resultados = peticion.getListaResultados();
-
-        PeticionDTO peticionDTO;
-        List<ResultadoDTO> resultadoDTOs = new ArrayList<>();
-
-        for (Resultado resultado : resultados) {
-            String nombrePractica = resultado.getPractica().getNombrePractica();
-            String valorResultado;
-            String valorMinPractica = String.valueOf(resultado.getPractica().getRangoValores().getMinValor());
-            String valorMaxPractica = String.valueOf(resultado.getPractica().getRangoValores().getMaxValor());
-            String grupoPractica = resultado.getPractica().getGrupo();
-            int practicaId = resultado.getPractica().getCodigoPractica();
-            if (resultado.isValorReservado()) {
-                valorResultado = "Retirar por sucursal";
-            } else {
-                valorResultado = String.valueOf(resultado.getValor());
-            }
-
-            ResultadoDTO resultadoDTO = new ResultadoDTO(valorResultado, practicaId, idPeticion, resultado.isFinalizado(), resultado.isValorCritico(), resultado.isValorReservado());
-            resultadoDTOs.add(resultadoDTO);
-        }
-        return PeticionDTO;
-    }*/
 
     public void eliminarResultadoDePractica(int idPeticion, int idPractica) {
         Peticion peticion = peticionDAO.findById(idPeticion);
@@ -304,27 +294,32 @@ public class PeticionService {
 
         List<ResultadoDTO> listaResultados = new ArrayList<>();
         for (Resultado resultado : peticion.getListaResultados()) {
-            int practicaId = resultado.getPractica().getCodigoPractica();
+            Practica practica = resultado.getPractica();
+            int practicaId = practica.getCodigoPractica();
+            String nombrePractica = practica.getNombrePractica();
+            RangoValor rangoValores = practica.getRangoValores();
+            String rango = "Min: " + rangoValores.getMinValor() + " Max: " + rangoValores.getMaxValor();
             String valor;
-
-            //TODO ver si tiene que estar
-//            if (resultado.isValorCritico()) {
-//                valor = "Retirar por sucursal";
-//            } else {
-//                valor = String.valueOf(resultado.getValor());
-//            }
-
-            valor = String.valueOf(resultado.getValor());
-
-            //PracticaDTO practicaDTO = new PracticaDTO(resultado.getPractica().getCodigoPractica(),resultado.getPractica().getNombrePractica(),resultado.getPractica().getGrupo(),resultado.getPractica().getRangoValores(),0f,true,false)
+            if (resultado.isValorReservado()) {
+                valor = "Retirar por sucursal";
+            } else {
+                valor = String.valueOf(resultado.getValor());
+            }
 
             ResultadoDTO resultadoDTO = new ResultadoDTO(
                     valor,
                     practicaId,
+                    nombrePractica,
+                    rango,
                     peticion.getIdPeticion(),
                     resultado.isFinalizado(),
                     resultado.isValorCritico(),
-                    resultado.isValorReservado()
+                    resultado.isValorReservado(),
+                    peticion.getPaciente().getNombre(),
+                    peticion.getPaciente().getDomicilio(),
+                    peticion.getPaciente().getMail().getValue(),
+                    peticion.getPaciente().getSexo(),
+                    peticion.getPaciente().getEdad()
             );
 
             listaResultados.add(resultadoDTO);
@@ -333,6 +328,8 @@ public class PeticionService {
 
         return peticionDTO;
     }
+
+
 
     public PeticionDTO getPeticionById(int idPeticion) {
         Peticion peticion = peticionDAO.findById(idPeticion);

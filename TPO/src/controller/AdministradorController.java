@@ -59,9 +59,12 @@ public class AdministradorController {
         usuarioService.modificarUsuario(usuarioDTO);
     }
 
-    public void darAltaPractica(PracticaDTO practicaDTO) {
-        practicaService.darAltaPractica(practicaDTO);
+
+    public int darAltaPractica(PracticaDTO practicaDTO) {
+        return practicaService.darAltaPractica(practicaDTO);
     }
+
+
 
     public void darBajaPractica(int codigoPractica) {
         practicaService.darBajaPractica(codigoPractica);
