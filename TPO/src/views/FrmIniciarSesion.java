@@ -1,9 +1,10 @@
 package views;
 
+import Dtos.UsuarioDTO;
 import controller.AdministradorController;
+import model.TipoDeUsuario;
 import service.UsuarioService;
 
-import javax.swing.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -54,38 +55,74 @@ public class FrmIniciarSesion extends JFrame {
         gbc.gridy = 2;
         panel.add(loginButton, gbc);
 
-        // Add the panel to the frame
         add(panel);
 
-        // Add action listener to the button
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String nombreUsuario = userText.getText();
                 String password = new String(passwordText.getPassword());
-                try{
-                    administradorController.iniciarSesion(nombreUsuario,password,botonSeleccionado);
-                }
-                catch (UsuarioService.InvalidPasswordException ex){
+                try {
+                    UsuarioDTO usuario = administradorController.iniciarSesion(nombreUsuario, password, botonSeleccionado);
+
+                    // Verificar si el usuario tiene permiso para la sección seleccionada
+                    if (usuario != null) {
+                        boolean accesoPermitido = false;
+                        switch (botonSeleccionado) {
+                            case "Recepcionista":
+                                if (usuario.getTipoDeUsuario() == TipoDeUsuario.Recepcionista || usuario.getTipoDeUsuario() == TipoDeUsuario.Administrador) {
+                                    accesoPermitido = true;
+                                }
+                                break;
+                            case "Laboratorista":
+                                if (usuario.getTipoDeUsuario() == TipoDeUsuario.Laboratorista || usuario.getTipoDeUsuario() == TipoDeUsuario.Administrador) {
+                                    accesoPermitido = true;
+                                }
+                                break;
+                            case "Administrador":
+                                if (usuario.getTipoDeUsuario() == TipoDeUsuario.Administrador) {
+                                    accesoPermitido = true;
+                                }
+                                break;
+                            default:
+                                throw new IllegalArgumentException("El rol especificado no es válido.");
+                        }
+
+                        // Mostrar el mensaje de inicio de sesión exitoso y cerrar la ventana solo si el acceso es permitido
+                        if (accesoPermitido) {
+                            JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                            dispose();
+
+                            // Abrir la ventana correspondiente según el tipo de usuario
+                            switch (botonSeleccionado) {
+                                case "Recepcionista":
+                                    FrmRecepcionista frmRecepcionista = new FrmRecepcionista(null, "Recepcionista");
+                                    frmRecepcionista.setVisible(true);
+                                    break;
+                                case "Laboratorista":
+                                    FrmLaboratorista frmLaboratorista = new FrmLaboratorista(null, "Laboratorista");
+                                    frmLaboratorista.setVisible(true);
+                                    break;
+                                case "Administrador":
+                                    FrmAdministrador frmAdministrador = new FrmAdministrador(null, "Administrador");
+                                    frmAdministrador.setVisible(true);
+                                    break;
+                            }
+                        } else {
+                            throw new IllegalArgumentException("No tienes permiso para acceder a esta sección.");
+                        }
+                    }
+                } catch (UsuarioService.InvalidPasswordException ex) {
                     JOptionPane.showMessageDialog(null, "La contraseña no es correcta", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                catch (UsuarioService.UserNotFoundException ex){
+                } catch (UsuarioService.UserNotFoundException ex) {
                     JOptionPane.showMessageDialog(null, "El nombre de usuario no existe", "Error", JOptionPane.ERROR_MESSAGE);
-
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
-
             }
         });
     }
 
-    /*public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new FrmIniciarSesion().setVisible(true);
-            }
-        });
-    }*/
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -94,13 +131,4 @@ public class FrmIniciarSesion extends JFrame {
             }
         });
     }
-
-    /*public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            // Aquí deberías pasar una instancia válida de AdministradorController
-            new FrmIniciarSesion(AdministradorController.getInstance()).setVisible(true);
-        });
-    }*/
-
-
 }

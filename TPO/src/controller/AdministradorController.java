@@ -1,20 +1,15 @@
 package controller;
 
-import Dtos.RangoValorDTO;
-import Dtos.SucursalDTO;
-import Dtos.UsuarioDTO;
-import Dtos.PracticaDTO;
-import model.Email;
-import model.Practica;
+import Dtos.*;
 import model.TipoDeUsuario;
 import model.Usuario;
 import service.PracticaService;
 import service.SucursalService;
 import service.UsuarioService;
+import views.FrmAdministrador;
+import views.FrmLaboratorista;
+import views.FrmRecepcionista;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class AdministradorController {
@@ -24,7 +19,6 @@ public class AdministradorController {
     private UsuarioService usuarioService;
     private PracticaService practicaService;
 
-    // Constructor privado para singleton
     private AdministradorController() {
         this.sucursalService = new SucursalService();
         this.usuarioService = new UsuarioService();
@@ -44,7 +38,6 @@ public class AdministradorController {
         sucursalService.createSucursal(sucursalDTO, dniResponsableTecnico);
     }
 
-
     public void darBajaSucursal(int numeroSucursalBaja, int sucursalDestinoPeticiones) {
         sucursalService.darBajaSucursal(numeroSucursalBaja, sucursalDestinoPeticiones);
     }
@@ -52,7 +45,6 @@ public class AdministradorController {
     public void modificarSucursal(SucursalDTO sucursalDTO, int dniResponsableTecnico) {
         sucursalService.modificarSucursal(sucursalDTO, dniResponsableTecnico);
     }
-
 
     public void darAltaUsuario(UsuarioDTO usuarioDTO) {
         usuarioService.darAltaUsuario(usuarioDTO);
@@ -66,12 +58,9 @@ public class AdministradorController {
         usuarioService.modificarUsuario(usuarioDTO);
     }
 
-
     public int darAltaPractica(PracticaDTO practicaDTO) {
         return practicaService.darAltaPractica(practicaDTO);
     }
-
-
 
     public void darBajaPractica(int codigoPractica) {
         practicaService.darBajaPractica(codigoPractica);
@@ -82,7 +71,6 @@ public class AdministradorController {
     }
 
     private void cargarPracticasDePrueba() {
-        // Crear prácticas de prueba
         PracticaDTO practica1 = new PracticaDTO(101, "Hemograma Completo", "Hematología", new RangoValorDTO(0.0f, 100.0f), 24f, true, false);
         PracticaDTO practica2 = new PracticaDTO(102, "Glucosa en Sangre", "Bioquímica", new RangoValorDTO(70.0f, 110.0f), 12f, true, false);
         PracticaDTO practica3 = new PracticaDTO(103, "Perfil Lipídico", "Bioquímica", new RangoValorDTO(100.0f, 200.0f), 24f, true, true);
@@ -92,23 +80,52 @@ public class AdministradorController {
         darAltaPractica(practica3);
     }
 
-    private void cargarUsuarioAdministrador(){
+    private void cargarUsuarioAdministrador() {
         TipoDeUsuario tipoDeUsuario = TipoDeUsuario.Administrador;
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date fecha = null;
-        try {
-            fecha = formatter.parse("28/10/1999");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        UsuarioDTO usuarioDTO = new UsuarioDTO("admin","admin@gmail.com","admin","Administrador","juan b justo 1234",12345678,fecha,tipoDeUsuario);
+        UsuarioDTO usuarioDTO = new UsuarioDTO("admin", "admin@gmail.com", "admin", "Administrador", "juan b justo 1234", 12345678, new Date(), tipoDeUsuario);
         darAltaUsuario(usuarioDTO);
     }
 
-    public void iniciarSesion(String nombreRsuario, String password,String botonSeleccionado) throws UsuarioService.InvalidPasswordException, UsuarioService.UserNotFoundException{
-        usuarioService.iniciarSesion(nombreRsuario,password,botonSeleccionado);
+    public UsuarioDTO iniciarSesion(String nombreUsuario, String password, String botonSeleccionado) throws UsuarioService.InvalidPasswordException, UsuarioService.UserNotFoundException {
+        Usuario usuario = usuarioService.iniciarSesion(nombreUsuario, password);
+        return usuarioService.convertirUsuarioADTO(usuario);
     }
 
 
 
+    private void mostrarVistasSegunTipoDeUsuarioYBoton(Usuario usuario, String botonSeleccionado) {
+        TipoDeUsuario tipoDeUsuario = usuario.getTipoDeUsuario();
+
+        switch (botonSeleccionado) {
+            case "Recepcionista":
+                if (tipoDeUsuario == TipoDeUsuario.Recepcionista || tipoDeUsuario == TipoDeUsuario.Administrador) {
+                    FrmRecepcionista frmRecepcionista = new FrmRecepcionista(null, "Recepcionista");
+                    frmRecepcionista.setVisible(true);
+                } else {
+                    throw new IllegalArgumentException("El usuario no tiene el rol adecuado para acceder como Recepcionista.");
+                }
+                break;
+
+            case "Laboratorista":
+                if (tipoDeUsuario == TipoDeUsuario.Laboratorista || tipoDeUsuario == TipoDeUsuario.Administrador) {
+                    FrmLaboratorista frmLaboratorista = new FrmLaboratorista(null, "Laboratorista");
+                    frmLaboratorista.setVisible(true);
+                } else {
+                    throw new IllegalArgumentException("El usuario no tiene el rol adecuado para acceder como Laboratorista.");
+                }
+                break;
+
+            case "Administrador":
+                if (tipoDeUsuario == TipoDeUsuario.Administrador) {
+                    FrmAdministrador frmAdministrador = new FrmAdministrador(null, "Administrador");
+                    frmAdministrador.setVisible(true);
+                } else {
+                    throw new IllegalArgumentException("El usuario no tiene el rol adecuado para acceder como Administrador.");
+                }
+                break;
+
+            default:
+                throw new IllegalArgumentException("El rol especificado no es válido.");
+        }
     }
+}

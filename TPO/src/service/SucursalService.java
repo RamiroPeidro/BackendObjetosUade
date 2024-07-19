@@ -5,10 +5,7 @@ import Daos.PeticionDAO;
 import Daos.UsuarioDAO;
 import Dtos.SucursalDTO;
 import Dtos.UsuarioDTO;
-import model.Sucursal;
-import model.Peticion;
-import model.Usuario;
-import model.Email;
+import model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,10 +68,16 @@ public class SucursalService {
         if (responsableTecnico == null) {
             throw new IllegalArgumentException("Responsable Técnico no encontrado");
         }
+
+        if (responsableTecnico.getTipoDeUsuario() != TipoDeUsuario.ResponsableTecnico) {
+            throw new IllegalArgumentException("El usuario no tiene el rol adecuado para ser Responsable Técnico.");
+        }
+
         UsuarioDTO responsableTecnicoDTO = convertirAUsuarioDTO(responsableTecnico);
         Sucursal sucursal = convertirASucursal(sucursalDTO, responsableTecnicoDTO);
         sucursalDAO.create(sucursal);
     }
+
 
 
 

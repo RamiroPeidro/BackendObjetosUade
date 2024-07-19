@@ -47,10 +47,6 @@ public class FrmPrincipal extends JFrame {
                 //INICIO SESION
                 FrmIniciarSesion frmIniciarSesion = new FrmIniciarSesion("Laboratorista");
                 frmIniciarSesion.setVisible(true);
-
-                //esto deberia inicializarse directamente desde iniciarSesion() usuarioService?
-                //FrmLaboratorista frmLaboratorista = new FrmLaboratorista(self, "Laboratorista");
-                //frmLaboratorista.setVisible(true);
             }
         });
 
@@ -60,10 +56,6 @@ public class FrmPrincipal extends JFrame {
                 //INICIO SESION
                 FrmIniciarSesion frmIniciarSesion = new FrmIniciarSesion("Administrador");
                 frmIniciarSesion.setVisible(true);
-
-                //esto deberia inicializarse directamente desde iniciarSesion() usuarioService?
-                //FrmAdministrador frmAdministrador = new FrmAdministrador(self, "Administrador");
-                //frmAdministrador.setVisible(true);
             }
         });
 
@@ -73,10 +65,6 @@ public class FrmPrincipal extends JFrame {
                 //INICIO SESION
                 FrmIniciarSesion frmIniciarSesion = new FrmIniciarSesion("Recepcionista");
                 frmIniciarSesion.setVisible(true);
-
-                //esto deberia inicializarse directamente desde iniciarSesion() usuarioService?
-                //FrmRecepcionista frmRecepcionista = new FrmRecepcionista(self, "Recepcionista");
-                //frmRecepcionista.setVisible(true);
             }
         });
     }
