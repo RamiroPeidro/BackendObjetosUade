@@ -6,8 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResultadoDAO extends GenericDAOImpl<Resultado, Integer> {
+    private static ResultadoDAO instance;
+    private List<Resultado> resultados;
 
-    private List<Resultado> resultados = new ArrayList<>();
+    private ResultadoDAO() {
+        this.resultados = new ArrayList<>();
+    }
+
+    public static ResultadoDAO getInstance() {
+        if (instance == null) {
+            instance = new ResultadoDAO();
+        }
+        return instance;
+    }
 
     @Override
     public Resultado findById(Integer id) {
@@ -18,7 +29,7 @@ public class ResultadoDAO extends GenericDAOImpl<Resultado, Integer> {
 
     @Override
     public List<Resultado> findAll() {
-        return resultados;
+        return new ArrayList<>(resultados);
     }
 
     @Override

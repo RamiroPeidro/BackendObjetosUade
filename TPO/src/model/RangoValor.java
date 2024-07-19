@@ -3,13 +3,11 @@ package model;
 public class RangoValor {
     private float minValor;
     private float maxValor;
-    private float umbralReservado; // Define cuánto más allá del maxValor es considerado reservado
 
     // Constructor
-    public RangoValor(float minValor, float maxValor, float umbralReservado) {
+    public RangoValor(float minValor, float maxValor) {
         this.minValor = minValor;
         this.maxValor = maxValor;
-        this.umbralReservado = umbralReservado;
     }
 
     // Getters y Setters
@@ -29,13 +27,6 @@ public class RangoValor {
         this.maxValor = maxValor;
     }
 
-    public float getUmbralReservado() {
-        return umbralReservado;
-    }
-
-    public void setUmbralReservado(float umbralReservado) {
-        this.umbralReservado = umbralReservado;
-    }
 
     // Método para verificar si el valor es crítico
     public boolean esCritico(float valor) {
@@ -43,7 +34,4 @@ public class RangoValor {
     }
 
     // Método para verificar si el valor es reservado
-    public boolean esReservado(float valor) {
-        return valor > maxValor + umbralReservado || valor < minValor - umbralReservado;
-    }
 }

@@ -1,8 +1,10 @@
 package service;
 
 import Daos.PracticaDAO;
+import Dtos.PeticionDTO;
 import Dtos.PracticaDTO;
 import Dtos.RangoValorDTO;
+import model.Peticion;
 import model.Practica;
 import model.RangoValor;
 
@@ -11,7 +13,7 @@ public class PracticaService {
     private PracticaDAO practicaDAO;
 
     public PracticaService() {
-        this.practicaDAO = new PracticaDAO();
+        this.practicaDAO = PracticaDAO.getInstance();
     }
 
     public void darAltaPractica(PracticaDTO practicaDTO) {
@@ -52,11 +54,11 @@ public class PracticaService {
     }
 
     private RangoValor convertirDTORangoValorAEntidad(RangoValorDTO rangoValorDTO) {
-        return new RangoValor(rangoValorDTO.getMinValor(), rangoValorDTO.getMaxValor(), rangoValorDTO.getUmbralReservado());
+        return new RangoValor(rangoValorDTO.getMinValor(), rangoValorDTO.getMaxValor());
     }
 
     private RangoValorDTO convertirEntidadARangoValorDTO(RangoValor rangoValor) {
-        return new RangoValorDTO(rangoValor.getMinValor(), rangoValor.getMaxValor(), rangoValor.getUmbralReservado());
+        return new RangoValorDTO(rangoValor.getMinValor(), rangoValor.getMaxValor());
     }
 
     public PracticaDTO convertirPracticaADTO(Practica practica) {
@@ -71,4 +73,7 @@ public class PracticaService {
                 practica.getEsReservada()
         );
     }
+
+    //VIEW SOLICITAR RESULTADOS PETICION
+
 }

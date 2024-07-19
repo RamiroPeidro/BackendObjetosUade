@@ -3,14 +3,21 @@ package Dtos;
 public class ResultadoDTO {
 
     private String valor;
+
     private int practicaId; // Usamos el ID de la práctica para referenciarla
+    private PracticaDTO practicaDTO; // no se si esto va o no va
+    private int peticionId; // Usamos el ID de la petición para referenciarla
+    private boolean finalizado;
     private boolean valorCritico;
     private boolean valorReservado;
 
     // Constructor
-    public ResultadoDTO(String valor, int practicaId, boolean valorCritico, boolean valorReservado) {
+    public ResultadoDTO(String valor, int practicaId, int peticionId, boolean finalizado, boolean valorCritico, boolean valorReservado) {
         this.valor = valor;
         this.practicaId = practicaId;
+        //this.practicaDTO = practicaDTO;
+        this.peticionId = peticionId;
+        this.finalizado = finalizado;
         this.valorCritico = valorCritico;
         this.valorReservado = valorReservado;
     }
@@ -30,6 +37,29 @@ public class ResultadoDTO {
 
     public void setPracticaId(int practicaId) {
         this.practicaId = practicaId;
+    }
+
+    public PracticaDTO getPracticaDTO() {
+        return practicaDTO;
+    }
+    public void setPracticaDTO(PracticaDTO practicaDTO) {
+        this.practicaDTO = practicaDTO;
+    }
+
+    public int getPeticionId() {
+        return peticionId;
+    }
+
+    public void setPeticionId(int peticionId) {
+        this.peticionId = peticionId;
+    }
+
+    public boolean isFinalizado() {
+        return finalizado;
+    }
+
+    public void setFinalizado(boolean finalizado) {
+        this.finalizado = finalizado;
     }
 
     public boolean isValorCritico() {

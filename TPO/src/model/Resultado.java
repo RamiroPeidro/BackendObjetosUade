@@ -1,5 +1,7 @@
 package model;
 
+import Dtos.ResultadoDTO;
+
 public class Resultado {
 
     private float valor;
@@ -34,6 +36,8 @@ public class Resultado {
         return practica;
     }
 
+    public Peticion getPeticion(){return peticion;}
+
     public void setPractica(Practica practica) {
         this.practica = practica;
     }
@@ -64,4 +68,15 @@ public class Resultado {
     private boolean verificarValorReservado() {
         return this.practica.getEsReservada();
     }
+
+    /*public ResultadoDTO toDTO() {
+        return new ResultadoDTO(
+                String.valueOf(this.valor),
+                this.practica,
+                this.peticion.getIdPeticion(),
+                this.finalizado,
+                this.valorCritico,
+                this.valorReservado
+        );
+    }*/
 }

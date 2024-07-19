@@ -4,13 +4,11 @@ public class RangoValorDTO {
 
     private float minValor;
     private float maxValor;
-    private float umbralReservado;
 
     // Constructor
-    public RangoValorDTO(float minValor, float maxValor, float umbralReservado) {
+    public RangoValorDTO(float minValor, float maxValor) {
         this.minValor = minValor;
         this.maxValor = maxValor;
-        this.umbralReservado = umbralReservado;
     }
 
     // Getters y Setters
@@ -30,11 +28,4 @@ public class RangoValorDTO {
         this.maxValor = maxValor;
     }
 
-    public float getUmbralReservado() {
-        return umbralReservado;
-    }
-
-    public void setUmbralReservado(float umbralReservado) {
-        this.umbralReservado = umbralReservado;
-    }
 }

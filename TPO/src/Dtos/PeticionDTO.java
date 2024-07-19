@@ -1,5 +1,7 @@
 package Dtos;
 
+import model.Practica;
+
 import java.util.Date;
 import java.util.List;
 

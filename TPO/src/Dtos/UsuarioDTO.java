@@ -12,6 +12,19 @@ public class UsuarioDTO {
     private int dni;
     private Date fechaNacimiento;
 
+    // Constructor
+    public UsuarioDTO(String nombreUsuario, String mail, String password, String nombre, String domicilio, int dni, Date fechaNacimiento) {
+        this.nombreUsuario = nombreUsuario;
+        this.mail = mail;
+        this.password = password;
+        this.nombre = nombre;
+        this.domicilio = domicilio;
+        this.dni = dni;
+        this.fechaNacimiento = fechaNacimiento;
+
+
+    }
+
     // Getters y setters
     public String getNombreUsuario() {
         return nombreUsuario;

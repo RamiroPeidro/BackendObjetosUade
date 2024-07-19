@@ -3,6 +3,18 @@ package Daos;
 import model.Paciente;
 
 public class PacienteDAO extends GenericDAOImpl<Paciente, Integer> {
+    private static PacienteDAO instance;
+
+    private PacienteDAO() {
+        // Constructor privado para evitar instanciación externa
+    }
+
+    public static PacienteDAO getInstance() {
+        if (instance == null) {
+            instance = new PacienteDAO();
+        }
+        return instance;
+    }
 
     @Override
     protected Integer getId(Paciente entity) {
@@ -11,11 +23,6 @@ public class PacienteDAO extends GenericDAOImpl<Paciente, Integer> {
 
     @Override
     public Paciente findById(Integer dni) {
-        for (Paciente paciente : findAll()) {
-            if (paciente.getDNIPaciente() == dni) {
-                return paciente;
-            }
-        }
-        return null;
+        return super.findById(dni);
     }
 }

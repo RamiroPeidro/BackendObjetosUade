@@ -6,8 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsuarioDAO extends GenericDAOImpl<Usuario, Integer> {
+    private static UsuarioDAO instance;
+    private List<Usuario> usuarios;
 
-    private List<Usuario> usuarios = new ArrayList<>();
+    private UsuarioDAO() {
+        this.usuarios = new ArrayList<>();
+    }
+
+    public static UsuarioDAO getInstance() {
+        if (instance == null) {
+            instance = new UsuarioDAO();
+        }
+        return instance;
+    }
 
     @Override
     public Usuario findById(Integer dni) {
@@ -21,7 +32,7 @@ public class UsuarioDAO extends GenericDAOImpl<Usuario, Integer> {
 
     @Override
     public List<Usuario> findAll() {
-        return usuarios;
+        return new ArrayList<>(usuarios);
     }
 
     @Override

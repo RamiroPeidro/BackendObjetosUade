@@ -18,8 +18,8 @@ public class PacienteService {
     private final PeticionDAO peticionDAO;
 
     public PacienteService() {
-        this.pacienteDAO = new PacienteDAO();
-        this.peticionDAO = new PeticionDAO();
+        this.pacienteDAO = PacienteDAO.getInstance();
+        this.peticionDAO = PeticionDAO.getInstance();
     }
 
     public void recibirPaciente() {
