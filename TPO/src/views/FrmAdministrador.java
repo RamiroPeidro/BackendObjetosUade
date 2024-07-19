@@ -206,10 +206,11 @@ public class FrmAdministrador extends JFrame {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        pnlPracticas.add(new JLabel("Código:"), gbc);
+        pnlPracticas.add(new JLabel("Código (solo para modificación y baja):"), gbc);
 
         gbc.gridx = 1;
         txtCodigoPractica = new JTextField(10);
+        // No deshabilitamos el campo aquí, quedará habilitado para modificación y baja
         pnlPracticas.add(txtCodigoPractica, gbc);
 
         gbc.gridx = 2;
@@ -287,6 +288,8 @@ public class FrmAdministrador extends JFrame {
         btnModificarPractica.addActionListener(e -> modificarPractica());
         pnlPracticas.add(btnModificarPractica, gbc);
     }
+
+
 
 
     private void altaSucursal() {
@@ -426,6 +429,11 @@ public class FrmAdministrador extends JFrame {
 
     private void altaPractica() {
         try {
+            String codigoPracticaStr = txtCodigoPractica.getText().trim();
+            if (!codigoPracticaStr.isEmpty()) {
+                throw new IllegalArgumentException("No se debe completar el campo código de práctica en un alta ya que se autogenera.");
+            }
+
             String nombre = txtNombrePractica.getText().trim();
             String grupo = txtGrupoPractica.getText().trim();
             float minValor = Float.parseFloat(txtMinValor.getText().trim());
@@ -440,8 +448,8 @@ public class FrmAdministrador extends JFrame {
 
             RangoValorDTO rangoValorDTO = new RangoValorDTO(minValor, maxValor);
             PracticaDTO practicaDTO = new PracticaDTO(0, nombre, grupo, rangoValorDTO, cantHorasResultados, habilitada, reservada); // 0 para que se genere automáticamente
-            administradorController.darAltaPractica(practicaDTO);
-            JOptionPane.showMessageDialog(this, "Práctica dada de alta exitosamente.");
+            int codigoGenerado = administradorController.darAltaPractica(practicaDTO);
+            JOptionPane.showMessageDialog(this, "Práctica dada de alta exitosamente. Código generado: " + codigoGenerado);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Los campos numéricos deben contener valores válidos.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (IllegalArgumentException e) {
@@ -450,6 +458,8 @@ public class FrmAdministrador extends JFrame {
             JOptionPane.showMessageDialog(this, "Error al dar de alta la práctica: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+
 
 
 
