@@ -1,5 +1,7 @@
 package Dtos;
 
+import model.TipoDeUsuario;
+
 import java.util.Date;
 
 public class UsuarioDTO {
@@ -11,9 +13,11 @@ public class UsuarioDTO {
     private String domicilio;
     private int dni;
     private Date fechaNacimiento;
+    private TipoDeUsuario tipoDeUsuario;
+
 
     // Constructor
-    public UsuarioDTO(String nombreUsuario, String mail, String password, String nombre, String domicilio, int dni, Date fechaNacimiento) {
+    public UsuarioDTO(String nombreUsuario, String mail, String password, String nombre, String domicilio, int dni, Date fechaNacimiento,TipoDeUsuario tipoDeUsuario) {
         this.nombreUsuario = nombreUsuario;
         this.mail = mail;
         this.password = password;
@@ -21,8 +25,7 @@ public class UsuarioDTO {
         this.domicilio = domicilio;
         this.dni = dni;
         this.fechaNacimiento = fechaNacimiento;
-
-
+        this.tipoDeUsuario = tipoDeUsuario;
     }
 
     // Getters y setters
@@ -80,5 +83,12 @@ public class UsuarioDTO {
 
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public TipoDeUsuario getTipoDeUsuario() {
+        return tipoDeUsuario;
+    }
+    public void setTipoDeUsuario(TipoDeUsuario tipoDeUsuario) {
+        this.tipoDeUsuario = tipoDeUsuario;
     }
 }

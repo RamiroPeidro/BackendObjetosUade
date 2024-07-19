@@ -139,7 +139,7 @@ public class SucursalService {
                 responsableTecnicoDTO.getNombre(),
                 responsableTecnicoDTO.getDomicilio(),
                 responsableTecnicoDTO.getDni(),
-                responsableTecnicoDTO.getFechaNacimiento()
+                responsableTecnicoDTO.getFechaNacimiento(),responsableTecnicoDTO.getTipoDeUsuario()
         );
         sucursal.setResponsableTecnico(responsableTecnico);
 
@@ -158,7 +158,6 @@ public class SucursalService {
         return sucursal;
     }
 
-
     private UsuarioDTO convertirAUsuarioDTO(Usuario usuario) {
         return new UsuarioDTO(
                 usuario.getNombreUsuario(),
@@ -167,7 +166,7 @@ public class SucursalService {
                 usuario.getNombre(),
                 usuario.getDomicilio(),
                 usuario.getDni(),
-                usuario.getFechaNacimiento()
+                usuario.getFechaNacimiento(),usuario.getTipoDeUsuario()
         );
     }
 }

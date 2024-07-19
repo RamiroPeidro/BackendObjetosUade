@@ -4,11 +4,16 @@ import Dtos.RangoValorDTO;
 import Dtos.SucursalDTO;
 import Dtos.UsuarioDTO;
 import Dtos.PracticaDTO;
+import model.Email;
 import model.Practica;
+import model.TipoDeUsuario;
+import model.Usuario;
 import service.PracticaService;
 import service.SucursalService;
 import service.UsuarioService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -24,6 +29,8 @@ public class AdministradorController {
         this.sucursalService = new SucursalService();
         this.usuarioService = new UsuarioService();
         this.practicaService = new PracticaService();
+
+        cargarUsuarioAdministrador();
     }
 
     public static AdministradorController getInstance() {
@@ -85,4 +92,23 @@ public class AdministradorController {
         darAltaPractica(practica3);
     }
 
-}
+    private void cargarUsuarioAdministrador(){
+        TipoDeUsuario tipoDeUsuario = TipoDeUsuario.Administrador;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date fecha = null;
+        try {
+            fecha = formatter.parse("28/10/1999");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        UsuarioDTO usuarioDTO = new UsuarioDTO("admin","admin@gmail.com","admin","Administrador","juan b justo 1234",12345678,fecha,tipoDeUsuario);
+        darAltaUsuario(usuarioDTO);
+    }
+
+    public void iniciarSesion(String nombreRsuario, String password,String botonSeleccionado) throws UsuarioService.InvalidPasswordException, UsuarioService.UserNotFoundException{
+        usuarioService.iniciarSesion(nombreRsuario,password,botonSeleccionado);
+    }
+
+
+
+    }

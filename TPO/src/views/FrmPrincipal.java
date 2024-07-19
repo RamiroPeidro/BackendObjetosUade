@@ -15,6 +15,8 @@ public class FrmPrincipal extends JFrame {
     private JButton recepcionButton;
     private JButton laboratoristaButton;
     private FrmPrincipal self;
+    private AdministradorController administradorController;
+
 
     public FrmPrincipal(String titulo) {
         super(titulo);
@@ -42,24 +44,39 @@ public class FrmPrincipal extends JFrame {
         laboratoristaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FrmLaboratorista frmLaboratorista = new FrmLaboratorista(self, "Laboratorista");
-                frmLaboratorista.setVisible(true);
+                //INICIO SESION
+                FrmIniciarSesion frmIniciarSesion = new FrmIniciarSesion("Laboratorista");
+                frmIniciarSesion.setVisible(true);
+
+                //esto deberia inicializarse directamente desde iniciarSesion() usuarioService?
+                //FrmLaboratorista frmLaboratorista = new FrmLaboratorista(self, "Laboratorista");
+                //frmLaboratorista.setVisible(true);
             }
         });
 
         administradorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FrmAdministrador frmAdministrador = new FrmAdministrador(self, "Administrador");
-                frmAdministrador.setVisible(true);
+                //INICIO SESION
+                FrmIniciarSesion frmIniciarSesion = new FrmIniciarSesion("Administrador");
+                frmIniciarSesion.setVisible(true);
+
+                //esto deberia inicializarse directamente desde iniciarSesion() usuarioService?
+                //FrmAdministrador frmAdministrador = new FrmAdministrador(self, "Administrador");
+                //frmAdministrador.setVisible(true);
             }
         });
 
         recepcionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FrmRecepcionista frmRecepcionista = new FrmRecepcionista(self, "Recepcionista");
-                frmRecepcionista.setVisible(true);
+                //INICIO SESION
+                FrmIniciarSesion frmIniciarSesion = new FrmIniciarSesion("Recepcionista");
+                frmIniciarSesion.setVisible(true);
+
+                //esto deberia inicializarse directamente desde iniciarSesion() usuarioService?
+                //FrmRecepcionista frmRecepcionista = new FrmRecepcionista(self, "Recepcionista");
+                //frmRecepcionista.setVisible(true);
             }
         });
     }
@@ -67,4 +84,6 @@ public class FrmPrincipal extends JFrame {
     public static void main(String[] args) {
         FrmPrincipal frame = new FrmPrincipal("Sistema de Laboratorio");
     }
+
+
 }
