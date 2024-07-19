@@ -5,7 +5,7 @@ public class ResultadoDTO {
     private String valor;
 
     private int practicaId; // Usamos el ID de la práctica para referenciarla
-    private PracticaDTO practicaDTO;
+    private PracticaDTO practicaDTO; // no se si esto va o no va
     private int peticionId; // Usamos el ID de la petición para referenciarla
     private boolean finalizado;
     private boolean valorCritico;

@@ -68,19 +68,9 @@ public class RecepcionController {
     }
 
 
-    //BOTON SOLICITAR RESULTADOS PETICION
-    /*public List<ResultadoDTO> solicitarResultados(int idPeticion) {
+    public List<ResultadoDTO> solicitarResultados(int idPeticion) {
             return peticionService.solicitarResultado(idPeticion);
-        }*/
-
-
-
-
-
-
-
-
-
+        }
 
 
     private void cargarPeticionesDePrueba() {

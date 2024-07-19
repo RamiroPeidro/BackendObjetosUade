@@ -229,7 +229,7 @@ public class FrmRecepcionista extends JFrame {
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.NONE;
         JButton btnSolicitarResultados = new JButton("Solicitar Resultados");
-        btnSolicitarResultados.addActionListener(e -> mostrarInformacionPeticion());
+        btnSolicitarResultados.addActionListener(e -> solicitarResultados());
         pnlResultados.add(btnSolicitarResultados, gbc);
 
         gbc.gridy = 2;
@@ -387,7 +387,7 @@ public class FrmRecepcionista extends JFrame {
     }
 
     //BOTON SOLICITAR RESULTADOS PETICION
-    /*private void solicitarResultados() {
+    private void solicitarResultados() {
         String idPeticionStr = txtIdPeticionResultados.getText().trim();
 
         if (idPeticionStr.isEmpty()) {
@@ -405,10 +405,10 @@ public class FrmRecepcionista extends JFrame {
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "ID Petición debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }*/
+    }
 
-    //METODO A PARTE PARA PROBAR LA VIEW DE DEL BOTON SOLICITAR RESULTADOS
-    private void mostrarInformacionPeticion() {
+    //ESTE ES EL METODO QUE REEMPLAZARIA solicitarResultados() A PARA MOSTRAR TODOS LOS VALORES DE LA PETICION EN LA VIEW
+    private void solicitarResultadosPeticion() {
         Peticion peticion = new Peticion();
         peticion.setPaciente("Juan Pérez");
         peticion.setSexo("Masculino");

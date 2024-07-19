@@ -189,9 +189,9 @@ public class PeticionService {
         }
     }
 
-    //VIEW SOLICITAR RESULTADOS PETICION
-    /*public List<ResultadoDTO> solicitarResultado(int idPeticion) {
-        //aca encuentra la peticion (a partir de su id) en peticion DAO donde se guardan las peticiones que cargamos, y lo guarda en la variable peticion que despues la usa en este metodo
+
+    //Necesito, con lo que devuelte este metodo, poder mostrar por pantalla: De Peticion --> obraSocial, fechacarga. De Paciente relacionado a Peticion --> nombre, sexo, edad. De Sucursal relacionada a Peticion --> nombre. De cada uno de los Resulatdos relacionados a Paciente --> valor. De cada Practica relacionada a Resultado --> nombre, grupo. De cada RangoValor relacionado a Practica --> minValor, maxValor.
+    public List<ResultadoDTO> solicitarResultado(int idPeticion) {
         Peticion peticion = peticionDAO.findById(idPeticion);
         if (peticion == null) {
             throw new IllegalArgumentException("Peticion no encontrada");
@@ -211,7 +211,11 @@ public class PeticionService {
             resultadoDTOs.add(resultadoDTO);
         }
         return resultadoDTOs;
-    }*/
+    }
+
+
+    // ESTE ES solicitarResultado() PERO MODIFICADO PARA QUE ME DEVUELVA PeticionDTO. Pero rompe y esta a medio hacer.
+
     /*public PeticionDTO solicitarResultado(int idPeticion) {
         // peticion es la peticion que encontre a partir de su id
         Peticion peticion = peticionDAO.findById(idPeticion);
@@ -243,11 +247,8 @@ public class PeticionService {
             ResultadoDTO resultadoDTO = new ResultadoDTO(valorResultado, practicaId, idPeticion, resultado.isFinalizado(), resultado.isValorCritico(), resultado.isValorReservado());
             resultadoDTOs.add(resultadoDTO);
         }
-        return true;
+        return PeticionDTO;
     }*/
-
-
-
 
     public void eliminarResultadoDePractica(int idPeticion, int idPractica) {
         Peticion peticion = peticionDAO.findById(idPeticion);
