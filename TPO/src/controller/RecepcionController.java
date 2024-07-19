@@ -29,13 +29,20 @@ public class RecepcionController {
         return instance;
     }
 
-    public void cargarPeticion(int Dni, String obraSocial, int sucursalId) {
-        peticionService.cargarPeticion(Dni, obraSocial, sucursalId);
+    public int cargarPeticion(int dni, String obraSocial, int sucursalId) {
+        return peticionService.cargarPeticion(dni, obraSocial, sucursalId);
     }
 
+
     public void asociarPracticaAPeticion(int idPeticion, int practicaId) {
-        peticionService.asociarPracticaAPeticion(idPeticion, practicaId);
+        try {
+            peticionService.asociarPracticaAPeticion(idPeticion, practicaId);
+        } catch (IllegalArgumentException e) {
+            // Propagar la excepción para que pueda ser manejada en la vista
+            throw e;
+        }
     }
+
 
     public void darBajaPeticion(int numeroPeticion) {
         peticionService.darBajaPeticion(numeroPeticion);
@@ -46,7 +53,12 @@ public class RecepcionController {
     }
 
     public void darAltaPaciente(PacienteDTO pacienteDTO) {
-        pacienteService.darAltaPaciente(pacienteDTO);
+        try {
+            pacienteService.darAltaPaciente(pacienteDTO);
+        } catch (IllegalArgumentException e) {
+            // Propagar la excepción para que pueda ser manejada en la vista
+            throw e;
+        }
     }
 
     public List<PacienteDTO> getPacientes() {
@@ -72,22 +84,4 @@ public class RecepcionController {
             return peticionService.solicitarResultado(idPeticion);
         }
 
-
-    private void cargarPeticionesDePrueba() {
-        // Crear pacientes de prueba
-        PacienteDTO paciente1 = new PacienteDTO("Juan Perez", 12345678, "Calle Falsa 123", "juan.perez@example.com", "M", 30, null);
-        PacienteDTO paciente2 = new PacienteDTO("Maria Gomez", 87654321, "Avenida Siempreviva 456", "maria.gomez@example.com", "F", 25, null);
-
-        darAltaPaciente(paciente1);
-        darAltaPaciente(paciente2);
-
-        // Crear peticiones de prueba
-        cargarPeticion(12345678, "Obra Social 1", 1);
-        cargarPeticion(87654321, "Obra Social 2", 1);
-
-        // Asociar prácticas a las peticiones
-        asociarPracticaAPeticion(1, 101); // Petición 1, Práctica 101
-        asociarPracticaAPeticion(1, 102); // Petición 1, Práctica 102
-        asociarPracticaAPeticion(2, 103); // Petición 2, Práctica 103
-    }
 }
