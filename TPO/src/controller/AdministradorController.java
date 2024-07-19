@@ -90,7 +90,7 @@ public class AdministradorController {
     }
 
     private void cargarUsuarioAdministrador(){
-        TipoDeUsuario tipoDeUsuario = TipoDeUsuario.Admistrador;
+        TipoDeUsuario tipoDeUsuario = TipoDeUsuario.Administrador;
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date fecha = null;
         try {
@@ -98,12 +98,12 @@ public class AdministradorController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        UsuarioDTO usuarioDTO = new UsuarioDTO("admin","admin@gmail.com","admin","administrador","juan b justo 1234",12345678,fecha,tipoDeUsuario);
+        UsuarioDTO usuarioDTO = new UsuarioDTO("admin","admin@gmail.com","admin","Administrador","juan b justo 1234",12345678,fecha,tipoDeUsuario);
         darAltaUsuario(usuarioDTO);
     }
 
-    private void iniciarSesion(String usuario, String contraseña){
-
+    public void iniciarSesion(String nombreRsuario, String password,String botonSeleccionado) throws UsuarioService.InvalidPasswordException, UsuarioService.UserNotFoundException{
+        usuarioService.iniciarSesion(nombreRsuario,password,botonSeleccionado);
     }
 
 

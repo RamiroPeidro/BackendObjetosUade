@@ -1,5 +1,8 @@
 package views;
 
+import controller.AdministradorController;
+import service.UsuarioService;
+
 import javax.swing.*;
 import javax.swing.*;
 import java.awt.*;
@@ -8,21 +11,25 @@ import java.awt.event.ActionListener;
 
 public class FrmIniciarSesion extends JFrame {
 
-    public FrmIniciarSesion() {
-        // Set frame properties
+    private AdministradorController administradorController;
+    private static String botonSeleccionado;
+
+    public FrmIniciarSesion(String botonSeleccionado) {
+
+        this.administradorController = AdministradorController.getInstance();
+        this.botonSeleccionado = botonSeleccionado;
+
         setTitle("Inicio de Sesión");
         setSize(500, 500);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null); // Center the frame
 
-        // Create components
         JLabel userLabel = new JLabel("Usuario:");
         JTextField userText = new JTextField(20);
         JLabel passwordLabel = new JLabel("Contraseña:");
         JPasswordField passwordText = new JPasswordField(20);
         JButton loginButton = new JButton("Iniciar Sesión");
 
-        // Create a panel and add components to it
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5); // Padding
@@ -54,27 +61,46 @@ public class FrmIniciarSesion extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = userText.getText();
+                String nombreUsuario = userText.getText();
                 String password = new String(passwordText.getPassword());
-
-                //ignorar esto
-                if ("admin".equals(username) && "password".equals("password")) {
-                    JOptionPane.showMessageDialog(null, "Login successful!");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Invalid username or password.");
+                try{
+                    administradorController.iniciarSesion(nombreUsuario,password,botonSeleccionado);
                 }
+                catch (UsuarioService.InvalidPasswordException ex){
+                    JOptionPane.showMessageDialog(null, "La contraseña no es correcta", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                catch (UsuarioService.UserNotFoundException ex){
+                    JOptionPane.showMessageDialog(null, "El nombre de usuario no existe", "Error", JOptionPane.ERROR_MESSAGE);
+
+                }
+
             }
         });
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 new FrmIniciarSesion().setVisible(true);
             }
         });
+    }*/
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new FrmIniciarSesion(botonSeleccionado).setVisible(true);
+            }
+        });
     }
+
+    /*public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            // Aquí deberías pasar una instancia válida de AdministradorController
+            new FrmIniciarSesion(AdministradorController.getInstance()).setVisible(true);
+        });
+    }*/
 
 
 }

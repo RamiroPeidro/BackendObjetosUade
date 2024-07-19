@@ -190,7 +190,7 @@ public class FrmAdministrador extends JFrame {
         userTypeComboBox = new JComboBox<>(TipoDeUsuario.values());
         pnlUsuarios.add(userTypeComboBox, gbc);
 
-        JButton submitButton = new JButton("Submit");
+        //JButton submitButton = new JButton("Submit");
         //gbc.insets = new Insets(5, 5, 5, 5);
         //gbc.gridx = 0;
         //gbc.gridy = 0;
@@ -203,15 +203,15 @@ public class FrmAdministrador extends JFrame {
         gbc.gridy = 7;
         gbc.gridwidth = 4;
         gbc.fill = GridBagConstraints.NONE;
-        pnlUsuarios.add(submitButton, gbc);
+        //pnlUsuarios.add(submitButton, gbc);
         //add(pnlUsuarios);
-        submitButton.addActionListener(new ActionListener() {
+        /*submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 TipoDeUsuario selectedUserType = (TipoDeUsuario) userTypeComboBox.getSelectedItem();
                 JOptionPane.showMessageDialog(null, "Seleccionado: " + selectedUserType);
             }
-        });
+        });*/
 
 
         gbc.gridx = 0;

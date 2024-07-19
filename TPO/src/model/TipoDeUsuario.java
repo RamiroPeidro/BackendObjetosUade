@@ -4,6 +4,6 @@ public enum TipoDeUsuario {
     Recepcionista,
     Laboratorista,
     ResponsableTecnico,
-    Admistrador,
+    Administrador,
 
 }
