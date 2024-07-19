@@ -3,20 +3,21 @@ package Dtos;
 public class ResultadoDTO {
 
     private String valor;
-
-    private int practicaId; // Usamos el ID de la práctica para referenciarla
-    private PracticaDTO practicaDTO; // no se si esto va o no va
-    private int peticionId; // Usamos el ID de la petición para referenciarla
+    private int practicaId;
+    private String nombrePractica;
+    private String rangoValores;
+    private int peticionId;
     private boolean finalizado;
     private boolean valorCritico;
     private boolean valorReservado;
 
     // Constructor
-    public ResultadoDTO(String valor, int practicaId, int peticionId, boolean finalizado, boolean valorCritico, boolean valorReservado) {
+    public ResultadoDTO(String valor, int practicaId, String nombrePractica, String rangoValores, int idPeticion, boolean finalizado, boolean valorCritico, boolean valorReservado) {
         this.valor = valor;
         this.practicaId = practicaId;
-        //this.practicaDTO = practicaDTO;
-        this.peticionId = peticionId;
+        this.nombrePractica = nombrePractica;
+        this.rangoValores = rangoValores;
+        this.peticionId = idPeticion;
         this.finalizado = finalizado;
         this.valorCritico = valorCritico;
         this.valorReservado = valorReservado;
@@ -37,13 +38,6 @@ public class ResultadoDTO {
 
     public void setPracticaId(int practicaId) {
         this.practicaId = practicaId;
-    }
-
-    public PracticaDTO getPracticaDTO() {
-        return practicaDTO;
-    }
-    public void setPracticaDTO(PracticaDTO practicaDTO) {
-        this.practicaDTO = practicaDTO;
     }
 
     public int getPeticionId() {
@@ -73,6 +67,23 @@ public class ResultadoDTO {
     public boolean isValorReservado() {
         return valorReservado;
     }
+
+    public String getNombrePractica() {
+        return nombrePractica;
+    }
+
+    public void setNombrePractica(String nombrePractica) {
+        this.nombrePractica = nombrePractica;
+    }
+
+    public String getRangoValores() {
+        return rangoValores;
+    }
+
+    public void setRangoValores(String rangoValores) {
+        this.rangoValores = rangoValores;
+    }
+
 
     public void setValorReservado(boolean valorReservado) {
         this.valorReservado = valorReservado;

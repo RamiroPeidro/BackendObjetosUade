@@ -234,7 +234,7 @@ public class FrmRecepcionista extends JFrame {
 
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        txtResultados = new JTextArea(10, 30);
+        txtResultados = new JTextArea(10, 50); // Cambiado el ancho de 30 a 50
         txtResultados.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(txtResultados);
         pnlResultados.add(scrollPane, gbc);
@@ -400,12 +400,14 @@ public class FrmRecepcionista extends JFrame {
             List<ResultadoDTO> resultados = recepcionController.solicitarResultados(idPeticion);
             txtResultados.setText("");
             for (ResultadoDTO resultado : resultados) {
-                txtResultados.append(resultado.getValor() + "\n");
+                String resultadoTexto = resultado.getNombrePractica() + " - Resultado: " + resultado.getValor() + " - Rango: " + resultado.getRangoValores();
+                txtResultados.append(resultadoTexto + "\n");
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "ID Petición debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 
     //ESTE ES EL METODO QUE REEMPLAZARIA solicitarResultados() A PARA MOSTRAR TODOS LOS VALORES DE LA PETICION EN LA VIEW
     private void solicitarResultadosPeticion() {
