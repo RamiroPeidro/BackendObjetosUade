@@ -49,7 +49,7 @@ public class UsuarioService {
                 usuarioDTO.getNombre(),
                 usuarioDTO.getDomicilio(),
                 usuarioDTO.getDni(),
-                usuarioDTO.getFechaNacimiento()
+                usuarioDTO.getFechaNacimiento(),usuarioDTO.getTipoDeUsuario()
         );
     }
 
@@ -61,10 +61,9 @@ public class UsuarioService {
                 usuario.getNombre(),
                 usuario.getDomicilio(),
                 usuario.getDni(),
-                usuario.getFechaNacimiento()
+                usuario.getFechaNacimiento(), usuario.getTipoDeUsuario()
         );
     }
-
 
 
     public List<UsuarioDTO> obtenerTodosLosUsuarios() {
@@ -73,4 +72,6 @@ public class UsuarioService {
                 .map(this::convertirUsuarioADTO)
                 .collect(Collectors.toList());
     }
+
+
 }

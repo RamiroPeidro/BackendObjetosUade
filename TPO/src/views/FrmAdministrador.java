@@ -13,6 +13,7 @@ import Dtos.RangoValorDTO;
 import Dtos.UsuarioDTO;
 import controller.AdministradorController;
 import Dtos.SucursalDTO;
+import model.TipoDeUsuario;
 
 public class FrmAdministrador extends JFrame {
     private JPanel pnlSucursales;
@@ -23,6 +24,7 @@ public class FrmAdministrador extends JFrame {
     private JTextField txtDireccionSucursal;
     private JTextField txtDniSucursal;
 
+    //USUARIO
     private JTextField txtNombreUsuario;
     private JTextField txtMailUsuario;
     private JTextField txtPasswordUsuario;
@@ -30,6 +32,7 @@ public class FrmAdministrador extends JFrame {
     private JTextField txtDomicilio;
     private JTextField txtDniUsuario;
     private JTextField txtFechaNacimiento;
+    private JComboBox<TipoDeUsuario> userTypeComboBox;
 
     private JTextField txtCodigoPractica;
     private JTextField txtNombrePractica;
@@ -179,6 +182,37 @@ public class FrmAdministrador extends JFrame {
         gbc.gridx = 1;
         txtFechaNacimiento = new JTextField(10);
         pnlUsuarios.add(txtFechaNacimiento, gbc);
+
+        gbc.gridx = 2;
+        pnlUsuarios.add(new JLabel("TipoUsuario:"), gbc);
+
+        gbc.gridx = 3;
+        userTypeComboBox = new JComboBox<>(TipoDeUsuario.values());
+        pnlUsuarios.add(userTypeComboBox, gbc);
+
+        JButton submitButton = new JButton("Submit");
+        //gbc.insets = new Insets(5, 5, 5, 5);
+        //gbc.gridx = 0;
+        //gbc.gridy = 0;
+        //gbc.gridx = 1;
+        //gbc.gridy = 0;
+        //gbc.gridx = 1;
+        //gbc.gridy = 1;
+        //pnlUsuarios.add(submitButton, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.gridwidth = 4;
+        gbc.fill = GridBagConstraints.NONE;
+        pnlUsuarios.add(submitButton, gbc);
+        //add(pnlUsuarios);
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TipoDeUsuario selectedUserType = (TipoDeUsuario) userTypeComboBox.getSelectedItem();
+                JOptionPane.showMessageDialog(null, "Seleccionado: " + selectedUserType);
+            }
+        });
+
 
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -359,12 +393,13 @@ public class FrmAdministrador extends JFrame {
             int dni = Integer.parseInt(txtDniUsuario.getText().trim());
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date fechaNacimiento = sdf.parse(txtFechaNacimiento.getText().trim());
+            TipoDeUsuario tipoDeUsuario = (TipoDeUsuario) userTypeComboBox.getSelectedItem();
 
             if (nombreUsuario.isEmpty() || mail.isEmpty() || password.isEmpty() || nombre.isEmpty() || domicilio.isEmpty()) {
                 throw new IllegalArgumentException("Todos los campos deben estar completos.");
             }
 
-            UsuarioDTO usuarioDTO = new UsuarioDTO(nombreUsuario, mail, password, nombre, domicilio, dni, fechaNacimiento);
+            UsuarioDTO usuarioDTO = new UsuarioDTO(nombreUsuario, mail, password, nombre, domicilio, dni, fechaNacimiento, tipoDeUsuario);
             administradorController.darAltaUsuario(usuarioDTO);
             JOptionPane.showMessageDialog(this, "Usuario dado de alta exitosamente.");
         } catch (NumberFormatException e) {
@@ -402,12 +437,13 @@ public class FrmAdministrador extends JFrame {
             int dni = Integer.parseInt(txtDniUsuario.getText().trim());
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date fechaNacimiento = sdf.parse(txtFechaNacimiento.getText().trim());
+            TipoDeUsuario tipoDeUsuario = (TipoDeUsuario) userTypeComboBox.getSelectedItem();
 
             if (nombreUsuario.isEmpty() || mail.isEmpty() || password.isEmpty() || nombre.isEmpty() || domicilio.isEmpty()) {
                 throw new IllegalArgumentException("Todos los campos deben estar completos.");
             }
 
-            UsuarioDTO usuarioDTO = new UsuarioDTO(nombreUsuario, mail, password, nombre, domicilio, dni, fechaNacimiento);
+            UsuarioDTO usuarioDTO = new UsuarioDTO(nombreUsuario, mail, password, nombre, domicilio, dni, fechaNacimiento,tipoDeUsuario);
             administradorController.modificarUsuario(usuarioDTO);
             JOptionPane.showMessageDialog(this, "Usuario modificado exitosamente.");
         } catch (NumberFormatException e) {
