@@ -11,8 +11,15 @@ public class ResultadoDTO {
     private boolean valorCritico;
     private boolean valorReservado;
 
+    // Nuevos atributos relacionados con el paciente
+    private String nombrePaciente;
+    private String domicilioPaciente;
+    private String mailPaciente;
+    private String sexoPaciente;
+    private int edadPaciente;
+
     // Constructor
-    public ResultadoDTO(String valor, int practicaId, String nombrePractica, String rangoValores, int idPeticion, boolean finalizado, boolean valorCritico, boolean valorReservado) {
+    public ResultadoDTO(String valor, int practicaId, String nombrePractica, String rangoValores, int idPeticion, boolean finalizado, boolean valorCritico, boolean valorReservado, String nombrePaciente, String domicilioPaciente, String mailPaciente, String sexoPaciente, int edadPaciente) {
         this.valor = valor;
         this.practicaId = practicaId;
         this.nombrePractica = nombrePractica;
@@ -21,6 +28,11 @@ public class ResultadoDTO {
         this.finalizado = finalizado;
         this.valorCritico = valorCritico;
         this.valorReservado = valorReservado;
+        this.nombrePaciente = nombrePaciente;
+        this.domicilioPaciente = domicilioPaciente;
+        this.mailPaciente = mailPaciente;
+        this.sexoPaciente = sexoPaciente;
+        this.edadPaciente = edadPaciente;
     }
 
     // Getters y Setters
@@ -84,7 +96,45 @@ public class ResultadoDTO {
         this.rangoValores = rangoValores;
     }
 
+    public String getNombrePaciente() {
+        return nombrePaciente;
+    }
 
+    public void setNombrePaciente(String nombrePaciente) {
+        this.nombrePaciente = nombrePaciente;
+    }
+
+    public String getDomicilioPaciente() {
+        return domicilioPaciente;
+    }
+
+    public void setDomicilioPaciente(String domicilioPaciente) {
+        this.domicilioPaciente = domicilioPaciente;
+    }
+
+    public String getMailPaciente() {
+        return mailPaciente;
+    }
+
+    public void setMailPaciente(String mailPaciente) {
+        this.mailPaciente = mailPaciente;
+    }
+
+    public String getSexoPaciente() {
+        return sexoPaciente;
+    }
+
+    public void setSexoPaciente(String sexoPaciente) {
+        this.sexoPaciente = sexoPaciente;
+    }
+
+    public int getEdadPaciente() {
+        return edadPaciente;
+    }
+
+    public void setEdadPaciente(int edadPaciente) {
+        this.edadPaciente = edadPaciente;
+    }
     public void setValorReservado(boolean valorReservado) {
         this.valorReservado = valorReservado;
     }

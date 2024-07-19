@@ -1,12 +1,12 @@
 package service;
 
 import Daos.PracticaDAO;
-import Dtos.PeticionDTO;
 import Dtos.PracticaDTO;
 import Dtos.RangoValorDTO;
-import model.Peticion;
 import model.Practica;
 import model.RangoValor;
+
+import java.util.List;
 
 public class PracticaService {
 
@@ -17,8 +17,19 @@ public class PracticaService {
     }
 
     public void darAltaPractica(PracticaDTO practicaDTO) {
+        int nuevoCodigo = generarNuevoCodigoPractica();
+        practicaDTO.setCodigoPractica(nuevoCodigo);
         Practica practica = convertirDTOaPractica(practicaDTO);
         practicaDAO.create(practica);
+    }
+
+    private int generarNuevoCodigoPractica() {
+        List<Practica> practicas = practicaDAO.findAll();
+        int maxCodigo = practicas.stream()
+                .mapToInt(Practica::getCodigoPractica)
+                .max()
+                .orElse(0); // Si no hay prácticas, el código empieza en 1
+        return maxCodigo + 1;
     }
 
     public void darBajaPractica(int codigoPractica) {
@@ -73,7 +84,4 @@ public class PracticaService {
                 practica.getEsReservada()
         );
     }
-
-    //VIEW SOLICITAR RESULTADOS PETICION
-
 }

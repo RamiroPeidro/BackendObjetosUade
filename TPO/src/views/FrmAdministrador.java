@@ -423,18 +423,30 @@ public class FrmAdministrador extends JFrame {
 
 
     private void altaPractica() {
-        int codigo = Integer.parseInt(txtCodigoPractica.getText());
-        String nombre = txtNombrePractica.getText();
-        String grupo = txtGrupoPractica.getText();
-        float minValor = Float.parseFloat(txtMinValor.getText());
-        float maxValor = Float.parseFloat(txtMaxValor.getText());
-        float cantHorasResultados = Float.parseFloat(txtCantHorasResultados.getText());
-        boolean habilitada = chkHabilitada.isSelected();
-        boolean reservada = chkReservada.isSelected();
-        RangoValorDTO rangoValorDTO = new RangoValorDTO(minValor, maxValor);
-        PracticaDTO practicaDTO = new PracticaDTO(codigo, nombre, grupo, rangoValorDTO, cantHorasResultados, habilitada, reservada);
-        administradorController.darAltaPractica(practicaDTO);
-        JOptionPane.showMessageDialog(this, "Practica dada de alta exitosamente.");
+        try {
+            String nombre = txtNombrePractica.getText().trim();
+            String grupo = txtGrupoPractica.getText().trim();
+            float minValor = Float.parseFloat(txtMinValor.getText().trim());
+            float maxValor = Float.parseFloat(txtMaxValor.getText().trim());
+            float cantHorasResultados = Float.parseFloat(txtCantHorasResultados.getText().trim());
+            boolean habilitada = chkHabilitada.isSelected();
+            boolean reservada = chkReservada.isSelected();
+
+            if (nombre.isEmpty() || grupo.isEmpty()) {
+                throw new IllegalArgumentException("Todos los campos deben estar completos.");
+            }
+
+            RangoValorDTO rangoValorDTO = new RangoValorDTO(minValor, maxValor);
+            PracticaDTO practicaDTO = new PracticaDTO(0, nombre, grupo, rangoValorDTO, cantHorasResultados, habilitada, reservada); // 0 para que se genere automáticamente
+            administradorController.darAltaPractica(practicaDTO);
+            JOptionPane.showMessageDialog(this, "Práctica dada de alta exitosamente.");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Los campos numéricos deben contener valores válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al dar de alta la práctica: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void bajaPractica() {

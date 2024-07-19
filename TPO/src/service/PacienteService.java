@@ -43,7 +43,12 @@ public class PacienteService {
         // Implementar lógica de consultar resultado
     }
 
-    public void darAltaPaciente(PacienteDTO pacienteDTO) {
+    public void darAltaPaciente(PacienteDTO pacienteDTO) throws IllegalArgumentException {
+        Paciente existente = pacienteDAO.findById(pacienteDTO.getDni());
+        if (existente != null) {
+            throw new IllegalArgumentException("Ya existe un paciente con el DNI ingresado.");
+        }
+
         List<Peticion> peticiones = new ArrayList<>(); // Convertir IDs de peticiones a objetos Peticion si es necesario
         Email email = new Email(pacienteDTO.getMail()); // Crear el Value Object Email
         Paciente paciente = convertirDTOaPaciente(pacienteDTO, peticiones);
