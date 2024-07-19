@@ -16,12 +16,17 @@ public class PracticaService {
         this.practicaDAO = PracticaDAO.getInstance();
     }
 
-    public void darAltaPractica(PracticaDTO practicaDTO) {
-        int nuevoCodigo = generarNuevoCodigoPractica();
-        practicaDTO.setCodigoPractica(nuevoCodigo);
-        Practica practica = convertirDTOaPractica(practicaDTO);
-        practicaDAO.create(practica);
-    }
+        public void darAltaPractica(PracticaDTO practicaDTO) {
+            Practica practicaDAOById = practicaDAO.findById(practicaDTO.getCodigoPractica());
+            if (practicaDAOById != null) {
+                throw new IllegalArgumentException("Ya existe una práctica con el código especificado");
+            }
+
+            int nuevoCodigo = generarNuevoCodigoPractica();
+            practicaDTO.setCodigoPractica(nuevoCodigo);
+            Practica practica = convertirDTOaPractica(practicaDTO);
+            practicaDAO.create(practica);
+        }
 
     private int generarNuevoCodigoPractica() {
         List<Practica> practicas = practicaDAO.findAll();

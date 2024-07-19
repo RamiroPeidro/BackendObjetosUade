@@ -311,6 +311,8 @@ public class FrmAdministrador extends JFrame {
         }
     }
 
+
+
     private void bajaSucursal() {
         try {
             int numero = Integer.parseInt(txtNumeroSucursal.getText().trim());
@@ -448,6 +450,8 @@ public class FrmAdministrador extends JFrame {
             JOptionPane.showMessageDialog(this, "Error al dar de alta la práctica: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+
 
     private void bajaPractica() {
         try {
